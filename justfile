@@ -102,7 +102,7 @@ gen-doc: _gen-yaml && _add-artifacts
 testdoc: gen-doc _serve
 
 # Generate the Python data models (dataclasses & pydantic)
-gen-python:
+gen-python: && fix-python-keywords
   uv run gen-project -d  {{pymodel}} -I python {{source_schema_path}}
   uv run gen-pydantic {{gen_pydantic_args}} {{source_schema_path}} > {{pymodel}}/{{schema_name}}_pydantic.py
 
@@ -197,6 +197,7 @@ _test-examples: _ensure_examples_output
     --input-formats yaml \
     --output-formats json \
     --output-formats yaml \
+    --no-use-type-designators \
     --counter-example-input-directory tests/data/invalid \
     --input-directory tests/data/valid \
     --output-directory examples/output \

@@ -1,4 +1,4 @@
-uuid: "7d7a8ae0-d49c-4e0a-0010-000000000001"
+uuid: "7d7a8ae0-d49c-4e0a-8010-000000000001"
 type: software
 title: "Audit Log Service"
 description: >-
@@ -10,12 +10,7 @@ status:
 protocols:
   - name: syslog
     title: "Syslog over TLS"
-    port-ranges:
+    port_ranges:
       - start: 6514
         end: 6514
         transport: TCP
-props:
-  - name: version
-    value: "3.2.1"
-  - name: vendor
-    value: "Example Corp"

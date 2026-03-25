@@ -1,0 +1,908 @@
+ syntax="proto3";
+ package
+// metamodel_version: 1.7.0
+// An action applied by a role within a given party to the content.
+message Action
+ {
+  uUIDType uuid = 0
+  tokenType type = 0
+  dateTimeWithTimezoneType date = 0
+  uRIType system = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleParty responsible-parties = 0
+ }
+// Identifies an assessment or related process that can be performed. In the assessment plan, this is an intended activity.
+message Activity
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+ repeated  step steps = 0
+  reviewedControls related-controls = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleRole responsible-roles = 0
+ }
+// A postal address for the location.
+message Address
+ {
+  addressTypeEnum type = 0
+ repeated  string addr-lines = 0
+  string city = 0
+  string state = 0
+  string postal-code = 0
+  string country = 0
+ }
+// Identifies the assets used to perform this assessment.
+message AssessmentAssets
+ {
+ repeated  systemComponent components = 0
+ repeated  assessmentPlatform assessment-platforms = 0
+ }
+// A local definition of a control objective.
+message AssessmentMethod
+ {
+  uUIDType uuid = 0
+  markupMultilineType description = 0
+  assessmentPart part = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A partition of an assessment plan or results or a child of another part.
+message AssessmentPart
+ {
+  uUIDType uuid = 0
+  assessmentPartNameEnum name = 0
+  uRIType ns = 0
+  tokenType class = 0
+  markupLineType title = 0
+  markupMultilineType prose = 0
+ repeated  assessmentPart parts = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// An assessment plan, such as those provided by a FedRAMP assessor.
+message AssessmentPlan
+ {
+  uUIDType uuid = 0
+  metadata metadata = 0
+  importSSP import-ssp = 0
+  localDefinitions local-definitions = 0
+  termsAndConditions terms-and-conditions = 0
+ repeated  assessmentSubject assessment-subjects = 0
+  assessmentAssets assessment-assets = 0
+  reviewedControls reviewed-controls = 0
+ repeated  task tasks = 0
+  backMatter back-matter = 0
+ }
+// Root wrapper for an OSCAL Assessment Plan document.
+message AssessmentPlanDocument
+ {
+  assessmentPlan assessment-plan = 0
+ }
+// Used to represent the toolset used to perform aspects of the assessment.
+message AssessmentPlatform
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+ repeated  usesComponent uses-components = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Select a specific control for inclusion/exclusion in the assessment by literal control ID and optional statement IDs.
+message AssessmentSelectControlById
+ {
+  tokenType control-id = 0
+ repeated  tokenType statement-ids = 0
+ }
+// Identifies system elements being assessed, such as components, inventory items, and locations.
+message AssessmentSubject
+ {
+  assessmentSubjectTypeEnum type = 0
+  markupMultilineType description = 0
+  includeAll include-all = 0
+ repeated  selectSubjectById include-subjects = 0
+ repeated  selectSubjectById exclude-subjects = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Used when the assessment subjects will be determined as part of one or more other assessment activities.
+message AssessmentSubjectPlaceholder
+ {
+  uUIDType uuid = 0
+  markupMultilineType description = 0
+ repeated  assessmentSubjectSource sources = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Assessment subjects will be identified while conducting the referenced activity.
+message AssessmentSubjectSource
+ {
+  uUIDType task-uuid = 0
+  markupMultilineType remarks = 0
+ }
+// Identifies an individual activity to be performed as part of a task.
+message AssociatedActivity
+ {
+  uUIDType activity-uuid = 0
+ repeated  assessmentSubject subjects = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleRole responsible-roles = 0
+ }
+// Relates the finding to a set of referenced risks.
+message AssociatedRisk
+ {
+  uUIDType risk-uuid = 0
+  markupMultilineType remarks = 0
+ }
+// The task is intended to occur at the specified frequency.
+message AtFrequency
+ {
+  integer period = 0
+  timingUnitEnum unit = 0
+  markupMultilineType remarks = 0
+ }
+// Identifies a specific system privilege held by the user, along with an associated description and/or rationale for the privilege.
+message AuthorizedPrivilege
+ {
+  markupLineType title = 0
+  markupMultilineType description = 0
+ repeated  string functions-performed = 0
+ }
+// A collection of resources that may be referenced from within the OSCAL document instance.
+message BackMatter
+ {
+ repeated  resource resources = 0
+ }
+// A resource encoded using the Base64 alphabet defined by RFC 2045.
+message Base64Resource
+ {
+  string media-type = 0
+  base64Type value = 0
+  tokenType filename = 0
+ }
+// A structured, organized collection of control information.
+message Catalog
+ {
+  uUIDType uuid = 0
+  metadata metadata = 0
+  backMatter back-matter = 0
+ repeated  parameter params = 0
+ repeated  control controls = 0
+ repeated  group groups = 0
+ }
+// Root wrapper for an OSCAL Catalog document.
+message CatalogDocument
+ {
+  catalog catalog = 0
+ }
+// A collection of descriptive data about the containing object from a specific origin.
+message Characterization
+ {
+  origin origin = 0
+ repeated  facet facets = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// An optional citation consisting of end note text using structured markup.
+message Citation
+ {
+  markupLineType text = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Describes the operational status of the system component.
+message ComponentStatus
+ {
+  componentStateEnum state = 0
+  markupMultilineType remarks = 0
+ }
+// A test expression which is expected to be evaluated by a tool.
+message ConstraintTest
+ {
+  markupMultilineType remarks = 0
+  string expression = 0
+ }
+// A structured object representing a requirement or guideline, which when implemented will reduce an aspect of risk related to an information system and its information.
+message Control
+ {
+  tokenType id = 0
+  tokenType class = 0
+  markupLineType title = 0
+ repeated  parameter params = 0
+ repeated  part parts = 0
+ repeated  control controls = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Selecting a set of controls by matching their IDs with a wildcard pattern.
+message ControlMatching
+ {
+  markupMultilineType remarks = 0
+  string pattern = 0
+ }
+// Identifies the control objectives of the assessment.
+message ControlObjectiveSelection
+ {
+  markupMultilineType description = 0
+  includeAll include-all = 0
+ repeated  selectObjectiveById include-objectives = 0
+ repeated  selectObjectiveById exclude-objectives = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// An annotated, markup-based textual element of a control's or catalog group's definition, or a child of another part.
+message ControlPart
+ {
+  tokenType id = 0
+  tokenType name = 0
+  uRIType ns = 0
+  tokenType class = 0
+  markupLineType title = 0
+  markupMultilineType prose = 0
+ repeated  controlPart parts = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Identifies the controls being assessed.
+message ControlSelection
+ {
+  markupMultilineType description = 0
+  includeAll include-all = 0
+ repeated  assessmentSelectControlById include-controls = 0
+ repeated  assessmentSelectControlById exclude-controls = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A document identifier qualified by an identifier scheme.
+message DocumentId
+ {
+  uRIType scheme = 0
+  string identifier = 0
+ }
+// The timing under which the task is intended to occur.
+message EventTiming
+ {
+  onDateCondition on-date = 0
+  withinDateRange within-date-range = 0
+  atFrequency at-frequency = 0
+ }
+// An individual characteristic that is part of a larger set produced by the same actor.
+message Facet
+ {
+  tokenType name = 0
+  string value = 0
+  uRIType system = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Describes an individual finding.
+message Finding
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+  findingTarget target = 0
+  uUIDType implementation-statement-uuid = 0
+ repeated  origin origins = 0
+ repeated  relatedObservation related-observations = 0
+ repeated  associatedRisk related-risks = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Captures an assessor's conclusions regarding the degree to which an objective is satisfied.
+message FindingTarget
+ {
+  findingTargetTypeEnum type = 0
+  tokenType target-id = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+  implementationStatus implementation-status = 0
+  objectiveStatus status = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A group of controls, or of groups of controls.
+message Group
+ {
+  tokenType id = 0
+  tokenType class = 0
+  markupLineType title = 0
+ repeated  parameter params = 0
+ repeated  part parts = 0
+ repeated  group groups = 0
+ repeated  control controls = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A representation of a cryptographic digest generated over a resource using a specified hash algorithm.
+message Hash
+ {
+  string value = 0
+  hashAlgorithmEnum algorithm = 0
+ }
+// Used to detail assessment subjects that were identified by this task.
+message IdentifiedSubject
+ {
+  uUIDType subject-placeholder-uuid = 0
+ repeated  assessmentSubject subjects = 0
+ }
+// Indicates the degree to which a given control is implemented.
+message ImplementationStatus
+ {
+  implementationStatusStateEnum state = 0
+  markupMultilineType remarks = 0
+ }
+// The set of components that are implemented in a given system inventory item.
+message ImplementedComponent
+ {
+  uUIDType component-uuid = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleParty responsible-parties = 0
+ }
+// Used by the assessment plan and POA&M to import information about the system.
+message ImportSSP
+ {
+  uRIReferenceType href = 0
+  markupMultilineType remarks = 0
+ }
+// A single managed inventory item within the system.
+message InventoryItem
+ {
+  uUIDType uuid = 0
+  markupMultilineType description = 0
+ repeated  implementedComponent implemented-components = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleParty responsible-parties = 0
+ }
+// A reference to a local or remote resource, that has a specific relation to the containing object.
+message Link
+ {
+  uRIReferenceType href = 0
+  tokenType rel = 0
+  string resource-fragment = 0
+  string media-type = 0
+  markupLineType text = 0
+ }
+// Used to define data objects that are used in the assessment plan, that do not appear in the referenced SSP.
+message LocalDefinitions
+ {
+ repeated  systemComponent components = 0
+ repeated  inventoryItem inventory-items = 0
+ repeated  systemUser users = 0
+ repeated  localObjective objectives-and-methods = 0
+ repeated  activity activities = 0
+  markupMultilineType remarks = 0
+ }
+// A local definition of a control objective for this assessment. Uses catalog syntax for control objective and assessment actions.
+message LocalObjective
+ {
+  tokenType control-id = 0
+  markupMultilineType description = 0
+ repeated  controlPart parts = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A physical point of presence, which may be associated with people, organizations, or other concepts within the current or linked OSCAL document.
+message Location
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+ repeated  emailAddressType email-addresses = 0
+ repeated  telephoneNumber telephone-numbers = 0
+  address address = 0
+ repeated  uRIType urls = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Used to indicate who created a log entry in what role.
+message LoggedBy
+ {
+  uUIDType party-uuid = 0
+  tokenType role-id = 0
+  markupMultilineType remarks = 0
+ }
+// Provides information about the containing document, and defines concepts shared across the document.
+message Metadata
+ {
+  markupLineType title = 0
+  dateTimeWithTimezoneType published = 0
+  dateTimeWithTimezoneType last-modified = 0
+  string version = 0
+  string oscal-version = 0
+ repeated  documentId document-ids = 0
+ repeated  revision revisions = 0
+ repeated  role roles = 0
+ repeated  location locations = 0
+ repeated  party parties = 0
+ repeated  action actions = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleParty responsible-parties = 0
+ }
+// Describes an existing mitigating factor that may affect the overall determination of the risk.
+message MitigatingFactor
+ {
+  uUIDType uuid = 0
+  markupMultilineType description = 0
+  uUIDType implementation-uuid = 0
+ repeated  subjectReference subjects = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A determination of if the objective is satisfied or not within a given system.
+message ObjectiveStatus
+ {
+  objectiveStatusStateEnum state = 0
+  objectiveStatusReasonEnum reason = 0
+  markupMultilineType remarks = 0
+ }
+// Describes an individual observation.
+message Observation
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+ repeated  observationMethodEnum methods = 0
+ repeated  observationTypeEnum types = 0
+ repeated  origin origins = 0
+ repeated  subjectReference subjects = 0
+ repeated  relevantEvidence relevant-evidence = 0
+  dateTimeWithTimezoneType collected = 0
+  dateTimeWithTimezoneType expires = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// The task is intended to occur on the specified date.
+message OnDateCondition
+ {
+  dateTimeWithTimezoneType date = 0
+  markupMultilineType remarks = 0
+ }
+// Identifies the source of the finding, such as a tool, interviewed person, or activity.
+message Origin
+ {
+ repeated  originActor actors = 0
+ repeated  relatedTask related-tasks = 0
+ }
+// The actor that produces an observation, a finding, or a risk.
+message OriginActor
+ {
+  originActorTypeEnum type = 0
+  uUIDType actor-uuid = 0
+  tokenType role-id = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Parameters provide a mechanism for the dynamic assignment of value(s) in a control.
+message Parameter
+ {
+  tokenType id = 0
+  tokenType class = 0
+  tokenType depends-on = 0
+  markupLineType label = 0
+  markupMultilineType usage = 0
+ repeated  parameterConstraint constraints = 0
+ repeated  parameterGuideline guidelines = 0
+ repeated  string values = 0
+  parameterSelection select = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A formal or informal expression of a constraint or test.
+message ParameterConstraint
+ {
+  markupMultilineType description = 0
+ repeated  constraintTest tests = 0
+ }
+// A prose statement that provides a recommendation for the use of a parameter.
+message ParameterGuideline
+ {
+  markupMultilineType prose = 0
+ }
+// Presenting a choice among alternatives.
+message ParameterSelection
+ {
+  parameterCardinalityEnum how-many = 0
+ repeated  markupLineType choice = 0
+ }
+// An annotated, markup-based textual element of a control's or catalog group's definition, or a child of another part.
+message Part
+ {
+  tokenType id = 0
+  tokenType name = 0
+  uRIType ns = 0
+  tokenType class = 0
+  markupLineType title = 0
+  markupMultilineType prose = 0
+ repeated  part parts = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// An organization or person, which may be associated with roles or other concepts within the current or linked OSCAL document.
+message Party
+ {
+  uUIDType uuid = 0
+  partyTypeEnum type = 0
+  string name = 0
+  string short-name = 0
+ repeated  emailAddressType email-addresses = 0
+ repeated  telephoneNumber telephone-numbers = 0
+ repeated  partyExternalId external-ids = 0
+ repeated  address addresses = 0
+ repeated  uUIDType location-uuids = 0
+ repeated  uUIDType member-of-organizations = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// An identifier for a person or organization using a designated scheme, e.g. an Open Researcher and Contributor ID (ORCID).
+message PartyExternalId
+ {
+  uRIType scheme = 0
+  string id = 0
+ }
+// Where applicable, the transport layer protocol port range.
+message PortRange
+ {
+  integer start = 0
+  integer end = 0
+  transportEnum transport = 0
+  markupMultilineType remarks = 0
+ }
+// An attribute, characteristic, or quality of the containing object expressed as a namespace qualified name/value pair.
+message Property
+ {
+  tokenType name = 0
+  uUIDType uuid = 0
+  uRIType ns = 0
+  string value = 0
+  tokenType class = 0
+  markupMultilineType remarks = 0
+  tokenType group = 0
+ }
+// Information about the protocol used to provide a service.
+message Protocol
+ {
+  uUIDType uuid = 0
+  string name = 0
+  markupLineType title = 0
+ repeated  portRange port-ranges = 0
+ }
+// Relates the identified element to a set of referenced observations.
+message RelatedObservation
+ {
+  uUIDType observation-uuid = 0
+  markupMultilineType remarks = 0
+ }
+// Identifies an individual task for which the containing object is a consequence of.
+message RelatedTask
+ {
+  uUIDType task-uuid = 0
+ repeated  assessmentSubject subjects = 0
+  identifiedSubject identified-subject = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleParty responsible-parties = 0
+ }
+// Links this observation to relevant evidence.
+message RelevantEvidence
+ {
+  uRIReferenceType href = 0
+  markupMultilineType description = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Identifies an asset required to achieve remediation.
+message RequiredAsset
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+ repeated  subjectReference subjects = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A resource associated with content in the containing document instance. A resource may be directly included in the document using base64 encoding or may point to one or more equivalent internet resources.
+message Resource
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+ repeated  property props = 0
+ repeated  documentId document-ids = 0
+  markupMultilineType remarks = 0
+  citation citation = 0
+ repeated  resourceLink rlinks = 0
+  base64Resource base64 = 0
+ }
+// A URL-based pointer to an external resource with an optional hash for verification and change detection.
+message ResourceLink
+ {
+  uRIReferenceType href = 0
+  string media-type = 0
+ repeated  hash hashes = 0
+ }
+// Describes either recommended or an actual plan for addressing the risk.
+message Response
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+  responseLifecycleEnum lifecycle = 0
+ repeated  origin origins = 0
+ repeated  requiredAsset required-assets = 0
+ repeated  task tasks = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A reference to a set of persons and/or organizations that have responsibility for performing the referenced role in the context of the containing object.
+message ResponsibleParty
+ {
+  tokenType role-id = 0
+ repeated  uUIDType party-uuids = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A reference to a role with responsibility for performing a function relative to the containing object, optionally associated with a set of persons and/or organizations that perform that role.
+message ResponsibleRole
+ {
+  tokenType role-id = 0
+ repeated  uUIDType party-uuids = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Identifies the controls being assessed and their control objectives.
+message ReviewedControls
+ {
+  markupMultilineType description = 0
+ repeated  controlSelection control-selections = 0
+ repeated  controlObjectiveSelection control-objective-selections = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// An entry in a sequential list of revisions to the containing document.
+message Revision
+ {
+  markupLineType title = 0
+  dateTimeWithTimezoneType published = 0
+  dateTimeWithTimezoneType last-modified = 0
+  string version = 0
+  string oscal-version = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// An identified risk.
+message Risk
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+  markupMultilineType statement = 0
+ repeated  origin origins = 0
+ repeated  threatId threat-ids = 0
+ repeated  characterization characterizations = 0
+ repeated  mitigatingFactor mitigating-factors = 0
+  dateTimeWithTimezoneType deadline = 0
+ repeated  response remediations = 0
+  riskLog risk-log = 0
+ repeated  relatedObservation related-observations = 0
+  riskStatusEnum status = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A log of all risk-related tasks taken.
+message RiskLog
+ {
+ repeated  riskLogEntry entries = 0
+ }
+// Identifies an individual risk response that occurred as part of managing an identified risk.
+message RiskLogEntry
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+  dateTimeWithTimezoneType start = 0
+  dateTimeWithTimezoneType end = 0
+ repeated  loggedBy logged-by = 0
+  riskStatusEnum status-change = 0
+ repeated  riskResponseReference related-responses = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Identifies an individual risk response that this log entry is for.
+message RiskResponseReference
+ {
+  uUIDType response-uuid = 0
+ repeated  relatedTask related-tasks = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Defines a function, which might be assigned to a party in a specific situation.
+message Role
+ {
+  tokenType id = 0
+  markupLineType title = 0
+  string short-name = 0
+  markupMultilineType description = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Select a control or controls from an imported control set.
+message SelectControlById
+ {
+  withChildControlsEnum with-child-controls = 0
+ repeated  tokenType with-ids = 0
+ repeated  controlMatching matching = 0
+ }
+// Used to select a control objective for inclusion/exclusion.
+message SelectObjectiveById
+ {
+  tokenType objective-id = 0
+  markupMultilineType remarks = 0
+ }
+// Identifies a set of assessment subjects to include/exclude by UUID.
+message SelectSubjectById
+ {
+  uUIDType subject-uuid = 0
+  selectSubjectTypeEnum type = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Identifies the parameter that will be set by the enclosed value.
+message SetParameter
+ {
+  tokenType param-id = 0
+ repeated  string values = 0
+  markupMultilineType remarks = 0
+ }
+// Identifies an individual step in a series of steps related to an activity, such as an assessment test or examination procedure.
+message Step
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+  reviewedControls reviewed-controls = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleRole responsible-roles = 0
+ }
+// A human-oriented identifier reference to a resource. Use type to indicate whether the identified resource is a component, inventory item, location, user, or something else.
+message SubjectReference
+ {
+  uUIDType subject-uuid = 0
+  selectSubjectTypeEnum type = 0
+  markupLineType title = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// A defined component that can be part of an implemented system.
+message SystemComponent
+ {
+  uUIDType uuid = 0
+  componentTypeEnum type = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+  markupLineType purpose = 0
+ repeated  protocol protocols = 0
+  componentStatus status = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleRole responsible-roles = 0
+ }
+// A human-oriented, globally unique identifier for a system.
+message SystemId
+ {
+  string id = 0
+  uRIType identifier-type = 0
+ }
+// A type of user that interacts with the system based on an associated role.
+message SystemUser
+ {
+  uUIDType uuid = 0
+  markupLineType title = 0
+  string short-name = 0
+  markupMultilineType description = 0
+ repeated  tokenType role-ids = 0
+ repeated  authorizedPrivilege authorized-privileges = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ }
+// Represents a scheduled event or milestone, which may be associated with a series of assessment actions.
+message Task
+ {
+  uUIDType uuid = 0
+  taskTypeEnum type = 0
+  markupLineType title = 0
+  markupMultilineType description = 0
+  eventTiming timing = 0
+ repeated  taskDependency dependencies = 0
+ repeated  associatedActivity associated-activities = 0
+ repeated  task tasks = 0
+ repeated  assessmentSubject subjects = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleRole responsible-roles = 0
+ }
+// Used to indicate that a task is dependent on another task.
+message TaskDependency
+ {
+  uUIDType task-uuid = 0
+  markupMultilineType remarks = 0
+ }
+// A telephone service number as defined by ITU-T E.164.
+message TelephoneNumber
+ {
+  phoneTypeEnum type = 0
+  string number = 0
+ }
+// Used to define various terms and conditions under which an assessment can be performed.
+message TermsAndConditions
+ {
+ repeated  assessmentPart parts = 0
+ }
+// A pointer, by ID, to an externally-defined threat.
+message ThreatId
+ {
+  uRIReferenceType href = 0
+  uRIType system = 0
+  uRIType id = 0
+ }
+// The set of components that are used by the assessment platform.
+message UsesComponent
+ {
+  uUIDType component-uuid = 0
+  markupMultilineType remarks = 0
+ repeated  property props = 0
+ repeated  link links = 0
+ repeated  responsibleParty responsible-parties = 0
+ }
+// The task is intended to occur within the specified date range.
+message WithinDateRange
+ {
+  dateTimeWithTimezoneType start = 0
+  dateTimeWithTimezoneType end = 0
+  markupMultilineType remarks = 0
+ }

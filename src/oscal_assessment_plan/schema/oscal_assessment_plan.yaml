@@ -168,11 +168,6 @@ subsets:
       Classes originating from the oscal-implementation-common namespace:
       system components, protocols, inventory items, users, and set-parameter.
 
-  control_common:
-    description: >-
-      Classes originating from the oscal-control-common namespace reused within
-      the Assessment Plan (e.g. ControlPart).
-
 
 # ------------------------------------------------------------------------------
 # Top-level slots (AP-specific; shared catalog slots are available via import)
@@ -236,10 +231,6 @@ slots:
     inlined_as_list: true
     description: A collection of system components.
 
-  state:
-    range: string
-    description: Indicates the operational or assessed state of the containing object.
-
   status:
     range: string
     description: Indicates the status of the containing object.
@@ -257,10 +248,6 @@ slots:
     inlined: true
     inlined_as_list: true
     description: Identifies tasks for which the containing object is a consequence.
-
-  system:
-    range: URIType
-    description: Specifies the system or scheme from which the identifier originates.
 
   start:
     range: DateTimeWithTimezoneType
@@ -763,7 +750,7 @@ classes:
   # -- Root document -----------------------------------------------------------
 
   AssessmentPlanDocument:
-    tree_root: true
+    is_a: OscalDocument
     description: Root wrapper for an OSCAL Assessment Plan document.
     slots:
       - assessment-plan
@@ -1219,7 +1206,7 @@ classes:
       - uuid
       - name
       - ns
-      - class
+      - _class
       - title
       - prose
       - parts
@@ -1242,7 +1229,7 @@ classes:
       - id
       - name
       - ns
-      - class
+      - _class
       - title
       - prose
       - parts
@@ -1252,7 +1239,7 @@ classes:
       parts:
         range: ControlPart
     in_subset:
-      - control_common
+      - oscal_control_common
 
   # -- Control Common ----------------------------------------------------------
 
@@ -1311,6 +1298,7 @@ classes:
       state:
         range: ComponentStateEnum
         required: true
+        description: The operational status.
     in_subset:
       - implementation_common
 
@@ -1352,6 +1340,7 @@ classes:
       state:
         range: ImplementationStatusStateEnum
         required: true
+        description: Identifies the implementation status of the control or control objective.
     in_subset:
       - implementation_common
 
@@ -1592,6 +1581,7 @@ classes:
       state:
         range: ObjectiveStatusStateEnum
         required: true
+        description: An indication as to whether the objective is satisfied or not.
     in_subset:
       - assessment_common
 
@@ -1659,6 +1649,7 @@ classes:
     slot_usage:
       system:
         required: true
+        description: Specifies the system or scheme from which the identifier originates.
       id:
         range: URIType
         required: true
@@ -1695,6 +1686,7 @@ classes:
         required: true
       system:
         required: true
+        description: Specifies the system or scheme from which the identifier originates.
     in_subset:
       - assessment_common
 

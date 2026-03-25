@@ -1,0 +1,15 @@
+uuid: "7d7a8ae0-d49c-4e0a-8010-000000000001"
+type: software
+title: "Authentication Service"
+description: "The authentication service component."
+status:
+  state: operational
+  remarks: "Component is fully deployed and operational."
+protocols:
+  - uuid: "7d7a8ae0-d49c-4e0a-8010-000000000002"
+    name: "https"
+    title: "HTTPS"
+    port-ranges:
+      - start: 443
+        end: 443
+        transport: TCP

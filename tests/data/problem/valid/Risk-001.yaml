@@ -1,0 +1,27 @@
+uuid: "7d7a8ae0-d49c-4e0a-8000-000000000003"
+title: "Misconfigured Access Control Risk"
+description: "A risk identified due to misconfigured access control settings."
+statement: "Access control settings do not meet required policy standards."
+status:
+  state: open
+characterizations:
+  - origin:
+      actors:
+        - type: party
+          actor-uuid: "7d7a8ae0-d49c-4e0a-8000-000000000010"
+    facets:
+      - name: likelihood
+        system: "https://example.com/risk-system"
+        value: high
+      - name: impact
+        system: "https://example.com/risk-system"
+        value: high
+threat-ids:
+  - href: "https://attack.mitre.org"
+    system: "https://attack.mitre.org"
+    id: "T1078"
+mitigating-factors:
+  - uuid: "7d7a8ae0-d49c-4e0a-8004-000000000001"
+    description: "MFA is enforced for privileged accounts."
+related-observations:
+  - observation-uuid: "7d7a8ae0-d49c-4e0a-8000-000000000002"

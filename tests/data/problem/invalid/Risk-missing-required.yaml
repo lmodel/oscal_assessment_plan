@@ -1,0 +1,4 @@
+uuid: "7d7a8ae0-d49c-4e0a-8000-000000000003"
+description: "A risk that is missing its required title field."
+status:
+  state: open

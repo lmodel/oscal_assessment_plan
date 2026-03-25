@@ -1,12 +1,12 @@
-assessment-plan:
+assessment_plan:
   uuid: "7d7a8ae0-d49c-4e0a-8000-000000000001"
   metadata:
     title: "Minimal Test Assessment Plan"
-    last-modified: "2026-01-15T12:00:00.000Z"
+    last_modified: "2026-01-15T12:00:00.000Z"
     version: "1.0.0"
-    oscal-version: "1.1.2"
-  import-ssp:
+    oscal_version: "1.1.2"
+  import_ssp:
     href: "https://example.com/ssp/system-security-plan.json"
-  reviewed-controls:
-    control-selections:
-      - include-all: {}
+  reviewed_controls:
+    control_selections:
+      - include_all: {}

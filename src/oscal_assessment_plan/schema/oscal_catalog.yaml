@@ -116,22 +116,22 @@ enums:
 
 
 subsets:
-  catalog:
+  oscal_catalog:
     description: >-
       Classes originating from the oscal-catalog namespace: the root catalog
       document, groups, and controls.
 
-  metadata:
+  oscal_metadata:
     description: >-
       Classes originating from the oscal-metadata namespace: document metadata,
       parties, roles, locations, and utility types such as Property, Link, and Hash.
 
-  back_matter:
+  oscal_back_matter:
     description: >-
       Classes originating from the oscal-metadata back-matter definition:
       back-matter container and its constituent resource types.
 
-  control_common:
+  oscal_control_common:
     description: >-
       Classes originating from the oscal-control-common namespace: parts,
       parameters, constraints, guidelines, selections, and control-matching
@@ -196,6 +196,7 @@ slots:
   _class:
     range: TokenType
     description: A textual label that provides a sub-type or characterization.
+    notes:
 
   name:
     range: TokenType
@@ -348,30 +349,41 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: >-
+      An entry in a sequential list of revisions to the containing document,
+      expected to be in reverse chronological order (i.e. latest first).
 
   roles:
     range: Role
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: Defines a function, which might be assigned to a party in a specific situation.
 
   locations:
     range: Location
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: >-
+      A physical point of presence, which may be associated with people,
+      organizations, or other concepts within the current or linked OSCAL document.
 
   parties:
     range: Party
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: >-
+      An organization or person, which may be associated with roles or other
+      concepts within the current or linked OSCAL document.
 
   actions:
     range: Action
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: An action applied by a role within a given party to the content.
 
   identifier:
     range: string
@@ -380,30 +392,42 @@ slots:
   address:
     range: Address
     inlined: true
+    description: A postal address for the location.
 
   urls:
     range: URIType
     multivalued: true
+    description: >-
+      The uniform resource locator (URL) for a web site or other resource
+      associated with the location.
 
   external-ids:
     range: PartyExternalId
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: >-
+      An identifier for a person or organization using a designated scheme,
+      e.g. an Open Researcher and Contributor ID (ORCID).
 
   addresses:
     range: Address
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: Postal addresses associated with the containing object.
 
   location-uuids:
     range: UUIDType
     multivalued: true
+    description: Reference to a location by UUID.
 
   member-of-organizations:
     range: UUIDType
     multivalued: true
+    description: >-
+      A reference to another party by UUID, typically an organization, that
+      this subject is associated with.
 
   date:
     range: DateTimeWithTimezoneType
@@ -420,18 +444,23 @@ slots:
   addr-lines:
     range: string
     multivalued: true
+    description: A single line of an address.
 
   city:
     range: string
+    description: City, town or geographical region for the mailing address.
 
   state:
     range: string
+    description: State, province or analogous geographical region for a mailing address.
 
   postal-code:
     range: string
+    description: Postal or ZIP code for mailing address.
 
   country:
     range: string
+    description: The ISO 3166-1 alpha-2 country code for the mailing address.
 
   algorithm:
     range: HashAlgorithmEnum
@@ -459,26 +488,38 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: >-
+      A resource associated with content in the containing document instance.
+      A resource may be directly included in the document using base64 encoding
+      or may point to one or more equivalent internet resources.
 
   citation:
     range: Citation
     inlined: true
+    description: An optional citation consisting of end note text using structured markup.
 
   rlinks:
     range: ResourceLink
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: >-
+      A URL-based pointer to an external resource with an optional hash for
+      verification and change detection.
 
   base64:
     range: Base64Resource
     inlined: true
+    description: A resource encoded using the Base64 alphabet defined by RFC 2045.
 
   hashes:
     range: Hash
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: >-
+      A representation of a cryptographic digest generated over a resource
+      using a specified hash algorithm.
 
   filename:
     range: TokenType
@@ -507,12 +548,14 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: A formal or informal expression of a constraint or test.
 
   guidelines:
     range: ParameterGuideline
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: A prose statement that provides a recommendation for the use of a parameter.
 
   values:
     range: string
@@ -522,12 +565,14 @@ slots:
   select:
     range: ParameterSelection
     inlined: true
+    description: Presenting a choice among alternatives.
 
   tests:
     range: ConstraintTest
     multivalued: true
     inlined: true
     inlined_as_list: true
+    description: A test expression which is expected to be evaluated by a tool.
 
   expression:
     range: string
@@ -600,9 +645,15 @@ classes:
       - responsible-parties
 
   # Root document
+
+  OscalDocument:
+    description: >-
+      A root wrapper for an OSCAL document, which may be of any OSCAL document
+      type (e.g. Catalog, Profile, Assessment Plan, SSP).
+    tree_root: true
   
   CatalogDocument:
-    tree_root: true
+    is_a: OscalDocument
     description: Root wrapper for an OSCAL Catalog document.
     slots:
       - catalog
@@ -610,7 +661,7 @@ classes:
       catalog:
         required: true
     in_subset:
-      - catalog
+      - oscal_catalog
 
   # Top-level Catalog
   Catalog:
@@ -630,7 +681,7 @@ classes:
       metadata:
         required: true
     in_subset:
-      - catalog
+      - oscal_catalog
 
   # Catalog-specific classes
 
@@ -662,7 +713,7 @@ classes:
           A name given to the group, which may be used by a tool for display
           and navigation.
     in_subset:
-      - catalog
+      - oscal_catalog
 
   Control:
     description: >-
@@ -694,7 +745,7 @@ classes:
           A name given to the control, which may be used by a tool for display
           and navigation.
     in_subset:
-      - catalog
+      - oscal_catalog
 
   # Metadata classes
 
@@ -731,7 +782,7 @@ classes:
         required: true
         description: The OSCAL model version the document was authored against.
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Revision:
     description: An entry in a sequential list of revisions to the containing document.
@@ -747,7 +798,7 @@ classes:
       version:
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   DocumentId:
     description: A document identifier qualified by an identifier scheme.
@@ -758,7 +809,7 @@ classes:
       identifier:
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Role:
     description: >-
@@ -778,7 +829,7 @@ classes:
       title:
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Location:
     description: >-
@@ -798,7 +849,7 @@ classes:
       uuid:
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Party:
     description: >-
@@ -828,7 +879,7 @@ classes:
         range: string
         description: The full name of the party.
     in_subset:
-      - metadata
+      - oscal_metadata
 
   PartyExternalId:
     description: >-
@@ -845,7 +896,7 @@ classes:
         range: string
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   ResponsibleParty:
     description: >-
@@ -864,7 +915,7 @@ classes:
       party-uuids:
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   ResponsibleRole:
     description: >-
@@ -881,7 +932,7 @@ classes:
         required: true
         description: A human-oriented identifier reference to a role performed.
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Action:
     description: An action applied by a role within a given party to the content.
@@ -907,7 +958,7 @@ classes:
       system:
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   TelephoneNumber:
     description: A telephone service number as defined by ITU-T E.164.
@@ -921,7 +972,7 @@ classes:
       number:
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Address:
     description: A postal address for the location.
@@ -937,7 +988,7 @@ classes:
         range: AddressTypeEnum
         description: Indicates the type of address.
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Hash:
     description: >-
@@ -952,7 +1003,7 @@ classes:
       algorithm:
         required: true
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Property:
     description: >-
@@ -987,7 +1038,7 @@ classes:
           A textual label that provides a sub-type or characterization of the
           property's name.
     in_subset:
-      - metadata
+      - oscal_metadata
 
   Link:
     description: >-
@@ -1004,7 +1055,7 @@ classes:
         required: true
         description: A resolvable URL reference to a resource.
     in_subset:
-      - metadata
+      - oscal_metadata
 
   # Back Matter
 
@@ -1015,7 +1066,7 @@ classes:
     slots:
       - resources
     in_subset:
-      - back_matter
+      - oscal_back_matter
 
   Resource:
     description: >-
@@ -1045,7 +1096,7 @@ classes:
           An optional short summary of the resource used to indicate the
           purpose of the resource.
     in_subset:
-      - back_matter
+      - oscal_back_matter
 
   Citation:
     description: >-
@@ -1059,7 +1110,7 @@ classes:
         required: true
         description: A line of citation text.
     in_subset:
-      - back_matter
+      - oscal_back_matter
 
   ResourceLink:
     description: >-
@@ -1074,7 +1125,7 @@ classes:
         required: true
         description: A resolvable URL pointing to the referenced resource.
     in_subset:
-      - back_matter
+      - oscal_back_matter
 
   Base64Resource:
     description: A resource encoded using the Base64 alphabet defined by RFC 2045.
@@ -1087,7 +1138,7 @@ classes:
         range: Base64Type
         required: true
     in_subset:
-      - back_matter
+      - oscal_back_matter
 
   # Control Common
 
@@ -1129,7 +1180,7 @@ classes:
       prose:
         description: Permits multiple paragraphs, lists, tables etc.
     in_subset:
-      - control_common
+      - oscal_control_common
 
   Parameter:
     description: >-
@@ -1156,7 +1207,7 @@ classes:
           A textual label that provides a characterization of the type,
           purpose, use or scope of the parameter.
     in_subset:
-      - control_common
+      - oscal_control_common
 
   ParameterConstraint:
     description: A formal or informal expression of a constraint or test.
@@ -1167,7 +1218,7 @@ classes:
       description:
         description: A textual summary of the constraint to be applied.
     in_subset:
-      - control_common
+      - oscal_control_common
 
   ConstraintTest:
     description: A test expression which is expected to be evaluated by a tool.
@@ -1178,7 +1229,7 @@ classes:
       expression:
         required: true
     in_subset:
-      - control_common
+      - oscal_control_common
 
   ParameterGuideline:
     description: >-
@@ -1191,7 +1242,7 @@ classes:
         required: true
         description: Prose permits multiple paragraphs, lists, tables etc.
     in_subset:
-      - control_common
+      - oscal_control_common
 
   ParameterSelection:
     description: Presenting a choice among alternatives.
@@ -1200,13 +1251,13 @@ classes:
       - "how-many"
       - choice
     in_subset:
-      - control_common
+      - oscal_control_common
 
   IncludeAll:
     description: >-
       Include all controls from the imported catalog or profile resources.
     in_subset:
-      - control_common
+      - oscal_control_common
 
   ControlMatching:
     description: >-
@@ -1215,7 +1266,7 @@ classes:
       - remarks
       - pattern
     in_subset:
-      - control_common
+      - oscal_control_common
 
   SelectControlById:
     description: >-
@@ -1225,5 +1276,5 @@ classes:
       - with-ids
       - matching
     in_subset:
-      - control_common
+      - oscal_control_common
 

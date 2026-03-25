@@ -1,0 +1,22 @@
+uuid: "7d7a8ae0-d49c-4e0a-8000-000000000002"
+title: "Unexpected Configuration Setting Observed"
+description: >-
+  The assessor examined the system configuration and noted a discrepancy
+  from the expected baseline configuration.
+methods:
+  - EXAMINE
+  - TEST
+types:
+  - finding
+origins:
+  - actors:
+      - type: party
+        actor-uuid: "7d7a8ae0-d49c-4e0a-8000-000000000010"
+subjects:
+  - subject-uuid: "7d7a8ae0-d49c-4e0a-8010-000000000001"
+    type: component
+relevant-evidence:
+  - description: "Screenshot of configuration panel showing the unexpected setting."
+    href: "https://example.com/evidence/screenshot-001.png"
+collected: "2026-01-15T14:30:00.000Z"
+expires: "2027-01-15T00:00:00.000Z"

@@ -1,0 +1,1410 @@
+# metamodel_version: 1.7.0
+BASE <https://w3id.org/lmodel/oscal_assessment_plan/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX oscal_catalog: <https://w3id.org/lmodel/oscal_catalog/>
+PREFIX linkml: <https://w3id.org/linkml/>
+
+
+linkml:String xsd:string
+
+linkml:Integer xsd:integer
+
+linkml:Boolean xsd:boolean
+
+linkml:Float xsd:float
+
+linkml:Double xsd:double
+
+linkml:Decimal xsd:decimal
+
+linkml:Time xsd:time
+
+linkml:Date xsd:date
+
+linkml:Datetime xsd:dateTime
+
+linkml:DateOrDatetime linkml:DateOrDatetime
+
+linkml:Uriorcurie IRI
+
+linkml:Curie xsd:string
+
+linkml:Uri IRI
+
+linkml:Ncname xsd:string
+
+linkml:Objectidentifier IRI
+
+linkml:Nodeidentifier NONLITERAL
+
+linkml:Jsonpointer xsd:string
+
+linkml:Jsonpath xsd:string
+
+linkml:Sparqlpath xsd:string
+
+oscal_catalog:UUIDType xsd:string
+
+oscal_catalog:URIType IRI
+
+oscal_catalog:URIReferenceType IRI
+
+oscal_catalog:DateTimeWithTimezoneType xsd:dateTime
+
+oscal_catalog:MarkupLineType xsd:string
+
+oscal_catalog:MarkupMultilineType xsd:string
+
+oscal_catalog:TokenType xsd:string
+
+oscal_catalog:Base64Type xsd:base64Binary
+
+oscal_catalog:EmailAddressType xsd:string
+
+oscal_catalog:Action CLOSED {
+    (  $oscal_catalog:Action_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleParties_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleParties ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:type @oscal_catalog:TokenType ;
+          oscal_catalog:date @oscal_catalog:DateTimeWithTimezoneType ? ;
+          oscal_catalog:system @oscal_catalog:URIType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_parties @oscal_catalog:ResponsibleParty *
+       ) ;
+       rdf:type [ oscal_catalog:Action ] ?
+    )
+}
+
+<Activity> CLOSED {
+    (  $<Activity_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleRoles_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleRoles ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <steps> @<Step> * ;
+          <related_controls> @<ReviewedControls> ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_roles @oscal_catalog:ResponsibleRole *
+       ) ;
+       rdf:type [ <Activity> ] ?
+    )
+}
+
+oscal_catalog:Address CLOSED {
+    (  $oscal_catalog:Address_tes (  oscal_catalog:type [ <https://w3id.org/lmodel/oscal_catalog/AddressTypeEnum#home>
+             <https://w3id.org/lmodel/oscal_catalog/AddressTypeEnum#work> ] ? ;
+          oscal_catalog:addr_lines @linkml:String * ;
+          oscal_catalog:city @linkml:String ? ;
+          oscal_catalog:state @linkml:String ? ;
+          oscal_catalog:postal_code @linkml:String ? ;
+          oscal_catalog:country @linkml:String ?
+       ) ;
+       rdf:type [ oscal_catalog:Address ] ?
+    )
+}
+
+<AssessmentAssets> CLOSED {
+    (  $<AssessmentAssets_tes> (  <components> @<SystemComponent> * ;
+          <assessment_platforms> @<AssessmentPlatform> +
+       ) ;
+       rdf:type [ <AssessmentAssets> ] ?
+    )
+}
+
+<AssessmentMethod> CLOSED {
+    (  $<AssessmentMethod_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <part> @<AssessmentPart> ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <AssessmentMethod> ] ?
+    )
+}
+
+<AssessmentPart> CLOSED {
+    (  $<AssessmentPart_tes> (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ? ;
+          oscal_catalog:name [ <https://w3id.org/lmodel/oscal_assessment_plan/AssessmentPartNameEnum#asset>
+             <https://w3id.org/lmodel/oscal_assessment_plan/AssessmentPartNameEnum#method>
+             <https://w3id.org/lmodel/oscal_assessment_plan/AssessmentPartNameEnum#objective> ] ;
+          oscal_catalog:ns @oscal_catalog:URIType ? ;
+          oscal_catalog:_class @oscal_catalog:TokenType ? ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:prose @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:parts @<AssessmentPart> * ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <AssessmentPart> ] ?
+    )
+}
+
+<AssessmentPlan> CLOSED {
+    (  $<AssessmentPlan_tes> (  oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:metadata @oscal_catalog:Metadata ;
+          <import_ssp> @<ImportSSP> ;
+          <local_definitions> @<LocalDefinitions> ? ;
+          <terms_and_conditions> @<TermsAndConditions> ? ;
+          <assessment_subjects> @<AssessmentSubject> * ;
+          <assessment_assets> @<AssessmentAssets> ? ;
+          <reviewed_controls> @<ReviewedControls> ;
+          <tasks> @<Task> * ;
+          oscal_catalog:back_matter @oscal_catalog:BackMatter ?
+       ) ;
+       rdf:type [ <AssessmentPlan> ] ?
+    )
+}
+
+<AssessmentPlanDocument> CLOSED {
+    (  $<AssessmentPlanDocument_tes> (  &oscal_catalog:OscalDocument_tes ;
+          rdf:type [ oscal_catalog:OscalDocument ] ? ;
+          <assessment_plan> @<AssessmentPlan>
+       ) ;
+       rdf:type [ <AssessmentPlanDocument> ] ?
+    )
+}
+
+<AssessmentPlatform> CLOSED {
+    (  $<AssessmentPlatform_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          <uses_components> @<UsesComponent> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <AssessmentPlatform> ] ?
+    )
+}
+
+<AssessmentSelectControlById> CLOSED {
+    (  $<AssessmentSelectControlById_tes> (  <control_id> @oscal_catalog:TokenType ;
+          <statement_ids> @oscal_catalog:TokenType *
+       ) ;
+       rdf:type [ <AssessmentSelectControlById> ] ?
+    )
+}
+
+<AssessmentSubject> CLOSED {
+    (  $<AssessmentSubject_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:type [ <https://w3id.org/lmodel/oscal_assessment_plan/AssessmentSubjectTypeEnum#component>
+             <https://w3id.org/lmodel/oscal_assessment_plan/AssessmentSubjectTypeEnum#inventory-item>
+             <https://w3id.org/lmodel/oscal_assessment_plan/AssessmentSubjectTypeEnum#location>
+             <https://w3id.org/lmodel/oscal_assessment_plan/AssessmentSubjectTypeEnum#party>
+             <https://w3id.org/lmodel/oscal_assessment_plan/AssessmentSubjectTypeEnum#user> ] ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <include_all> @oscal_catalog:IncludeAll ? ;
+          <include_subjects> @<SelectSubjectById> * ;
+          <exclude_subjects> @<SelectSubjectById> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <AssessmentSubject> ] ?
+    )
+}
+
+<AssessmentSubjectPlaceholder> CLOSED {
+    (  $<AssessmentSubjectPlaceholder_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <sources> @<AssessmentSubjectSource> + ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <AssessmentSubjectPlaceholder> ] ?
+    )
+}
+
+<AssessmentSubjectSource> CLOSED {
+    (  $<AssessmentSubjectSource_tes> (  <task_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <AssessmentSubjectSource> ] ?
+    )
+}
+
+<AssociatedActivity> CLOSED {
+    (  $<AssociatedActivity_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleRoles_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleRoles ] ? ;
+          <activity_uuid> @oscal_catalog:UUIDType ;
+          <subjects> @<AssessmentSubject> + ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_roles @oscal_catalog:ResponsibleRole *
+       ) ;
+       rdf:type [ <AssociatedActivity> ] ?
+    )
+}
+
+<AssociatedRisk> CLOSED {
+    (  $<AssociatedRisk_tes> (  <risk_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <AssociatedRisk> ] ?
+    )
+}
+
+<AtFrequency> CLOSED {
+    (  $<AtFrequency_tes> (  <period> @linkml:Integer ;
+          <unit> [ <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#seconds>
+             <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#minutes>
+             <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#hours>
+             <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#days>
+             <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#months>
+             <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#years> ] ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <AtFrequency> ] ?
+    )
+}
+
+<AuthorizedPrivilege> CLOSED {
+    (  $<AuthorizedPrivilege_tes> (  oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <functions_performed> @linkml:String +
+       ) ;
+       rdf:type [ <AuthorizedPrivilege> ] ?
+    )
+}
+
+oscal_catalog:BackMatter CLOSED {
+    (  $oscal_catalog:BackMatter_tes oscal_catalog:resources @oscal_catalog:Resource * ;
+       rdf:type [ oscal_catalog:BackMatter ] ?
+    )
+}
+
+oscal_catalog:Base64Resource CLOSED {
+    (  $oscal_catalog:Base64Resource_tes (  oscal_catalog:media_type @linkml:String ? ;
+          oscal_catalog:value @oscal_catalog:Base64Type ;
+          oscal_catalog:filename @oscal_catalog:TokenType ?
+       ) ;
+       rdf:type [ oscal_catalog:Base64Resource ] ?
+    )
+}
+
+oscal_catalog:Catalog CLOSED {
+    (  $oscal_catalog:Catalog_tes (  oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:metadata @oscal_catalog:Metadata ;
+          oscal_catalog:back_matter @oscal_catalog:BackMatter ? ;
+          oscal_catalog:params @oscal_catalog:Parameter * ;
+          oscal_catalog:controls @oscal_catalog:Control * ;
+          oscal_catalog:groups @oscal_catalog:Group *
+       ) ;
+       rdf:type [ oscal_catalog:Catalog ] ?
+    )
+}
+
+oscal_catalog:CatalogDocument CLOSED {
+    (  $oscal_catalog:CatalogDocument_tes (  &oscal_catalog:OscalDocument_tes ;
+          rdf:type [ oscal_catalog:OscalDocument ] ? ;
+          oscal_catalog:catalog @oscal_catalog:Catalog
+       ) ;
+       rdf:type [ oscal_catalog:CatalogDocument ] ?
+    )
+}
+
+<Characterization> CLOSED {
+    (  $<Characterization_tes> (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          <origin> @<Origin> ;
+          <facets> @<Facet> + ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <Characterization> ] ?
+    )
+}
+
+oscal_catalog:Citation CLOSED {
+    (  $oscal_catalog:Citation_tes (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          oscal_catalog:text @oscal_catalog:MarkupLineType ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Citation ] ?
+    )
+}
+
+<ComponentStatus> CLOSED {
+    (  $<ComponentStatus_tes> (  oscal_catalog:state [
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentStateEnum#under-development>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentStateEnum#operational>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentStateEnum#disposition>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentStateEnum#other> ] ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <ComponentStatus> ] ?
+    )
+}
+
+oscal_catalog:ConstraintTest CLOSED {
+    (  $oscal_catalog:ConstraintTest_tes (  oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:expression @linkml:String
+       ) ;
+       rdf:type [ oscal_catalog:ConstraintTest ] ?
+    )
+}
+
+oscal_catalog:Control CLOSED {
+    (  $oscal_catalog:Control_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:id @oscal_catalog:TokenType ;
+          oscal_catalog:_class @oscal_catalog:TokenType ? ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:params @oscal_catalog:Parameter * ;
+          oscal_catalog:parts @oscal_catalog:Part * ;
+          oscal_catalog:controls @oscal_catalog:Control * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Control ] ?
+    )
+}
+
+oscal_catalog:ControlMatching CLOSED {
+    (  $oscal_catalog:ControlMatching_tes (  oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:pattern @linkml:String ?
+       ) ;
+       rdf:type [ oscal_catalog:ControlMatching ] ?
+    )
+}
+
+<ControlObjectiveSelection> CLOSED {
+    (  $<ControlObjectiveSelection_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <include_all> @oscal_catalog:IncludeAll ? ;
+          <include_objectives> @<SelectObjectiveById> * ;
+          <exclude_objectives> @<SelectObjectiveById> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <ControlObjectiveSelection> ] ?
+    )
+}
+
+<ControlPart> CLOSED {
+    (  $<ControlPart_tes> (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          oscal_catalog:id @oscal_catalog:TokenType ? ;
+          oscal_catalog:name @oscal_catalog:TokenType ;
+          oscal_catalog:ns @oscal_catalog:URIType ? ;
+          oscal_catalog:_class @oscal_catalog:TokenType ? ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:prose @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:parts @<ControlPart> * ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <ControlPart> ] ?
+    )
+}
+
+<ControlSelection> CLOSED {
+    (  $<ControlSelection_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <include_all> @oscal_catalog:IncludeAll ? ;
+          <include_controls> @<AssessmentSelectControlById> * ;
+          <exclude_controls> @<AssessmentSelectControlById> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <ControlSelection> ] ?
+    )
+}
+
+oscal_catalog:DocumentId CLOSED {
+    (  $oscal_catalog:DocumentId_tes (  oscal_catalog:scheme @oscal_catalog:URIType ? ;
+          oscal_catalog:identifier @linkml:String
+       ) ;
+       rdf:type [ oscal_catalog:DocumentId ] ?
+    )
+}
+
+<EventTiming> CLOSED {
+    (  $<EventTiming_tes> (  <on_date> @<OnDateCondition> ? ;
+          <within_date_range> @<WithinDateRange> ? ;
+          <at_frequency> @<AtFrequency> ?
+       ) ;
+       rdf:type [ <EventTiming> ] ?
+    )
+}
+
+<Facet> CLOSED {
+    (  $<Facet_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:name @oscal_catalog:TokenType ;
+          oscal_catalog:value @linkml:String ;
+          oscal_catalog:system @oscal_catalog:URIType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <Facet> ] ?
+    )
+}
+
+<Finding> CLOSED {
+    (  $<Finding_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <target> @<FindingTarget> ;
+          <implementation_statement_uuid> @oscal_catalog:UUIDType ? ;
+          <origins> @<Origin> * ;
+          <related_observations> @<RelatedObservation> * ;
+          <related_risks> @<AssociatedRisk> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <Finding> ] ?
+    )
+}
+
+<FindingTarget> CLOSED {
+    (  $<FindingTarget_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:type [ <https://w3id.org/lmodel/oscal_assessment_plan/FindingTargetTypeEnum#statement-id>
+             <https://w3id.org/lmodel/oscal_assessment_plan/FindingTargetTypeEnum#objective-id> ] ;
+          <target_id> @oscal_catalog:TokenType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <implementation_status> @<ImplementationStatus> ? ;
+          <status> @<ObjectiveStatus> ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <FindingTarget> ] ?
+    )
+}
+
+oscal_catalog:Group CLOSED {
+    (  $oscal_catalog:Group_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:id @oscal_catalog:TokenType ? ;
+          oscal_catalog:_class @oscal_catalog:TokenType ? ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:params @oscal_catalog:Parameter * ;
+          oscal_catalog:parts @oscal_catalog:Part * ;
+          oscal_catalog:groups @oscal_catalog:Group * ;
+          oscal_catalog:controls @oscal_catalog:Control * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Group ] ?
+    )
+}
+
+oscal_catalog:Hash CLOSED {
+    (  $oscal_catalog:Hash_tes (  oscal_catalog:value @linkml:String ;
+          oscal_catalog:algorithm [ <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA-224>
+             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA-256>
+             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA-384>
+             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA-512>
+             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA3-224>
+             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA3-256>
+             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA3-384>
+             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA3-512> ]
+       ) ;
+       rdf:type [ oscal_catalog:Hash ] ?
+    )
+}
+
+oscal_catalog:HasPropsAndLinks {
+    (  $oscal_catalog:HasPropsAndLinks_tes (  oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:HasPropsAndLinks ] ?
+    )
+}
+
+oscal_catalog:HasResponsibleParties {
+    (  $oscal_catalog:HasResponsibleParties_tes oscal_catalog:responsible_parties @oscal_catalog:ResponsibleParty * ;
+       rdf:type [ oscal_catalog:HasResponsibleParties ] ?
+    )
+}
+
+oscal_catalog:HasResponsibleRoles {
+    (  $oscal_catalog:HasResponsibleRoles_tes oscal_catalog:responsible_roles @oscal_catalog:ResponsibleRole * ;
+       rdf:type [ oscal_catalog:HasResponsibleRoles ] ?
+    )
+}
+
+<IdentifiedSubject> CLOSED {
+    (  $<IdentifiedSubject_tes> (  <subject_placeholder_uuid> @oscal_catalog:UUIDType ;
+          <subjects> @<AssessmentSubject> +
+       ) ;
+       rdf:type [ <IdentifiedSubject> ] ?
+    )
+}
+
+<ImplementationStatus> CLOSED {
+    (  $<ImplementationStatus_tes> (  oscal_catalog:state [
+             <https://w3id.org/lmodel/oscal_assessment_plan/ImplementationStatusStateEnum#implemented>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ImplementationStatusStateEnum#partial>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ImplementationStatusStateEnum#planned>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ImplementationStatusStateEnum#alternative>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ImplementationStatusStateEnum#not-applicable> ] ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <ImplementationStatus> ] ?
+    )
+}
+
+<ImplementedComponent> CLOSED {
+    (  $<ImplementedComponent_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleParties_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleParties ] ? ;
+          <component_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_parties @oscal_catalog:ResponsibleParty *
+       ) ;
+       rdf:type [ <ImplementedComponent> ] ?
+    )
+}
+
+<ImportSSP> CLOSED {
+    (  $<ImportSSP_tes> (  oscal_catalog:href @oscal_catalog:URIReferenceType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <ImportSSP> ] ?
+    )
+}
+
+oscal_catalog:IncludeAll CLOSED {
+    (  $oscal_catalog:IncludeAll_tes rdf:type . * ;
+       rdf:type [ oscal_catalog:IncludeAll ] ?
+    )
+}
+
+<InventoryItem> CLOSED {
+    (  $<InventoryItem_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleParties_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleParties ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <implemented_components> @<ImplementedComponent> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_parties @oscal_catalog:ResponsibleParty *
+       ) ;
+       rdf:type [ <InventoryItem> ] ?
+    )
+}
+
+oscal_catalog:Link CLOSED {
+    (  $oscal_catalog:Link_tes (  oscal_catalog:href @oscal_catalog:URIReferenceType ;
+          oscal_catalog:rel @oscal_catalog:TokenType ? ;
+          oscal_catalog:resource_fragment @linkml:String ? ;
+          oscal_catalog:media_type @linkml:String ? ;
+          oscal_catalog:text @oscal_catalog:MarkupLineType ?
+       ) ;
+       rdf:type [ oscal_catalog:Link ] ?
+    )
+}
+
+<LocalDefinitions> CLOSED {
+    (  $<LocalDefinitions_tes> (  <components> @<SystemComponent> * ;
+          <inventory_items> @<InventoryItem> * ;
+          <users> @<SystemUser> * ;
+          <objectives_and_methods> @<LocalObjective> * ;
+          <activities> @<Activity> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <LocalDefinitions> ] ?
+    )
+}
+
+<LocalObjective> CLOSED {
+    (  $<LocalObjective_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          <control_id> @oscal_catalog:TokenType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:parts @<ControlPart> + ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <LocalObjective> ] ?
+    )
+}
+
+oscal_catalog:Location CLOSED {
+    (  $oscal_catalog:Location_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:email_addresses @oscal_catalog:EmailAddressType * ;
+          oscal_catalog:telephone_numbers @oscal_catalog:TelephoneNumber * ;
+          oscal_catalog:address @oscal_catalog:Address ? ;
+          oscal_catalog:urls @oscal_catalog:URIType * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Location ] ?
+    )
+}
+
+<LoggedBy> CLOSED {
+    (  $<LoggedBy_tes> (  <party_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:role_id @oscal_catalog:TokenType ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <LoggedBy> ] ?
+    )
+}
+
+oscal_catalog:Metadata CLOSED {
+    (  $oscal_catalog:Metadata_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleParties_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleParties ] ? ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:published @oscal_catalog:DateTimeWithTimezoneType ? ;
+          oscal_catalog:last_modified @oscal_catalog:DateTimeWithTimezoneType ;
+          oscal_catalog:version @linkml:String ;
+          oscal_catalog:oscal_version @linkml:String ;
+          oscal_catalog:document_ids @oscal_catalog:DocumentId * ;
+          oscal_catalog:revisions @oscal_catalog:Revision * ;
+          oscal_catalog:roles @oscal_catalog:Role * ;
+          oscal_catalog:locations @oscal_catalog:Location * ;
+          oscal_catalog:parties @oscal_catalog:Party * ;
+          oscal_catalog:actions @oscal_catalog:Action * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_parties @oscal_catalog:ResponsibleParty *
+       ) ;
+       rdf:type [ oscal_catalog:Metadata ] ?
+    )
+}
+
+<MitigatingFactor> CLOSED {
+    (  $<MitigatingFactor_tes> (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <implementation_uuid> @oscal_catalog:UUIDType ? ;
+          <subjects> @<SubjectReference> * ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <MitigatingFactor> ] ?
+    )
+}
+
+<ObjectiveStatus> CLOSED {
+    (  $<ObjectiveStatus_tes> (  oscal_catalog:state [
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObjectiveStatusStateEnum#satisfied>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObjectiveStatusStateEnum#not-satisfied> ] ;
+          <reason> [ <https://w3id.org/lmodel/oscal_assessment_plan/ObjectiveStatusReasonEnum#pass>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObjectiveStatusReasonEnum#fail>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObjectiveStatusReasonEnum#other> ] ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <ObjectiveStatus> ] ?
+    )
+}
+
+<Observation> CLOSED {
+    (  $<Observation_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <methods> [ <https://w3id.org/lmodel/oscal_assessment_plan/ObservationMethodEnum#EXAMINE>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObservationMethodEnum#INTERVIEW>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObservationMethodEnum#TEST>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObservationMethodEnum#UNKNOWN> ] + ;
+          <types> [ <https://w3id.org/lmodel/oscal_assessment_plan/ObservationTypeEnum#ssp-statement-issue>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObservationTypeEnum#control-objective>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObservationTypeEnum#mitigation>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObservationTypeEnum#finding>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObservationTypeEnum#discovery>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ObservationTypeEnum#historic> ] * ;
+          <origins> @<Origin> * ;
+          <subjects> @<SubjectReference> * ;
+          <relevant_evidence> @<RelevantEvidence> * ;
+          <collected> @oscal_catalog:DateTimeWithTimezoneType ;
+          <expires> @oscal_catalog:DateTimeWithTimezoneType ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <Observation> ] ?
+    )
+}
+
+<OnDateCondition> CLOSED {
+    (  $<OnDateCondition_tes> (  oscal_catalog:date @oscal_catalog:DateTimeWithTimezoneType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <OnDateCondition> ] ?
+    )
+}
+
+<Origin> CLOSED {
+    (  $<Origin_tes> (  <actors> @<OriginActor> + ;
+          <related_tasks> @<RelatedTask> *
+       ) ;
+       rdf:type [ <Origin> ] ?
+    )
+}
+
+<OriginActor> CLOSED {
+    (  $<OriginActor_tes> (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          oscal_catalog:type [ <https://w3id.org/lmodel/oscal_assessment_plan/OriginActorTypeEnum#tool>
+             <https://w3id.org/lmodel/oscal_assessment_plan/OriginActorTypeEnum#assessment-platform>
+             <https://w3id.org/lmodel/oscal_assessment_plan/OriginActorTypeEnum#party> ] ;
+          <actor_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:role_id @oscal_catalog:TokenType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <OriginActor> ] ?
+    )
+}
+
+oscal_catalog:OscalCommon {
+    (  $oscal_catalog:OscalCommon_tes (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:OscalCommon ] ?
+    )
+}
+
+oscal_catalog:OscalDocument  (
+    CLOSED {
+       (  $oscal_catalog:OscalDocument_tes rdf:type . * ;
+          rdf:type [ oscal_catalog:OscalDocument ] ?
+       )
+    } OR @<AssessmentPlanDocument> OR @oscal_catalog:CatalogDocument
+)
+
+oscal_catalog:Parameter CLOSED {
+    (  $oscal_catalog:Parameter_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:id @oscal_catalog:TokenType ;
+          oscal_catalog:_class @oscal_catalog:TokenType ? ;
+          oscal_catalog:depends_on @oscal_catalog:TokenType ? ;
+          oscal_catalog:label @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:usage @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:constraints @oscal_catalog:ParameterConstraint * ;
+          oscal_catalog:guidelines @oscal_catalog:ParameterGuideline * ;
+          oscal_catalog:values @linkml:String * ;
+          oscal_catalog:select @oscal_catalog:ParameterSelection ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Parameter ] ?
+    )
+}
+
+oscal_catalog:ParameterConstraint CLOSED {
+    (  $oscal_catalog:ParameterConstraint_tes (  oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:tests @oscal_catalog:ConstraintTest *
+       ) ;
+       rdf:type [ oscal_catalog:ParameterConstraint ] ?
+    )
+}
+
+oscal_catalog:ParameterGuideline CLOSED {
+    (  $oscal_catalog:ParameterGuideline_tes oscal_catalog:prose @oscal_catalog:MarkupMultilineType ;
+       rdf:type [ oscal_catalog:ParameterGuideline ] ?
+    )
+}
+
+oscal_catalog:ParameterSelection CLOSED {
+    (  $oscal_catalog:ParameterSelection_tes (  oscal_catalog:how_many [
+             <https://w3id.org/lmodel/oscal_catalog/ParameterCardinalityEnum#one>
+             <https://w3id.org/lmodel/oscal_catalog/ParameterCardinalityEnum#one-or-more> ] ? ;
+          oscal_catalog:choice @oscal_catalog:MarkupLineType *
+       ) ;
+       rdf:type [ linkml:Any ] ?
+    )
+}
+
+oscal_catalog:Part CLOSED {
+    (  $oscal_catalog:Part_tes (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          oscal_catalog:id @oscal_catalog:TokenType ? ;
+          oscal_catalog:name @oscal_catalog:TokenType ;
+          oscal_catalog:ns @oscal_catalog:URIType ? ;
+          oscal_catalog:_class @oscal_catalog:TokenType ? ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:prose @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:parts @oscal_catalog:Part * ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Part ] ?
+    )
+}
+
+oscal_catalog:Party CLOSED {
+    (  $oscal_catalog:Party_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:type [ <https://w3id.org/lmodel/oscal_catalog/PartyTypeEnum#person>
+             <https://w3id.org/lmodel/oscal_catalog/PartyTypeEnum#organization> ] ;
+          oscal_catalog:name @linkml:String ? ;
+          oscal_catalog:short_name @linkml:String ? ;
+          oscal_catalog:email_addresses @oscal_catalog:EmailAddressType * ;
+          oscal_catalog:telephone_numbers @oscal_catalog:TelephoneNumber * ;
+          oscal_catalog:external_ids @oscal_catalog:PartyExternalId * ;
+          oscal_catalog:addresses @oscal_catalog:Address * ;
+          oscal_catalog:location_uuids @oscal_catalog:UUIDType * ;
+          oscal_catalog:member_of_organizations @oscal_catalog:UUIDType * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Party ] ?
+    )
+}
+
+oscal_catalog:PartyExternalId CLOSED {
+    (  $oscal_catalog:PartyExternalId_tes (  oscal_catalog:scheme @oscal_catalog:URIType ;
+          oscal_catalog:id @linkml:String
+       ) ;
+       rdf:type [ oscal_catalog:PartyExternalId ] ?
+    )
+}
+
+<PortRange> CLOSED {
+    (  $<PortRange_tes> (  <start> @linkml:Integer ? ;
+          <end> @linkml:Integer ? ;
+          <transport> [ <https://w3id.org/lmodel/oscal_assessment_plan/TransportEnum#TCP>
+             <https://w3id.org/lmodel/oscal_assessment_plan/TransportEnum#UDP> ] ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <PortRange> ] ?
+    )
+}
+
+oscal_catalog:Property CLOSED {
+    (  $oscal_catalog:Property_tes (  oscal_catalog:name @oscal_catalog:TokenType ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ? ;
+          oscal_catalog:ns @oscal_catalog:URIType ? ;
+          oscal_catalog:value @linkml:String ;
+          oscal_catalog:_class @oscal_catalog:TokenType ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:group @oscal_catalog:TokenType ?
+       ) ;
+       rdf:type [ oscal_catalog:Property ] ?
+    )
+}
+
+<Protocol> CLOSED {
+    (  $<Protocol_tes> (  oscal_catalog:uuid @oscal_catalog:UUIDType ? ;
+          oscal_catalog:name @linkml:String ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          <port_ranges> @<PortRange> *
+       ) ;
+       rdf:type [ <Protocol> ] ?
+    )
+}
+
+<RelatedObservation> CLOSED {
+    (  $<RelatedObservation_tes> (  <observation_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <RelatedObservation> ] ?
+    )
+}
+
+<RelatedTask> CLOSED {
+    (  $<RelatedTask_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleParties_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleParties ] ? ;
+          <task_uuid> @oscal_catalog:UUIDType ;
+          <subjects> @<AssessmentSubject> * ;
+          <identified_subject> @<IdentifiedSubject> ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_parties @oscal_catalog:ResponsibleParty *
+       ) ;
+       rdf:type [ <RelatedTask> ] ?
+    )
+}
+
+<RelevantEvidence> CLOSED {
+    (  $<RelevantEvidence_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:href @oscal_catalog:URIReferenceType ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <RelevantEvidence> ] ?
+    )
+}
+
+<RequiredAsset> CLOSED {
+    (  $<RequiredAsset_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <subjects> @<SubjectReference> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <RequiredAsset> ] ?
+    )
+}
+
+oscal_catalog:Resource CLOSED {
+    (  $oscal_catalog:Resource_tes (  oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:document_ids @oscal_catalog:DocumentId * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:citation @oscal_catalog:Citation ? ;
+          oscal_catalog:rlinks @oscal_catalog:ResourceLink * ;
+          oscal_catalog:base64 @oscal_catalog:Base64Resource ?
+       ) ;
+       rdf:type [ oscal_catalog:Resource ] ?
+    )
+}
+
+oscal_catalog:ResourceLink CLOSED {
+    (  $oscal_catalog:ResourceLink_tes (  oscal_catalog:href @oscal_catalog:URIReferenceType ;
+          oscal_catalog:media_type @linkml:String ? ;
+          oscal_catalog:hashes @oscal_catalog:Hash *
+       ) ;
+       rdf:type [ oscal_catalog:ResourceLink ] ?
+    )
+}
+
+<Response> CLOSED {
+    (  $<Response_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <lifecycle> [ <https://w3id.org/lmodel/oscal_assessment_plan/ResponseLifecycleEnum#recommendation>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ResponseLifecycleEnum#planned>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ResponseLifecycleEnum#completed> ] ;
+          <origins> @<Origin> * ;
+          <required_assets> @<RequiredAsset> * ;
+          <tasks> @<Task> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <Response> ] ?
+    )
+}
+
+oscal_catalog:ResponsibleParty CLOSED {
+    (  $oscal_catalog:ResponsibleParty_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:role_id @oscal_catalog:TokenType ;
+          oscal_catalog:party_uuids @oscal_catalog:UUIDType + ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:ResponsibleParty ] ?
+    )
+}
+
+oscal_catalog:ResponsibleRole CLOSED {
+    (  $oscal_catalog:ResponsibleRole_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:role_id @oscal_catalog:TokenType ;
+          oscal_catalog:party_uuids @oscal_catalog:UUIDType * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:ResponsibleRole ] ?
+    )
+}
+
+<ReviewedControls> CLOSED {
+    (  $<ReviewedControls_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <control_selections> @<ControlSelection> + ;
+          <control_objective_selections> @<ControlObjectiveSelection> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <ReviewedControls> ] ?
+    )
+}
+
+oscal_catalog:Revision CLOSED {
+    (  $oscal_catalog:Revision_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:published @oscal_catalog:DateTimeWithTimezoneType ? ;
+          oscal_catalog:last_modified @oscal_catalog:DateTimeWithTimezoneType ? ;
+          oscal_catalog:version @linkml:String ;
+          oscal_catalog:oscal_version @linkml:String ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Revision ] ?
+    )
+}
+
+<Risk> CLOSED {
+    (  $<Risk_tes> (  &oscal_catalog:HasPropsAndLinks_tes ;
+          rdf:type [ oscal_catalog:HasPropsAndLinks ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <statement> @oscal_catalog:MarkupMultilineType ;
+          <origins> @<Origin> * ;
+          <threat_ids> @<ThreatId> * ;
+          <characterizations> @<Characterization> * ;
+          <mitigating_factors> @<MitigatingFactor> * ;
+          <deadline> @oscal_catalog:DateTimeWithTimezoneType ? ;
+          <remediations> @<Response> * ;
+          <risk_log> @<RiskLog> ? ;
+          <related_observations> @<RelatedObservation> * ;
+          <status> [ <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#open>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#investigating>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#remediating>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#deviation-requested>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#deviation-approved>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#closed> ] ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <Risk> ] ?
+    )
+}
+
+<RiskLog> CLOSED {
+    (  $<RiskLog_tes> <entries> @<RiskLogEntry> + ;
+       rdf:type [ <RiskLog> ] ?
+    )
+}
+
+<RiskLogEntry> CLOSED {
+    (  $<RiskLogEntry_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <start> @oscal_catalog:DateTimeWithTimezoneType ;
+          <end> @oscal_catalog:DateTimeWithTimezoneType ? ;
+          <logged_by> @<LoggedBy> * ;
+          <status_change> [ <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#open>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#investigating>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#remediating>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#deviation-requested>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#deviation-approved>
+             <https://w3id.org/lmodel/oscal_assessment_plan/RiskStatusEnum#closed> ] ? ;
+          <related_responses> @<RiskResponseReference> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <RiskLogEntry> ] ?
+    )
+}
+
+<RiskResponseReference> CLOSED {
+    (  $<RiskResponseReference_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          <response_uuid> @oscal_catalog:UUIDType ;
+          <related_tasks> @<RelatedTask> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <RiskResponseReference> ] ?
+    )
+}
+
+oscal_catalog:Role CLOSED {
+    (  $oscal_catalog:Role_tes (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:id @oscal_catalog:TokenType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:short_name @linkml:String ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ oscal_catalog:Role ] ?
+    )
+}
+
+oscal_catalog:SelectControlById CLOSED {
+    (  $oscal_catalog:SelectControlById_tes (  oscal_catalog:with_child_controls [
+             <https://w3id.org/lmodel/oscal_catalog/WithChildControlsEnum#True>
+             <https://w3id.org/lmodel/oscal_catalog/WithChildControlsEnum#False> ] ? ;
+          oscal_catalog:with_ids @oscal_catalog:TokenType * ;
+          oscal_catalog:matching @oscal_catalog:ControlMatching *
+       ) ;
+       rdf:type [ oscal_catalog:SelectControlById ] ?
+    )
+}
+
+<SelectObjectiveById> CLOSED {
+    (  $<SelectObjectiveById_tes> (  <objective_id> @oscal_catalog:TokenType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <SelectObjectiveById> ] ?
+    )
+}
+
+<SelectSubjectById> CLOSED {
+    (  $<SelectSubjectById_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          <subject_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:type [ <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#component>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#inventory-item>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#location>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#party>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#user>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#resource> ] ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <SelectSubjectById> ] ?
+    )
+}
+
+<SetParameter> CLOSED {
+    (  $<SetParameter_tes> (  <param_id> @oscal_catalog:TokenType ;
+          oscal_catalog:values @linkml:String + ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <SetParameter> ] ?
+    )
+}
+
+<Step> CLOSED {
+    (  $<Step_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleRoles_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleRoles ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <reviewed_controls> @<ReviewedControls> ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_roles @oscal_catalog:ResponsibleRole *
+       ) ;
+       rdf:type [ <Step> ] ?
+    )
+}
+
+<SubjectReference> CLOSED {
+    (  $<SubjectReference_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          <subject_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:type [ <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#component>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#inventory-item>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#location>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#party>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#user>
+             <https://w3id.org/lmodel/oscal_assessment_plan/SelectSubjectTypeEnum#resource> ] ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <SubjectReference> ] ?
+    )
+}
+
+<SystemComponent> CLOSED {
+    (  $<SystemComponent_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleRoles_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleRoles ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:type [ <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#this-system>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#system>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#interconnection>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#software>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#hardware>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#service>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#policy>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#physical>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#process-procedure>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#plan>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#guidance>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#standard>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#validation>
+             <https://w3id.org/lmodel/oscal_assessment_plan/ComponentTypeEnum#network> ] ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ;
+          <purpose> @oscal_catalog:MarkupLineType ? ;
+          <protocols> @<Protocol> * ;
+          <status> @<ComponentStatus> ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_roles @oscal_catalog:ResponsibleRole *
+       ) ;
+       rdf:type [ <SystemComponent> ] ?
+    )
+}
+
+<SystemId> CLOSED {
+    (  $<SystemId_tes> (  oscal_catalog:id @linkml:String ;
+          <identifier_type> @oscal_catalog:URIType ?
+       ) ;
+       rdf:type [ <SystemId> ] ?
+    )
+}
+
+<SystemUser> CLOSED {
+    (  $<SystemUser_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ? ;
+          oscal_catalog:short_name @linkml:String ? ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <role_ids> @oscal_catalog:TokenType * ;
+          <authorized_privileges> @<AuthorizedPrivilege> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link *
+       ) ;
+       rdf:type [ <SystemUser> ] ?
+    )
+}
+
+<Task> CLOSED {
+    (  $<Task_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleRoles_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleRoles ] ? ;
+          oscal_catalog:uuid @oscal_catalog:UUIDType ;
+          oscal_catalog:type [ <https://w3id.org/lmodel/oscal_assessment_plan/TaskTypeEnum#milestone>
+             <https://w3id.org/lmodel/oscal_assessment_plan/TaskTypeEnum#action> ] ;
+          oscal_catalog:title @oscal_catalog:MarkupLineType ;
+          oscal_catalog:description @oscal_catalog:MarkupMultilineType ? ;
+          <timing> @<EventTiming> ? ;
+          <dependencies> @<TaskDependency> * ;
+          <associated_activities> @<AssociatedActivity> * ;
+          <tasks> @<Task> * ;
+          <subjects> @<AssessmentSubject> * ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_roles @oscal_catalog:ResponsibleRole *
+       ) ;
+       rdf:type [ <Task> ] ?
+    )
+}
+
+<TaskDependency> CLOSED {
+    (  $<TaskDependency_tes> (  <task_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <TaskDependency> ] ?
+    )
+}
+
+oscal_catalog:TelephoneNumber CLOSED {
+    (  $oscal_catalog:TelephoneNumber_tes (  oscal_catalog:type [ <https://w3id.org/lmodel/oscal_catalog/PhoneTypeEnum#home>
+             <https://w3id.org/lmodel/oscal_catalog/PhoneTypeEnum#office>
+             <https://w3id.org/lmodel/oscal_catalog/PhoneTypeEnum#mobile> ] ? ;
+          oscal_catalog:number @linkml:String
+       ) ;
+       rdf:type [ oscal_catalog:TelephoneNumber ] ?
+    )
+}
+
+<TermsAndConditions> CLOSED {
+    (  $<TermsAndConditions_tes> oscal_catalog:parts @<AssessmentPart> * ;
+       rdf:type [ <TermsAndConditions> ] ?
+    )
+}
+
+<ThreatId> CLOSED {
+    (  $<ThreatId_tes> (  oscal_catalog:href @oscal_catalog:URIReferenceType ? ;
+          oscal_catalog:system @oscal_catalog:URIType ;
+          oscal_catalog:id @oscal_catalog:URIType
+       ) ;
+       rdf:type [ <ThreatId> ] ?
+    )
+}
+
+<UsesComponent> CLOSED {
+    (  $<UsesComponent_tes> (  &oscal_catalog:OscalCommon_tes ;
+          rdf:type [ oscal_catalog:OscalCommon ] ? ;
+          &oscal_catalog:HasResponsibleParties_tes ;
+          rdf:type [ oscal_catalog:HasResponsibleParties ] ? ;
+          <component_uuid> @oscal_catalog:UUIDType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ? ;
+          oscal_catalog:props @oscal_catalog:Property * ;
+          oscal_catalog:links @oscal_catalog:Link * ;
+          oscal_catalog:responsible_parties @oscal_catalog:ResponsibleParty *
+       ) ;
+       rdf:type [ <UsesComponent> ] ?
+    )
+}
+
+<WithinDateRange> CLOSED {
+    (  $<WithinDateRange_tes> (  <start> @oscal_catalog:DateTimeWithTimezoneType ;
+          <end> @oscal_catalog:DateTimeWithTimezoneType ;
+          oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
+       ) ;
+       rdf:type [ <WithinDateRange> ] ?
+    )
+}

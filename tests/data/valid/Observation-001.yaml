@@ -11,11 +11,11 @@ types:
 origins:
   - actors:
       - type: party
-        actor-uuid: "7d7a8ae0-d49c-0000-8000-000000000001"
+        actor_uuid: "7d7a8ae0-d49c-4e0a-8000-000000000010"
 subjects:
-  - subject-uuid: "7d7a8ae0-d49c-4e0a-0010-000000000001"
+  - subject_uuid: "7d7a8ae0-d49c-4e0a-8010-000000000001"
     type: component
-relevant-evidence:
+relevant_evidence:
   - description: "Screenshot of the audit policy configuration panel."
     href: "https://example.com/evidence/screenshot-001.png"
 collected: "2026-01-15T14:30:00.000Z"

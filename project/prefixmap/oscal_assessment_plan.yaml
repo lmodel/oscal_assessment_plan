@@ -1,0 +1,119 @@
+{
+   "linkml": "https://w3id.org/linkml/",
+   "oscal_assessment_plan": "https://w3id.org/lmodel/oscal_assessment_plan/",
+   "oscal_catalog": "https://w3id.org/lmodel/oscal_catalog/",
+   "Action": {
+      "@id": "oscal_catalog:Action"
+   },
+   "Address": {
+      "@id": "oscal_catalog:Address"
+   },
+   "BackMatter": {
+      "@id": "oscal_catalog:BackMatter"
+   },
+   "Base64Resource": {
+      "@id": "oscal_catalog:Base64Resource"
+   },
+   "Catalog": {
+      "@id": "oscal_catalog:Catalog"
+   },
+   "CatalogDocument": {
+      "@id": "oscal_catalog:CatalogDocument"
+   },
+   "Citation": {
+      "@id": "oscal_catalog:Citation"
+   },
+   "ConstraintTest": {
+      "@id": "oscal_catalog:ConstraintTest"
+   },
+   "Control": {
+      "@id": "oscal_catalog:Control"
+   },
+   "ControlMatching": {
+      "@id": "oscal_catalog:ControlMatching"
+   },
+   "DocumentId": {
+      "@id": "oscal_catalog:DocumentId"
+   },
+   "Group": {
+      "@id": "oscal_catalog:Group"
+   },
+   "Hash": {
+      "@id": "oscal_catalog:Hash"
+   },
+   "HasPropsAndLinks": {
+      "@id": "oscal_catalog:HasPropsAndLinks"
+   },
+   "HasResponsibleParties": {
+      "@id": "oscal_catalog:HasResponsibleParties"
+   },
+   "HasResponsibleRoles": {
+      "@id": "oscal_catalog:HasResponsibleRoles"
+   },
+   "IncludeAll": {
+      "@id": "oscal_catalog:IncludeAll"
+   },
+   "Link": {
+      "@id": "oscal_catalog:Link"
+   },
+   "Location": {
+      "@id": "oscal_catalog:Location"
+   },
+   "Metadata": {
+      "@id": "oscal_catalog:Metadata"
+   },
+   "OscalCommon": {
+      "@id": "oscal_catalog:OscalCommon"
+   },
+   "OscalDocument": {
+      "@id": "oscal_catalog:OscalDocument"
+   },
+   "Parameter": {
+      "@id": "oscal_catalog:Parameter"
+   },
+   "ParameterConstraint": {
+      "@id": "oscal_catalog:ParameterConstraint"
+   },
+   "ParameterGuideline": {
+      "@id": "oscal_catalog:ParameterGuideline"
+   },
+   "ParameterSelection": {
+      "@id": "linkml:Any"
+   },
+   "Part": {
+      "@id": "oscal_catalog:Part"
+   },
+   "Party": {
+      "@id": "oscal_catalog:Party"
+   },
+   "PartyExternalId": {
+      "@id": "oscal_catalog:PartyExternalId"
+   },
+   "Property": {
+      "@id": "oscal_catalog:Property"
+   },
+   "Resource": {
+      "@id": "oscal_catalog:Resource"
+   },
+   "ResourceLink": {
+      "@id": "oscal_catalog:ResourceLink"
+   },
+   "ResponsibleParty": {
+      "@id": "oscal_catalog:ResponsibleParty"
+   },
+   "ResponsibleRole": {
+      "@id": "oscal_catalog:ResponsibleRole"
+   },
+   "Revision": {
+      "@id": "oscal_catalog:Revision"
+   },
+   "Role": {
+      "@id": "oscal_catalog:Role"
+   },
+   "SelectControlById": {
+      "@id": "oscal_catalog:SelectControlById"
+   },
+   "TelephoneNumber": {
+      "@id": "oscal_catalog:TelephoneNumber"
+   }
+}

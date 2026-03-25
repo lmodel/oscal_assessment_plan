@@ -1,0 +1,1121 @@
+# metamodel_version: 1.7.0
+enum AddressTypeEnum
+  {
+    home
+    work
+  }
+
+enum AssessmentPartNameEnum
+  {
+    asset
+    method
+    objective
+  }
+
+enum AssessmentSubjectTypeEnum
+  {
+    component
+    inventory__HYPHEN_MINUS__item
+    location
+    party
+    user
+  }
+
+enum ComponentStateEnum
+  {
+    under__HYPHEN_MINUS__development
+    operational
+    disposition
+    other
+  }
+
+enum ComponentTypeEnum
+  {
+    this__HYPHEN_MINUS__system
+    system
+    interconnection
+    software
+    hardware
+    service
+    policy
+    physical
+    process__HYPHEN_MINUS__procedure
+    plan
+    guidance
+    standard
+    validation
+    network
+  }
+
+enum FindingTargetTypeEnum
+  {
+    statement__HYPHEN_MINUS__id
+    objective__HYPHEN_MINUS__id
+  }
+
+enum HashAlgorithmEnum
+  {
+    SHA__HYPHEN_MINUS__224
+    SHA__HYPHEN_MINUS__256
+    SHA__HYPHEN_MINUS__384
+    SHA__HYPHEN_MINUS__512
+    SHA3__HYPHEN_MINUS__224
+    SHA3__HYPHEN_MINUS__256
+    SHA3__HYPHEN_MINUS__384
+    SHA3__HYPHEN_MINUS__512
+  }
+
+enum ImplementationStatusStateEnum
+  {
+    implemented
+    partial
+    planned
+    alternative
+    not__HYPHEN_MINUS__applicable
+  }
+
+enum ObjectiveStatusReasonEnum
+  {
+    pass
+    fail
+    other
+  }
+
+enum ObjectiveStatusStateEnum
+  {
+    satisfied
+    not__HYPHEN_MINUS__satisfied
+  }
+
+enum ObservationMethodEnum
+  {
+    EXAMINE
+    INTERVIEW
+    TEST
+    UNKNOWN
+  }
+
+enum ObservationTypeEnum
+  {
+    ssp__HYPHEN_MINUS__statement__HYPHEN_MINUS__issue
+    control__HYPHEN_MINUS__objective
+    mitigation
+    finding
+    discovery
+    historic
+  }
+
+enum OriginActorTypeEnum
+  {
+    tool
+    assessment__HYPHEN_MINUS__platform
+    party
+  }
+
+enum ParameterCardinalityEnum
+  {
+    one
+    one__HYPHEN_MINUS__or__HYPHEN_MINUS__more
+  }
+
+enum PartyTypeEnum
+  {
+    person
+    organization
+  }
+
+enum PhoneTypeEnum
+  {
+    home
+    office
+    mobile
+  }
+
+enum ResponseLifecycleEnum
+  {
+    recommendation
+    planned
+    completed
+  }
+
+enum RiskStatusEnum
+  {
+    open
+    investigating
+    remediating
+    deviation__HYPHEN_MINUS__requested
+    deviation__HYPHEN_MINUS__approved
+    closed
+  }
+
+enum SelectSubjectTypeEnum
+  {
+    component
+    inventory__HYPHEN_MINUS__item
+    location
+    party
+    user
+    resource
+  }
+
+enum TaskTypeEnum
+  {
+    milestone
+    action
+  }
+
+enum TimingUnitEnum
+  {
+    seconds
+    minutes
+    hours
+    days
+    months
+    years
+  }
+
+enum TransportEnum
+  {
+    TCP
+    UDP
+  }
+
+enum WithChildControlsEnum
+  {
+    True
+    False
+  }
+
+type Action implements OscalCommon, HasResponsibleParties
+  {
+    uuid: UUIDType!
+    type: TokenType!
+    date: DateTimeWithTimezoneType
+    system: URIType!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-parties: [ResponsibleParty]
+  }
+
+type Activity implements OscalCommon, HasResponsibleRoles
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    description: MarkupMultilineType!
+    steps: [Step]
+    related-controls: ReviewedControls
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-roles: [ResponsibleRole]
+  }
+
+type Address
+  {
+    type: AddressTypeEnum
+    addr-lines: [String]
+    city: String
+    state: String
+    postal-code: String
+    country: String
+  }
+
+type AssessmentAssets
+  {
+    components: [SystemComponent]
+    assessment-platforms: [AssessmentPlatform]!
+  }
+
+type AssessmentMethod implements OscalCommon
+  {
+    uuid: UUIDType!
+    description: MarkupMultilineType
+    part: AssessmentPart!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type AssessmentPart implements HasPropsAndLinks
+  {
+    uuid: UUIDType
+    name: AssessmentPartNameEnum!
+    ns: URIType
+    class: TokenType
+    title: MarkupLineType
+    prose: MarkupMultilineType
+    parts: [AssessmentPart]
+    props: [Property]
+    links: [Link]
+  }
+
+type AssessmentPlan
+  {
+    uuid: UUIDType!
+    metadata: Metadata!
+    import-ssp: ImportSSP!
+    local-definitions: LocalDefinitions
+    terms-and-conditions: TermsAndConditions
+    assessment-subjects: [AssessmentSubject]
+    assessment-assets: AssessmentAssets
+    reviewed-controls: ReviewedControls!
+    tasks: [Task]
+    back-matter: BackMatter
+  }
+
+type AssessmentPlanDocument
+  {
+    assessment-plan: AssessmentPlan!
+  }
+
+type AssessmentPlatform implements OscalCommon
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    uses-components: [UsesComponent]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type AssessmentSelectControlById
+  {
+    control-id: TokenType!
+    statement-ids: [TokenType]
+  }
+
+type AssessmentSubject implements OscalCommon
+  {
+    type: AssessmentSubjectTypeEnum!
+    description: MarkupMultilineType
+    include-all: IncludeAll
+    include-subjects: [SelectSubjectById]
+    exclude-subjects: [SelectSubjectById]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type AssessmentSubjectPlaceholder implements OscalCommon
+  {
+    uuid: UUIDType!
+    description: MarkupMultilineType
+    sources: [AssessmentSubjectSource]!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type AssessmentSubjectSource
+  {
+    task-uuid: UUIDType!
+    remarks: MarkupMultilineType
+  }
+
+type AssociatedActivity implements OscalCommon, HasResponsibleRoles
+  {
+    activity-uuid: UUIDType!
+    subjects: [AssessmentSubject]!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-roles: [ResponsibleRole]
+  }
+
+type AssociatedRisk
+  {
+    risk-uuid: UUIDType!
+    remarks: MarkupMultilineType
+  }
+
+type AtFrequency
+  {
+    period: Int!
+    unit: TimingUnitEnum!
+    remarks: MarkupMultilineType
+  }
+
+type AuthorizedPrivilege
+  {
+    title: MarkupLineType!
+    description: MarkupMultilineType
+    functions-performed: [String]!
+  }
+
+type BackMatter
+  {
+    resources: [Resource]
+  }
+
+type Base64Resource
+  {
+    media-type: String
+    value: Base64Type!
+    filename: TokenType
+  }
+
+type Catalog
+  {
+    uuid: UUIDType!
+    metadata: Metadata!
+    back-matter: BackMatter
+    params: [Parameter]
+    controls: [Control]
+    groups: [Group]
+  }
+
+type CatalogDocument
+  {
+    catalog: Catalog!
+  }
+
+type Characterization implements HasPropsAndLinks
+  {
+    origin: Origin!
+    facets: [Facet]!
+    props: [Property]
+    links: [Link]
+  }
+
+type Citation implements HasPropsAndLinks
+  {
+    text: MarkupLineType!
+    props: [Property]
+    links: [Link]
+  }
+
+type ComponentStatus
+  {
+    state: ComponentStateEnum!
+    remarks: MarkupMultilineType
+  }
+
+type ConstraintTest
+  {
+    remarks: MarkupMultilineType
+    expression: String!
+  }
+
+type Control implements OscalCommon
+  {
+    id: TokenType!
+    class: TokenType
+    title: MarkupLineType!
+    params: [Parameter]
+    parts: [Part]
+    controls: [Control]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type ControlMatching
+  {
+    remarks: MarkupMultilineType
+    pattern: String
+  }
+
+type ControlObjectiveSelection implements OscalCommon
+  {
+    description: MarkupMultilineType
+    include-all: IncludeAll
+    include-objectives: [SelectObjectiveById]
+    exclude-objectives: [SelectObjectiveById]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type ControlPart implements HasPropsAndLinks
+  {
+    id: TokenType
+    name: TokenType!
+    ns: URIType
+    class: TokenType
+    title: MarkupLineType
+    prose: MarkupMultilineType
+    parts: [ControlPart]
+    props: [Property]
+    links: [Link]
+  }
+
+type ControlSelection implements OscalCommon
+  {
+    description: MarkupMultilineType
+    include-all: IncludeAll
+    include-controls: [AssessmentSelectControlById]
+    exclude-controls: [AssessmentSelectControlById]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type DocumentId
+  {
+    scheme: URIType
+    identifier: String!
+  }
+
+type EventTiming
+  {
+    on-date: OnDateCondition
+    within-date-range: WithinDateRange
+    at-frequency: AtFrequency
+  }
+
+type Facet implements OscalCommon
+  {
+    name: TokenType!
+    value: String!
+    system: URIType!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Finding implements OscalCommon
+  {
+    uuid: UUIDType!
+    title: MarkupLineType!
+    description: MarkupMultilineType!
+    target: FindingTarget!
+    implementation-statement-uuid: UUIDType
+    origins: [Origin]
+    related-observations: [RelatedObservation]
+    related-risks: [AssociatedRisk]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type FindingTarget implements OscalCommon
+  {
+    type: FindingTargetTypeEnum!
+    target-id: TokenType!
+    title: MarkupLineType
+    description: MarkupMultilineType
+    implementation-status: ImplementationStatus
+    status: ObjectiveStatus!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Group implements OscalCommon
+  {
+    id: TokenType
+    class: TokenType
+    title: MarkupLineType!
+    params: [Parameter]
+    parts: [Part]
+    groups: [Group]
+    controls: [Control]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Hash
+  {
+    value: String!
+    algorithm: HashAlgorithmEnum!
+  }
+
+interface HasPropsAndLinks
+  {
+    props: [Property]
+    links: [Link]
+  }
+
+interface HasResponsibleParties
+  {
+    responsible-parties: [ResponsibleParty]
+  }
+
+interface HasResponsibleRoles
+  {
+    responsible-roles: [ResponsibleRole]
+  }
+
+type IdentifiedSubject
+  {
+    subject-placeholder-uuid: UUIDType!
+    subjects: [AssessmentSubject]!
+  }
+
+type ImplementationStatus
+  {
+    state: ImplementationStatusStateEnum!
+    remarks: MarkupMultilineType
+  }
+
+type ImplementedComponent implements OscalCommon, HasResponsibleParties
+  {
+    component-uuid: UUIDType!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-parties: [ResponsibleParty]
+  }
+
+type ImportSSP
+  {
+    href: URIReferenceType!
+    remarks: MarkupMultilineType
+  }
+
+type IncludeAll
+  {
+  }
+
+type InventoryItem implements OscalCommon, HasResponsibleParties
+  {
+    uuid: UUIDType!
+    description: MarkupMultilineType!
+    implemented-components: [ImplementedComponent]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-parties: [ResponsibleParty]
+  }
+
+type Link
+  {
+    href: URIReferenceType!
+    rel: TokenType
+    resource-fragment: String
+    media-type: String
+    text: MarkupLineType
+  }
+
+type LocalDefinitions
+  {
+    components: [SystemComponent]
+    inventory-items: [InventoryItem]
+    users: [SystemUser]
+    objectives-and-methods: [LocalObjective]
+    activities: [Activity]
+    remarks: MarkupMultilineType
+  }
+
+type LocalObjective implements OscalCommon
+  {
+    control-id: TokenType!
+    description: MarkupMultilineType
+    parts: [ControlPart]!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Location implements OscalCommon
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    email-addresses: [EmailAddressType]
+    telephone-numbers: [TelephoneNumber]
+    address: Address
+    urls: [URIType]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type LoggedBy
+  {
+    party-uuid: UUIDType!
+    role-id: TokenType
+    remarks: MarkupMultilineType
+  }
+
+type Metadata implements OscalCommon, HasResponsibleParties
+  {
+    title: MarkupLineType!
+    published: DateTimeWithTimezoneType
+    last-modified: DateTimeWithTimezoneType!
+    version: String!
+    oscal-version: String!
+    document-ids: [DocumentId]
+    revisions: [Revision]
+    roles: [Role]
+    locations: [Location]
+    parties: [Party]
+    actions: [Action]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-parties: [ResponsibleParty]
+  }
+
+type MitigatingFactor implements HasPropsAndLinks
+  {
+    uuid: UUIDType!
+    description: MarkupMultilineType!
+    implementation-uuid: UUIDType
+    subjects: [SubjectReference]
+    props: [Property]
+    links: [Link]
+  }
+
+type ObjectiveStatus
+  {
+    state: ObjectiveStatusStateEnum!
+    reason: ObjectiveStatusReasonEnum
+    remarks: MarkupMultilineType
+  }
+
+type Observation implements OscalCommon
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    description: MarkupMultilineType!
+    methods: [ObservationMethodEnum]!
+    types: [ObservationTypeEnum]
+    origins: [Origin]
+    subjects: [SubjectReference]
+    relevant-evidence: [RelevantEvidence]
+    collected: DateTimeWithTimezoneType!
+    expires: DateTimeWithTimezoneType
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type OnDateCondition
+  {
+    date: DateTimeWithTimezoneType!
+    remarks: MarkupMultilineType
+  }
+
+type Origin
+  {
+    actors: [OriginActor]!
+    related-tasks: [RelatedTask]
+  }
+
+type OriginActor implements HasPropsAndLinks
+  {
+    type: OriginActorTypeEnum!
+    actor-uuid: UUIDType!
+    role-id: TokenType
+    props: [Property]
+    links: [Link]
+  }
+
+type OscalCommon implements HasPropsAndLinks
+  {
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type OscalDocument
+  {
+  }
+
+type Parameter implements OscalCommon
+  {
+    id: TokenType!
+    class: TokenType
+    depends-on: TokenType
+    label: MarkupLineType
+    usage: MarkupMultilineType
+    constraints: [ParameterConstraint]
+    guidelines: [ParameterGuideline]
+    values: [String]
+    select: ParameterSelection
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type ParameterConstraint
+  {
+    description: MarkupMultilineType
+    tests: [ConstraintTest]
+  }
+
+type ParameterGuideline
+  {
+    prose: MarkupMultilineType!
+  }
+
+scalar ParameterSelection
+    how-many: ParameterCardinalityEnum
+    choice: [MarkupLineType]
+
+type Part implements HasPropsAndLinks
+  {
+    id: TokenType
+    name: TokenType!
+    ns: URIType
+    class: TokenType
+    title: MarkupLineType
+    prose: MarkupMultilineType
+    parts: [Part]
+    props: [Property]
+    links: [Link]
+  }
+
+type Party implements OscalCommon
+  {
+    uuid: UUIDType!
+    type: PartyTypeEnum!
+    name: String
+    short-name: String
+    email-addresses: [EmailAddressType]
+    telephone-numbers: [TelephoneNumber]
+    external-ids: [PartyExternalId]
+    addresses: [Address]
+    location-uuids: [UUIDType]
+    member-of-organizations: [UUIDType]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type PartyExternalId
+  {
+    scheme: URIType!
+    id: String!
+  }
+
+type PortRange
+  {
+    start: Int
+    end: Int
+    transport: TransportEnum
+    remarks: MarkupMultilineType
+  }
+
+type Property
+  {
+    name: TokenType!
+    uuid: UUIDType
+    ns: URIType
+    value: String!
+    class: TokenType
+    remarks: MarkupMultilineType
+    group: TokenType
+  }
+
+type Protocol
+  {
+    uuid: UUIDType
+    name: String!
+    title: MarkupLineType
+    port-ranges: [PortRange]
+  }
+
+type RelatedObservation
+  {
+    observation-uuid: UUIDType!
+    remarks: MarkupMultilineType
+  }
+
+type RelatedTask implements OscalCommon, HasResponsibleParties
+  {
+    task-uuid: UUIDType!
+    subjects: [AssessmentSubject]
+    identified-subject: IdentifiedSubject
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-parties: [ResponsibleParty]
+  }
+
+type RelevantEvidence implements OscalCommon
+  {
+    href: URIReferenceType
+    description: MarkupMultilineType!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type RequiredAsset implements OscalCommon
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    description: MarkupMultilineType!
+    subjects: [SubjectReference]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Resource
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    description: MarkupMultilineType
+    props: [Property]
+    document-ids: [DocumentId]
+    remarks: MarkupMultilineType
+    citation: Citation
+    rlinks: [ResourceLink]
+    base64: Base64Resource
+  }
+
+type ResourceLink
+  {
+    href: URIReferenceType!
+    media-type: String
+    hashes: [Hash]
+  }
+
+type Response implements OscalCommon
+  {
+    uuid: UUIDType!
+    title: MarkupLineType!
+    description: MarkupMultilineType!
+    lifecycle: ResponseLifecycleEnum!
+    origins: [Origin]
+    required-assets: [RequiredAsset]
+    tasks: [Task]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type ResponsibleParty implements OscalCommon
+  {
+    role-id: TokenType!
+    party-uuids: [UUIDType]!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type ResponsibleRole implements OscalCommon
+  {
+    role-id: TokenType!
+    party-uuids: [UUIDType]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type ReviewedControls implements OscalCommon
+  {
+    description: MarkupMultilineType
+    control-selections: [ControlSelection]!
+    control-objective-selections: [ControlObjectiveSelection]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Revision implements OscalCommon
+  {
+    title: MarkupLineType
+    published: DateTimeWithTimezoneType
+    last-modified: DateTimeWithTimezoneType
+    version: String!
+    oscal-version: String
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Risk implements HasPropsAndLinks
+  {
+    uuid: UUIDType!
+    title: MarkupLineType!
+    description: MarkupMultilineType!
+    statement: MarkupMultilineType!
+    origins: [Origin]
+    threat-ids: [ThreatId]
+    characterizations: [Characterization]
+    mitigating-factors: [MitigatingFactor]
+    deadline: DateTimeWithTimezoneType
+    remediations: [Response]
+    risk-log: RiskLog
+    related-observations: [RelatedObservation]
+    status: RiskStatusEnum!
+    props: [Property]
+    links: [Link]
+  }
+
+type RiskLog
+  {
+    entries: [RiskLogEntry]!
+  }
+
+type RiskLogEntry implements OscalCommon
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    description: MarkupMultilineType
+    start: DateTimeWithTimezoneType!
+    end: DateTimeWithTimezoneType
+    logged-by: [LoggedBy]
+    status-change: RiskStatusEnum
+    related-responses: [RiskResponseReference]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type RiskResponseReference implements OscalCommon
+  {
+    response-uuid: UUIDType!
+    related-tasks: [RelatedTask]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Role implements OscalCommon
+  {
+    id: TokenType!
+    title: MarkupLineType!
+    short-name: String
+    description: MarkupMultilineType
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type SelectControlById
+  {
+    with-child-controls: WithChildControlsEnum
+    with-ids: [TokenType]
+    matching: [ControlMatching]
+  }
+
+type SelectObjectiveById
+  {
+    objective-id: TokenType!
+    remarks: MarkupMultilineType
+  }
+
+type SelectSubjectById implements OscalCommon
+  {
+    subject-uuid: UUIDType!
+    type: SelectSubjectTypeEnum!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type SetParameter
+  {
+    param-id: TokenType!
+    values: [String]!
+    remarks: MarkupMultilineType
+  }
+
+type Step implements OscalCommon, HasResponsibleRoles
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    description: MarkupMultilineType!
+    reviewed-controls: ReviewedControls
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-roles: [ResponsibleRole]
+  }
+
+type SubjectReference implements OscalCommon
+  {
+    subject-uuid: UUIDType!
+    type: SelectSubjectTypeEnum!
+    title: MarkupLineType
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type SystemComponent implements OscalCommon, HasResponsibleRoles
+  {
+    uuid: UUIDType!
+    type: ComponentTypeEnum!
+    title: MarkupLineType!
+    description: MarkupMultilineType!
+    purpose: MarkupLineType
+    protocols: [Protocol]
+    status: ComponentStatus!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-roles: [ResponsibleRole]
+  }
+
+type SystemId
+  {
+    id: String!
+    identifier-type: URIType
+  }
+
+type SystemUser implements OscalCommon
+  {
+    uuid: UUIDType!
+    title: MarkupLineType
+    short-name: String
+    description: MarkupMultilineType
+    role-ids: [TokenType]
+    authorized-privileges: [AuthorizedPrivilege]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+  }
+
+type Task implements OscalCommon, HasResponsibleRoles
+  {
+    uuid: UUIDType!
+    type: TaskTypeEnum!
+    title: MarkupLineType!
+    description: MarkupMultilineType
+    timing: EventTiming
+    dependencies: [TaskDependency]
+    associated-activities: [AssociatedActivity]
+    tasks: [Task]
+    subjects: [AssessmentSubject]
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-roles: [ResponsibleRole]
+  }
+
+type TaskDependency
+  {
+    task-uuid: UUIDType!
+    remarks: MarkupMultilineType
+  }
+
+type TelephoneNumber
+  {
+    type: PhoneTypeEnum
+    number: String!
+  }
+
+type TermsAndConditions
+  {
+    parts: [AssessmentPart]
+  }
+
+type ThreatId
+  {
+    href: URIReferenceType
+    system: URIType!
+    id: URIType!
+  }
+
+type UsesComponent implements OscalCommon, HasResponsibleParties
+  {
+    component-uuid: UUIDType!
+    remarks: MarkupMultilineType
+    props: [Property]
+    links: [Link]
+    responsible-parties: [ResponsibleParty]
+  }
+
+type WithinDateRange
+  {
+    start: DateTimeWithTimezoneType!
+    end: DateTimeWithTimezoneType!
+    remarks: MarkupMultilineType
+  }

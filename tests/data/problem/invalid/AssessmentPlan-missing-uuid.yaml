@@ -1,0 +1,11 @@
+uuid: "not-a-valid-uuid"
+metadata:
+  title: "Assessment Plan Missing UUID"
+  last-modified: "2026-01-15T12:00:00.000Z"
+  version: "1.0.0"
+  oscal-version: "1.1.2"
+import-ssp:
+  href: "https://example.com/ssp/system-security-plan.json"
+reviewed-controls:
+  control-selections:
+    - include-all: {}

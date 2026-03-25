@@ -10,15 +10,15 @@ status: open
 origins:
   - actors:
       - type: party
-        actor-uuid: "7d7a8ae0-d49c-0000-8000-000000000001"
-threat-ids:
+        actor_uuid: "7d7a8ae0-d49c-4e0a-8000-000000000010"
+threat_ids:
   - system: "https://fedramp.gov/ns/oscal"
     id: "https://nvd.nist.gov/vuln/detail/CVE-2024-00001"
 characterizations:
   - origin:
       actors:
         - type: tool
-          actor-uuid: "7d7a8ae0-d49c-4e0a-0020-000000000001"
+          actor_uuid: "7d7a8ae0-d49c-4e0a-8020-000000000001"
     facets:
       - name: likelihood
         value: high
@@ -26,8 +26,8 @@ characterizations:
       - name: impact
         value: high
         system: "https://fedramp.gov/ns/oscal"
-mitigating-factors:
+mitigating_factors:
   - uuid: "7d7a8ae0-d49c-4e0a-8000-000000000031"
     description: "Network firewall limits external access to affected servers."
-related-observations:
-  - observation-uuid: "7d7a8ae0-d49c-4e0a-8000-000000000002"
+related_observations:
+  - observation_uuid: "7d7a8ae0-d49c-4e0a-8000-000000000002"
