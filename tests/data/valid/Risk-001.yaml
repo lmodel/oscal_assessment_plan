@@ -1,0 +1,33 @@
+uuid: "7d7a8ae0-d49c-4e0a-8000-000000000003"
+title: "Audit Logging Disabled on Production Servers"
+description: >-
+  Audit logging is not enabled on three production servers, reducing
+  the ability to detect and investigate unauthorized access.
+statement: >-
+  The organization must enable audit logging on all production servers
+  in accordance with AU-2 and AU-12 control requirements.
+status: open
+origins:
+  - actors:
+      - type: party
+        actor-uuid: "7d7a8ae0-d49c-0000-8000-000000000001"
+threat-ids:
+  - system: "https://fedramp.gov/ns/oscal"
+    id: "https://nvd.nist.gov/vuln/detail/CVE-2024-00001"
+characterizations:
+  - origin:
+      actors:
+        - type: tool
+          actor-uuid: "7d7a8ae0-d49c-4e0a-0020-000000000001"
+    facets:
+      - name: likelihood
+        value: high
+        system: "https://fedramp.gov/ns/oscal"
+      - name: impact
+        value: high
+        system: "https://fedramp.gov/ns/oscal"
+mitigating-factors:
+  - uuid: "7d7a8ae0-d49c-4e0a-8000-000000000031"
+    description: "Network firewall limits external access to affected servers."
+related-observations:
+  - observation-uuid: "7d7a8ae0-d49c-4e0a-8000-000000000002"

@@ -1,0 +1,3 @@
+# Risk missing required fields: 'uuid', 'statement', and 'status'
+title: "Incomplete Risk Entry"
+description: "This risk record is missing its uuid, statement, and status."

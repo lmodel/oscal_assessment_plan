@@ -1,0 +1,21 @@
+uuid: "7d7a8ae0-d49c-4e0a-0010-000000000001"
+type: software
+title: "Audit Log Service"
+description: >-
+  The centralized audit logging service that collects and stores log
+  events from all production servers.
+status:
+  state: operational
+  remarks: "Service is running in all availability zones."
+protocols:
+  - name: syslog
+    title: "Syslog over TLS"
+    port-ranges:
+      - start: 6514
+        end: 6514
+        transport: TCP
+props:
+  - name: version
+    value: "3.2.1"
+  - name: vendor
+    value: "Example Corp"

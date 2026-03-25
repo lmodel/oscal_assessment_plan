@@ -1,0 +1,36 @@
+uuid: "7d7a8ae0-d49c-4e0a-8000-000000000001"
+metadata:
+  title: "Test Assessment Plan"
+  last-modified: "2026-01-15T12:00:00.000Z"
+  version: "1.0.0"
+  oscal-version: "1.1.2"
+  roles:
+    - id: "assessor"
+      title: "Assessor"
+  parties:
+    - uuid: "7d7a8ae0-d49c-0000-8000-000000000001"
+      type: organization
+      name: "Test Org"
+  responsible-parties:
+    - role-id: "assessor"
+      party-uuids:
+        - "7d7a8ae0-d49c-0000-8000-000000000001"
+import-ssp:
+  href: "https://example.com/ssp/system-security-plan.json"
+reviewed-controls:
+  control-selections:
+    - include-all: {}
+  control-objective-selections:
+    - include-all: {}
+local-definitions:
+  activities:
+    - uuid: "7d7a8ae0-d49c-4e0a-0001-000000000001"
+      description: "Review access control policies."
+      steps:
+        - uuid: "7d7a8ae0-d49c-4e0a-0002-000000000001"
+          description: "Collect policy documents."
+tasks:
+  - uuid: "7d7a8ae0-d49c-4e0a-0003-000000000001"
+    type: action
+    title: "Review Access Controls"
+    description: "Assess AC family controls."

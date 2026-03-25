@@ -1,0 +1,1817 @@
+---
+id: https://w3id.org/lmodel/oscal_assessment_plan
+name: oscal_assessment_plan
+title: oscal_assessment_plan
+description: |-
+  OSCAL Assessment Plan Model: LinkML Schema
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/oscal_assessment_plan
+  - https://pages.nist.gov/OSCAL/learn/concepts/layer/assessment/assessment-plan/
+  - https://medium.com/@gregelin/an-orientation-to-oscal-in-the-devsecops-pipeline-b51e45f8503b
+source: https://pages.nist.gov/OSCAL-Reference/release-assets/latest/oscal_assessment-plan_schema.json
+
+prefixes:
+  oscal_assessment_plan: https://w3id.org/lmodel/oscal_assessment_plan/
+  oscal_catalog: https://w3id.org/lmodel/oscal_catalog/
+  linkml: https://w3id.org/linkml/
+default_prefix: oscal_assessment_plan
+default_range: string
+
+imports:
+  - linkml:types
+  - ./oscal_catalog
+
+enums:
+  TaskTypeEnum:
+    permissible_values:
+      milestone:
+      action:
+
+  TimingUnitEnum:
+    permissible_values:
+      seconds:
+      minutes:
+      hours:
+      days:
+      months:
+      years:
+
+  AssessmentSubjectTypeEnum:
+    permissible_values:
+      component:
+      inventory-item:
+      location:
+      party:
+      user:
+
+  SelectSubjectTypeEnum:
+    permissible_values:
+      component:
+      inventory-item:
+      location:
+      party:
+      user:
+      resource:
+
+  OriginActorTypeEnum:
+    permissible_values:
+      tool:
+      assessment-platform:
+      party:
+
+  ObservationMethodEnum:
+    permissible_values:
+      EXAMINE:
+      INTERVIEW:
+      TEST:
+      UNKNOWN:
+
+  ObservationTypeEnum:
+    permissible_values:
+      ssp-statement-issue:
+      control-objective:
+      mitigation:
+      finding:
+      discovery:
+      historic:
+
+  RiskStatusEnum:
+    permissible_values:
+      open:
+      investigating:
+      remediating:
+      deviation-requested:
+      deviation-approved:
+      closed:
+
+  FindingTargetTypeEnum:
+    permissible_values:
+      statement-id:
+      objective-id:
+
+  ObjectiveStatusStateEnum:
+    permissible_values:
+      satisfied:
+      not-satisfied:
+
+  ObjectiveStatusReasonEnum:
+    permissible_values:
+      pass:
+      fail:
+      other:
+
+  ImplementationStatusStateEnum:
+    permissible_values:
+      implemented:
+      partial:
+      planned:
+      alternative:
+      not-applicable:
+
+  ComponentTypeEnum:
+    permissible_values:
+      this-system:
+      system:
+      interconnection:
+      software:
+      hardware:
+      service:
+      policy:
+      physical:
+      process-procedure:
+      plan:
+      guidance:
+      standard:
+      validation:
+      network:
+
+  ComponentStateEnum:
+    permissible_values:
+      under-development:
+      operational:
+      disposition:
+      other:
+
+  TransportEnum:
+    permissible_values:
+      TCP:
+      UDP:
+
+  AssessmentPartNameEnum:
+    permissible_values:
+      asset:
+      method:
+      objective:
+
+  ResponseLifecycleEnum:
+    permissible_values:
+      recommendation:
+      planned:
+      completed:
+
+
+subsets:
+  assessment_plan:
+    description: >-
+      Classes that form the root Assessment Plan document and its direct
+      structural containers (local-definitions, terms-and-conditions).
+
+  assessment_common:
+    description: >-
+      Classes originating from the oscal-assessment-common namespace: subjects,
+      assets, activities, tasks, findings, observations, risks, and related
+      helper types.
+
+  implementation_common:
+    description: >-
+      Classes originating from the oscal-implementation-common namespace:
+      system components, protocols, inventory items, users, and set-parameter.
+
+  control_common:
+    description: >-
+      Classes originating from the oscal-control-common namespace reused within
+      the Assessment Plan (e.g. ControlPart).
+
+
+# ------------------------------------------------------------------------------
+# Top-level slots (AP-specific; shared catalog slots are available via import)
+# ------------------------------------------------------------------------------
+
+slots:
+  subject-uuid:
+    range: UUIDType
+    description: A UUID reference to the identified subject.
+
+  task-uuid:
+    range: UUIDType
+    description: A UUID reference to a task.
+
+  activity-uuid:
+    range: UUIDType
+    description: A UUID reference to an activity.
+
+  component-uuid:
+    range: UUIDType
+    description: A UUID reference to a component.
+
+  control-id:
+    range: TokenType
+    description: A reference to a control by its identifier.
+
+  include-all:
+    range: IncludeAll
+    inlined: true
+    description: Include all controls from the imported catalog or profile resources.
+
+  subjects:
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Assessment subjects or subject references for this object.
+
+  origins:
+    range: Origin
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Identifies the source of observations, findings, or risks.
+
+  reviewed-controls:
+    range: ReviewedControls
+    inlined: true
+    description: Identifies the controls being assessed and their control objectives.
+
+  tasks:
+    range: Task
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of tasks.
+
+  components:
+    range: SystemComponent
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of system components.
+
+  state:
+    range: string
+    description: Indicates the operational or assessed state of the containing object.
+
+  status:
+    range: string
+    description: Indicates the status of the containing object.
+
+  related-observations:
+    range: RelatedObservation
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Relates the containing object to a set of referenced observations.
+
+  related-tasks:
+    range: RelatedTask
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Identifies tasks for which the containing object is a consequence.
+
+  system:
+    range: URIType
+    description: Specifies the system or scheme from which the identifier originates.
+
+  start:
+    range: DateTimeWithTimezoneType
+    description: The start date/time.
+
+  end:
+    range: DateTimeWithTimezoneType
+    description: The end date/time.
+
+  # AssessmentPlanDocument
+  assessment-plan:
+    range: AssessmentPlan
+    inlined: true
+    description: The root assessment plan object.
+
+  # AssessmentPlan
+  import-ssp:
+    range: ImportSSP
+    inlined: true
+    description: Used to import information about the system from an SSP.
+
+  local-definitions:
+    range: LocalDefinitions
+    inlined: true
+    description: Used to define data objects that do not appear in the referenced SSP.
+
+  terms-and-conditions:
+    range: TermsAndConditions
+    inlined: true
+    description: Terms and conditions under which an assessment can be performed.
+
+  assessment-subjects:
+    range: AssessmentSubject
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Identifies system elements being assessed.
+
+  assessment-assets:
+    range: AssessmentAssets
+    inlined: true
+    description: Identifies the assets used to perform this assessment.
+
+  # LocalDefinitions
+  inventory-items:
+    range: InventoryItem
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of inventory items.
+
+  users:
+    range: SystemUser
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of system users.
+
+  objectives-and-methods:
+    range: LocalObjective
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of locally-defined control objectives.
+
+  activities:
+    range: Activity
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of activities.
+
+  # ReviewedControls
+  control-selections:
+    range: ControlSelection
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Identifies the controls being assessed.
+
+  control-objective-selections:
+    range: ControlObjectiveSelection
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Identifies the control objectives of the assessment.
+
+  # ControlSelection
+  include-controls:
+    range: AssessmentSelectControlById
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Controls to include in the assessment.
+
+  exclude-controls:
+    range: AssessmentSelectControlById
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Controls to exclude from the assessment.
+
+  # ControlObjectiveSelection
+  include-objectives:
+    range: SelectObjectiveById
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Objectives to include in the assessment.
+
+  exclude-objectives:
+    range: SelectObjectiveById
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Objectives to exclude from the assessment.
+
+  # AssessmentSelectControlById
+  statement-ids:
+    range: TokenType
+    multivalued: true
+    description: Statement IDs for control selection.
+
+  # SelectObjectiveById
+  objective-id:
+    range: TokenType
+    description: Reference to a control objective by its identifier.
+
+  # AssessmentSubject
+  include-subjects:
+    range: SelectSubjectById
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Assessment subjects to include.
+
+  exclude-subjects:
+    range: SelectSubjectById
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Assessment subjects to exclude.
+
+  # AssessmentSubjectPlaceholder
+  sources:
+    range: AssessmentSubjectSource
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Activities that will identify assessment subjects.
+
+  # AssessmentAssets
+  assessment-platforms:
+    range: AssessmentPlatform
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of assessment platforms.
+
+  # AssessmentPlatform
+  uses-components:
+    range: UsesComponent
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: The set of components used by the assessment platform.
+
+  # AssessmentMethod
+  part:
+    range: AssessmentPart
+    inlined: true
+    description: An assessment part.
+
+  # Activity
+  steps:
+    range: Step
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of steps in an activity.
+
+  related-controls:
+    range: ReviewedControls
+    inlined: true
+    description: A reference to reviewed controls for this activity or step.
+
+  # Task
+  timing:
+    range: EventTiming
+    inlined: true
+    description: The timing under which a task is intended to occur.
+
+  dependencies:
+    range: TaskDependency
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Tasks that this task depends on.
+
+  associated-activities:
+    range: AssociatedActivity
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Activities associated with this task.
+
+  # EventTiming
+  on-date:
+    range: OnDateCondition
+    inlined: true
+    description: The task is intended to occur on the specified date.
+
+  within-date-range:
+    range: WithinDateRange
+    inlined: true
+    description: The task is intended to occur within the specified date range.
+
+  at-frequency:
+    range: AtFrequency
+    inlined: true
+    description: The task is intended to occur at the specified frequency.
+
+  # AtFrequency
+  period:
+    range: integer
+    description: The task must occur every period (in the given units).
+
+  unit:
+    range: TimingUnitEnum
+    description: The unit of time for the period.
+
+  # SetParameter
+  param-id:
+    range: TokenType
+    description: A reference to a parameter by its identifier.
+
+  # SystemComponent
+  purpose:
+    range: MarkupLineType
+    description: A summary of the technological or business purpose of the component.
+
+  protocols:
+    range: Protocol
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Information about the protocol used to provide a service.
+
+  # Protocol
+  port-ranges:
+    range: PortRange
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Where applicable, the transport layer protocol port range.
+
+  # PortRange
+  transport:
+    range: TransportEnum
+    description: Indicates the transport type.
+
+  # SystemUser
+  role-ids:
+    range: TokenType
+    multivalued: true
+    description: Role identifiers associated with the user.
+
+  authorized-privileges:
+    range: AuthorizedPrivilege
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of authorized privileges.
+
+  # AuthorizedPrivilege
+  functions-performed:
+    range: string
+    multivalued: true
+    description: Describes a function performed for a given authorized privilege.
+
+  # InventoryItem
+  implemented-components:
+    range: ImplementedComponent
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of implemented components.
+
+  # SystemId
+  identifier-type:
+    range: URIType
+    description: A human-readable label for a specific identifier scheme.
+
+  # Origin
+  actors:
+    range: OriginActor
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: The actor that produces an observation, a finding, or a risk.
+
+  # OriginActor
+  actor-uuid:
+    range: UUIDType
+    description: A machine-oriented identifier reference to the tool or person based on the associated type.
+
+  # RelatedTask
+  identified-subject:
+    range: IdentifiedSubject
+    inlined: true
+    description: Used to detail assessment subjects that were identified by this task.
+
+  # IdentifiedSubject
+  subject-placeholder-uuid:
+    range: UUIDType
+    description: A reference to an assessment subject placeholder defined in the assessment plan.
+
+  # Observation
+  methods:
+    range: ObservationMethodEnum
+    multivalued: true
+    description: Identifies how the observation was made.
+
+  types:
+    range: ObservationTypeEnum
+    multivalued: true
+    description: Identifies the nature of the observation.
+
+  relevant-evidence:
+    range: RelevantEvidence
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Links the observation to relevant evidence.
+
+  collected:
+    range: DateTimeWithTimezoneType
+    description: Date/time stamp identifying when the finding information was collected.
+
+  expires:
+    range: DateTimeWithTimezoneType
+    description: Date/time identifying when the finding information is no longer considered valid.
+
+  # Finding
+  target:
+    range: FindingTarget
+    inlined: true
+    description: Identifies the target of a finding.
+
+  implementation-statement-uuid:
+    range: UUIDType
+    description: A reference to the implementation statement in the SSP to which this finding is related.
+
+  related-risks:
+    range: AssociatedRisk
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Relates the finding to a set of referenced risks.
+
+  # FindingTarget
+  target-id:
+    range: TokenType
+    description: Identifies the specific target qualified by the type.
+
+  implementation-status:
+    range: ImplementationStatus
+    inlined: true
+    description: Identifies the implementation status of the control.
+
+  # ObjectiveStatus
+  reason:
+    range: ObjectiveStatusReasonEnum
+    description: The reason the objective was given its status.
+
+  # RelatedObservation
+  observation-uuid:
+    range: UUIDType
+    description: A machine-oriented identifier reference to an observation defined in the list of observations.
+
+  # AssociatedRisk
+  risk-uuid:
+    range: UUIDType
+    description: A machine-oriented identifier reference to a risk defined in the list of risks.
+
+  # Risk
+  statement:
+    range: MarkupMultilineType
+    description: An assessor's summary of the risk, in narrative form.
+
+  threat-ids:
+    range: ThreatId
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: The referenced threat identifiers.
+
+  characterizations:
+    range: Characterization
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Supporting information about the risk and how it relates to the system.
+
+  mitigating-factors:
+    range: MitigatingFactor
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Describes existing mitigating factors that may affect the overall determination of the risk.
+
+  deadline:
+    range: DateTimeWithTimezoneType
+    description: The date/time by which the risk must be resolved.
+
+  remediations:
+    range: Response
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Describes either recommended or actual responses to a risk.
+
+  risk-log:
+    range: RiskLog
+    inlined: true
+    description: A log of all risk-related tasks taken.
+
+  # Characterization
+  origin:
+    range: Origin
+    inlined: true
+    description: The source of the finding.
+
+  facets:
+    range: Facet
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: An individual characteristic that is part of a larger set produced by the same actor.
+
+  # MitigatingFactor
+  implementation-uuid:
+    range: UUIDType
+    description: A machine-oriented, globally unique identifier with cross-instance scope that can be used to reference this implementation statement elsewhere in this or other OSCAL instances.
+
+  # Response
+  lifecycle:
+    range: ResponseLifecycleEnum
+    description: Identifies whether this is a recommendation or an actual plan.
+
+  required-assets:
+    range: RequiredAsset
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Identifies an asset required to achieve remediation.
+
+  # RiskLog
+  entries:
+    range: RiskLogEntry
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Identifies an individual risk response that occurred as part of managing an identified risk.
+
+  # RiskLogEntry
+  logged-by:
+    range: LoggedBy
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Used to indicate who created a log entry in what role.
+
+  status-change:
+    range: RiskStatusEnum
+    description: Identifies the risk change that prompted the log entry.
+
+  related-responses:
+    range: RiskResponseReference
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Identifies an individual risk response that this log entry is for.
+
+  # LoggedBy
+  party-uuid:
+    range: UUIDType
+    description: A machine-oriented identifier reference to the party who is making the log entry.
+
+  # RiskResponseReference
+  response-uuid:
+    range: UUIDType
+    description: A machine-oriented identifier reference to a unique risk response.
+
+# ------------------------------------------------------------------------------
+# Classes
+# ------------------------------------------------------------------------------
+
+classes:
+  # -- Root document -----------------------------------------------------------
+
+  AssessmentPlanDocument:
+    tree_root: true
+    description: Root wrapper for an OSCAL Assessment Plan document.
+    slots:
+      - assessment-plan
+    slot_usage:
+      assessment-plan:
+        required: true
+    in_subset:
+      - assessment_plan
+
+  # -- Top-level Assessment Plan -----------------------------------------------
+
+  AssessmentPlan:
+    description: >-
+      An assessment plan, such as those provided by a FedRAMP assessor.
+    slots:
+      - uuid
+      - metadata
+      - import-ssp
+      - local-definitions
+      - terms-and-conditions
+      - assessment-subjects
+      - assessment-assets
+      - reviewed-controls
+      - tasks
+      - back-matter
+    slot_usage:
+      uuid:
+        required: true
+        description: Assessment Plan Universally Unique Identifier.
+      metadata:
+        required: true
+      import-ssp:
+        required: true
+      reviewed-controls:
+        required: true
+    in_subset:
+      - assessment_plan
+
+  # -- Assessment-specific common ----------------------------------------------
+
+  ImportSSP:
+    description: Used by the assessment plan and POA&M to import information about the system.
+    slots:
+      - href
+      - remarks
+    slot_usage:
+      href:
+        required: true
+    in_subset:
+      - assessment_common
+
+  LocalDefinitions:
+    description: >-
+      Used to define data objects that are used in the assessment plan, that do
+      not appear in the referenced SSP.
+    slots:
+      - components
+      - inventory-items
+      - users
+      - objectives-and-methods
+      - activities
+      - remarks
+    in_subset:
+      - assessment_plan
+
+  TermsAndConditions:
+    description: >-
+      Used to define various terms and conditions under which an assessment can
+      be performed.
+    slots:
+      - parts
+    slot_usage:
+      parts:
+        range: AssessmentPart
+    in_subset:
+      - assessment_plan
+
+  ReviewedControls:
+    description: Identifies the controls being assessed and their control objectives.
+    mixins:
+      - OscalCommon
+    slots:
+      - description
+      - control-selections
+      - control-objective-selections
+    slot_usage:
+      control-selections:
+        required: true
+    in_subset:
+      - assessment_common
+
+  ControlSelection:
+    description: Identifies the controls being assessed.
+    mixins:
+      - OscalCommon
+    slots:
+      - description
+      - include-all
+      - include-controls
+      - exclude-controls
+    in_subset:
+      - assessment_common
+
+  ControlObjectiveSelection:
+    description: Identifies the control objectives of the assessment.
+    mixins:
+      - OscalCommon
+    slots:
+      - description
+      - include-all
+      - include-objectives
+      - exclude-objectives
+    in_subset:
+      - assessment_common
+
+  AssessmentSelectControlById:
+    description: >-
+      Select a specific control for inclusion/exclusion in the assessment by
+      literal control ID and optional statement IDs.
+    slots:
+      - control-id
+      - statement-ids
+    slot_usage:
+      control-id:
+        required: true
+    in_subset:
+      - assessment_common
+
+  SelectObjectiveById:
+    description: Used to select a control objective for inclusion/exclusion.
+    slots:
+      - objective-id
+      - remarks
+    slot_usage:
+      objective-id:
+        required: true
+    in_subset:
+      - assessment_common
+
+  AssessmentSubject:
+    description: >-
+      Identifies system elements being assessed, such as components, inventory
+      items, and locations.
+    mixins:
+      - OscalCommon
+    slots:
+      - type
+      - description
+      - include-all
+      - include-subjects
+      - exclude-subjects
+    slot_usage:
+      type:
+        range: AssessmentSubjectTypeEnum
+        required: true
+    in_subset:
+      - assessment_common
+
+  SelectSubjectById:
+    description: Identifies a set of assessment subjects to include/exclude by UUID.
+    mixins:
+      - OscalCommon
+    slots:
+      - subject-uuid
+      - type
+    slot_usage:
+      subject-uuid:
+        required: true
+      type:
+        range: SelectSubjectTypeEnum
+        required: true
+    in_subset:
+      - assessment_common
+
+  SubjectReference:
+    description: >-
+      A human-oriented identifier reference to a resource. Use type to indicate
+      whether the identified resource is a component, inventory item, location,
+      user, or something else.
+    mixins:
+      - OscalCommon
+    slots:
+      - subject-uuid
+      - type
+      - title
+    slot_usage:
+      subject-uuid:
+        required: true
+      type:
+        range: SelectSubjectTypeEnum
+        required: true
+    in_subset:
+      - assessment_common
+
+  AssessmentSubjectPlaceholder:
+    description: >-
+      Used when the assessment subjects will be determined as part of one or more
+      other assessment activities.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - description
+      - sources
+    slot_usage:
+      uuid:
+        required: true
+      sources:
+        required: true
+    in_subset:
+      - assessment_common
+
+  AssessmentSubjectSource:
+    description: Assessment subjects will be identified while conducting the referenced activity.
+    slots:
+      - task-uuid
+      - remarks
+    slot_usage:
+      task-uuid:
+        required: true
+    in_subset:
+      - assessment_common
+
+  AssessmentAssets:
+    description: Identifies the assets used to perform this assessment.
+    slots:
+      - components
+      - assessment-platforms
+    slot_usage:
+      assessment-platforms:
+        required: true
+    in_subset:
+      - assessment_common
+
+  AssessmentPlatform:
+    description: Used to represent the toolset used to perform aspects of the assessment.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - title
+      - uses-components
+    slot_usage:
+      uuid:
+        required: true
+    in_subset:
+      - assessment_common
+
+  UsesComponent:
+    description: The set of components that are used by the assessment platform.
+    mixins:
+      - OscalCommon
+      - HasResponsibleParties
+    slots:
+      - component-uuid
+    slot_usage:
+      component-uuid:
+        required: true
+    in_subset:
+      - assessment_common
+
+  # -- Activities and Tasks ----------------------------------------------------
+
+  LocalObjective:
+    description: >-
+      A local definition of a control objective for this assessment. Uses catalog
+      syntax for control objective and assessment actions.
+    mixins:
+      - OscalCommon
+    slots:
+      - control-id
+      - description
+      - parts
+    slot_usage:
+      control-id:
+        required: true
+      parts:
+        range: ControlPart
+        required: true
+    in_subset:
+      - assessment_common
+
+  AssessmentMethod:
+    description: A local definition of a control objective.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - description
+      - part
+    slot_usage:
+      uuid:
+        required: true
+      part:
+        required: true
+    in_subset:
+      - assessment_common
+
+  Activity:
+    description: >-
+      Identifies an assessment or related process that can be performed. In the
+      assessment plan, this is an intended activity.
+    mixins:
+      - OscalCommon
+      - HasResponsibleRoles
+    slots:
+      - uuid
+      - title
+      - description
+      - steps
+      - related-controls
+    slot_usage:
+      uuid:
+        required: true
+      description:
+        required: true
+    in_subset:
+      - assessment_common
+
+  Step:
+    description: >-
+      Identifies an individual step in a series of steps related to an activity,
+      such as an assessment test or examination procedure.
+    mixins:
+      - OscalCommon
+      - HasResponsibleRoles
+    slots:
+      - uuid
+      - title
+      - description
+      - reviewed-controls
+    slot_usage:
+      uuid:
+        required: true
+      description:
+        required: true
+    in_subset:
+      - assessment_common
+
+  Task:
+    description: >-
+      Represents a scheduled event or milestone, which may be associated with a
+      series of assessment actions.
+    mixins:
+      - OscalCommon
+      - HasResponsibleRoles
+    slots:
+      - uuid
+      - type
+      - title
+      - description
+      - timing
+      - dependencies
+      - associated-activities
+      - tasks
+      - subjects
+    slot_usage:
+      uuid:
+        required: true
+      type:
+        range: TaskTypeEnum
+        required: true
+      title:
+        required: true
+      subjects:
+        range: AssessmentSubject
+    in_subset:
+      - assessment_common
+
+  EventTiming:
+    description: The timing under which the task is intended to occur.
+    slots:
+      - on-date
+      - within-date-range
+      - at-frequency
+    in_subset:
+      - assessment_common
+
+  OnDateCondition:
+    description: The task is intended to occur on the specified date.
+    slots:
+      - date
+      - remarks
+    slot_usage:
+      date:
+        required: true
+    in_subset:
+      - assessment_common
+
+  WithinDateRange:
+    description: The task is intended to occur within the specified date range.
+    slots:
+      - start
+      - end
+      - remarks
+    slot_usage:
+      start:
+        required: true
+      end:
+        required: true
+    in_subset:
+      - assessment_common
+
+  AtFrequency:
+    description: The task is intended to occur at the specified frequency.
+    slots:
+      - period
+      - unit
+      - remarks
+    slot_usage:
+      period:
+        required: true
+      unit:
+        required: true
+    in_subset:
+      - assessment_common
+
+  TaskDependency:
+    description: Used to indicate that a task is dependent on another task.
+    slots:
+      - task-uuid
+      - remarks
+    slot_usage:
+      task-uuid:
+        required: true
+    in_subset:
+      - assessment_common
+
+  AssociatedActivity:
+    description: Identifies an individual activity to be performed as part of a task.
+    mixins:
+      - OscalCommon
+      - HasResponsibleRoles
+    slots:
+      - activity-uuid
+      - subjects
+    slot_usage:
+      activity-uuid:
+        required: true
+      subjects:
+        range: AssessmentSubject
+        required: true
+    in_subset:
+      - assessment_common
+
+  # -- Assessment Part / Control Part ------------------------------------------
+
+  AssessmentPart:
+    description: A partition of an assessment plan or results or a child of another part.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - uuid
+      - name
+      - ns
+      - class
+      - title
+      - prose
+      - parts
+    slot_usage:
+      name:
+        range: AssessmentPartNameEnum
+        required: true
+      parts:
+        range: AssessmentPart
+    in_subset:
+      - assessment_common
+
+  ControlPart:
+    description: >-
+      An annotated, markup-based textual element of a control's or catalog group's
+      definition, or a child of another part.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - id
+      - name
+      - ns
+      - class
+      - title
+      - prose
+      - parts
+    slot_usage:
+      name:
+        required: true
+      parts:
+        range: ControlPart
+    in_subset:
+      - control_common
+
+  # -- Control Common ----------------------------------------------------------
+
+  SetParameter:
+    description: Identifies the parameter that will be set by the enclosed value.
+    slots:
+      - param-id
+      - values
+      - remarks
+    slot_usage:
+      param-id:
+        required: true
+      values:
+        required: true
+    in_subset:
+      - implementation_common
+
+  # -- Implementation Common ---------------------------------------------------
+
+  SystemComponent:
+    description: A defined component that can be part of an implemented system.
+    mixins:
+      - OscalCommon
+      - HasResponsibleRoles
+    slots:
+      - uuid
+      - type
+      - title
+      - description
+      - purpose
+      - protocols
+      - status
+    slot_usage:
+      uuid:
+        required: true
+      type:
+        range: ComponentTypeEnum
+        required: true
+      title:
+        required: true
+      description:
+        required: true
+      status:
+        range: ComponentStatus
+        required: true
+        inlined: true
+    in_subset:
+      - implementation_common
+
+  ComponentStatus:
+    description: Describes the operational status of the system component.
+    slots:
+      - state
+      - remarks
+    slot_usage:
+      state:
+        range: ComponentStateEnum
+        required: true
+    in_subset:
+      - implementation_common
+
+  Protocol:
+    description: Information about the protocol used to provide a service.
+    slots:
+      - uuid
+      - name
+      - title
+      - port-ranges
+    slot_usage:
+      name:
+        range: string
+        required: true
+    in_subset:
+      - implementation_common
+
+  PortRange:
+    description: Where applicable, the transport layer protocol port range.
+    slots:
+      - start
+      - end
+      - transport
+      - remarks
+    slot_usage:
+      start:
+        range: integer
+      end:
+        range: integer
+    in_subset:
+      - implementation_common
+
+  ImplementationStatus:
+    description: Indicates the degree to which a given control is implemented.
+    slots:
+      - state
+      - remarks
+    slot_usage:
+      state:
+        range: ImplementationStatusStateEnum
+        required: true
+    in_subset:
+      - implementation_common
+
+  SystemUser:
+    description: A type of user that interacts with the system based on an associated role.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - title
+      - short-name
+      - description
+      - role-ids
+      - authorized-privileges
+    slot_usage:
+      uuid:
+        required: true
+    in_subset:
+      - implementation_common
+
+  AuthorizedPrivilege:
+    description: >-
+      Identifies a specific system privilege held by the user, along with an
+      associated description and/or rationale for the privilege.
+    slots:
+      - title
+      - description
+      - functions-performed
+    slot_usage:
+      title:
+        required: true
+      functions-performed:
+        required: true
+    in_subset:
+      - implementation_common
+
+  InventoryItem:
+    description: A single managed inventory item within the system.
+    mixins:
+      - OscalCommon
+      - HasResponsibleParties
+    slots:
+      - uuid
+      - description
+      - implemented-components
+    slot_usage:
+      uuid:
+        required: true
+      description:
+        required: true
+    in_subset:
+      - implementation_common
+
+  ImplementedComponent:
+    description: The set of components that are implemented in a given system inventory item.
+    mixins:
+      - OscalCommon
+      - HasResponsibleParties
+    slots:
+      - component-uuid
+    slot_usage:
+      component-uuid:
+        required: true
+    in_subset:
+      - implementation_common
+
+  SystemId:
+    description: A human-oriented, globally unique identifier for a system.
+    slots:
+      - id
+      - identifier-type
+    slot_usage:
+      id:
+        range: string
+        required: true
+    in_subset:
+      - implementation_common
+
+  # -- Findings, Observations, Risks -------------------------------------------
+
+  Origin:
+    description: Identifies the source of the finding, such as a tool, interviewed person, or activity.
+    slots:
+      - actors
+      - related-tasks
+    slot_usage:
+      actors:
+        required: true
+    in_subset:
+      - assessment_common
+
+  OriginActor:
+    description: The actor that produces an observation, a finding, or a risk.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - type
+      - actor-uuid
+      - role-id
+    slot_usage:
+      type:
+        range: OriginActorTypeEnum
+        required: true
+      actor-uuid:
+        required: true
+    in_subset:
+      - assessment_common
+
+  RelatedTask:
+    description: Identifies an individual task for which the containing object is a consequence of.
+    mixins:
+      - OscalCommon
+      - HasResponsibleParties
+    slots:
+      - task-uuid
+      - subjects
+      - identified-subject
+    slot_usage:
+      task-uuid:
+        required: true
+      subjects:
+        range: AssessmentSubject
+    in_subset:
+      - assessment_common
+
+  IdentifiedSubject:
+    description: Used to detail assessment subjects that were identified by this task.
+    slots:
+      - subject-placeholder-uuid
+      - subjects
+    slot_usage:
+      subject-placeholder-uuid:
+        required: true
+      subjects:
+        range: AssessmentSubject
+        required: true
+    in_subset:
+      - assessment_common
+
+  Observation:
+    description: Describes an individual observation.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - title
+      - description
+      - methods
+      - types
+      - origins
+      - subjects
+      - relevant-evidence
+      - collected
+      - expires
+    slot_usage:
+      uuid:
+        required: true
+      description:
+        required: true
+      subjects:
+        range: SubjectReference
+      methods:
+        required: true
+      collected:
+        required: true
+    in_subset:
+      - assessment_common
+
+  RelevantEvidence:
+    description: Links this observation to relevant evidence.
+    mixins:
+      - OscalCommon
+    slots:
+      - href
+      - description
+    slot_usage:
+      description:
+        required: true
+    in_subset:
+      - assessment_common
+
+  Finding:
+    description: Describes an individual finding.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - title
+      - description
+      - target
+      - implementation-statement-uuid
+      - origins
+      - related-observations
+      - related-risks
+    slot_usage:
+      uuid:
+        required: true
+      title:
+        required: true
+      description:
+        required: true
+      target:
+        required: true
+    in_subset:
+      - assessment_common
+
+  FindingTarget:
+    description: Captures an assessor's conclusions regarding the degree to which an objective is satisfied.
+    mixins:
+      - OscalCommon
+    slots:
+      - type
+      - target-id
+      - title
+      - description
+      - implementation-status
+      - status
+    slot_usage:
+      type:
+        range: FindingTargetTypeEnum
+        required: true
+      target-id:
+        required: true
+      status:
+        range: ObjectiveStatus
+        required: true
+        inlined: true
+    in_subset:
+      - assessment_common
+
+  ObjectiveStatus:
+    description: A determination of if the objective is satisfied or not within a given system.
+    slots:
+      - state
+      - reason
+      - remarks
+    slot_usage:
+      state:
+        range: ObjectiveStatusStateEnum
+        required: true
+    in_subset:
+      - assessment_common
+
+  RelatedObservation:
+    description: Relates the identified element to a set of referenced observations.
+    slots:
+      - observation-uuid
+      - remarks
+    slot_usage:
+      observation-uuid:
+        required: true
+    in_subset:
+      - assessment_common
+
+  AssociatedRisk:
+    description: Relates the finding to a set of referenced risks.
+    slots:
+      - risk-uuid
+      - remarks
+    slot_usage:
+      risk-uuid:
+        required: true
+    in_subset:
+      - assessment_common
+
+  Risk:
+    description: An identified risk.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - uuid
+      - title
+      - description
+      - statement
+      - origins
+      - threat-ids
+      - characterizations
+      - mitigating-factors
+      - deadline
+      - remediations
+      - risk-log
+      - related-observations
+      - status
+    slot_usage:
+      uuid:
+        required: true
+      title:
+        required: true
+      description:
+        required: true
+      statement:
+        required: true
+      status:
+        range: RiskStatusEnum
+        required: true
+    in_subset:
+      - assessment_common
+
+  ThreatId:
+    description: A pointer, by ID, to an externally-defined threat.
+    slots:
+      - href
+      - system
+      - id
+    slot_usage:
+      system:
+        required: true
+      id:
+        range: URIType
+        required: true
+    in_subset:
+      - assessment_common
+
+  Characterization:
+    description: A collection of descriptive data about the containing object from a specific origin.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - origin
+      - facets
+    slot_usage:
+      origin:
+        required: true
+      facets:
+        required: true
+    in_subset:
+      - assessment_common
+
+  Facet:
+    description: An individual characteristic that is part of a larger set produced by the same actor.
+    mixins:
+      - OscalCommon
+    slots:
+      - name
+      - value
+      - system
+    slot_usage:
+      name:
+        required: true
+      value:
+        required: true
+      system:
+        required: true
+    in_subset:
+      - assessment_common
+
+  MitigatingFactor:
+    description: Describes an existing mitigating factor that may affect the overall determination of the risk.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - uuid
+      - description
+      - implementation-uuid
+      - subjects
+    slot_usage:
+      uuid:
+        required: true
+      description:
+        required: true
+      subjects:
+        range: SubjectReference
+    in_subset:
+      - assessment_common
+
+  Response:
+    description: Describes either recommended or an actual plan for addressing the risk.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - title
+      - description
+      - lifecycle
+      - origins
+      - required-assets
+      - tasks
+    slot_usage:
+      uuid:
+        required: true
+      title:
+        required: true
+      description:
+        required: true
+      lifecycle:
+        required: true
+    in_subset:
+      - assessment_common
+
+  RequiredAsset:
+    description: Identifies an asset required to achieve remediation.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - title
+      - description
+      - subjects
+    slot_usage:
+      uuid:
+        required: true
+      description:
+        required: true
+      subjects:
+        range: SubjectReference
+    in_subset:
+      - assessment_common
+
+  RiskLog:
+    description: A log of all risk-related tasks taken.
+    slots:
+      - entries
+    slot_usage:
+      entries:
+        required: true
+    in_subset:
+      - assessment_common
+
+  RiskLogEntry:
+    description: Identifies an individual risk response that occurred as part of managing an identified risk.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - title
+      - description
+      - start
+      - end
+      - logged-by
+      - status-change
+      - related-responses
+    slot_usage:
+      uuid:
+        required: true
+      start:
+        required: true
+    in_subset:
+      - assessment_common
+
+  LoggedBy:
+    description: Used to indicate who created a log entry in what role.
+    slots:
+      - party-uuid
+      - role-id
+      - remarks
+    slot_usage:
+      party-uuid:
+        required: true
+    in_subset:
+      - assessment_common
+
+  RiskResponseReference:
+    description: Identifies an individual risk response that this log entry is for.
+    mixins:
+      - OscalCommon
+    slots:
+      - response-uuid
+      - related-tasks
+    slot_usage:
+      response-uuid:
+        required: true
+    in_subset:
+      - assessment_common

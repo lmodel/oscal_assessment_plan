@@ -1,0 +1,1229 @@
+---
+id: https://w3id.org/lmodel/oscal_catalog
+name: oscal_catalog
+title: oscal_catalog
+description: |-
+  OSCAL Control Catalog Model: LinkML Schema
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/oscal_catalog
+  - https://pages.nist.gov/OSCAL/learn/concepts/layer/control/catalog/
+source: https://pages.nist.gov/OSCAL-Reference/release-assets/latest/oscal_catalog_schema.json
+
+prefixes:
+  oscal_catalog: https://w3id.org/lmodel/oscal_catalog/
+  linkml: https://w3id.org/linkml/
+default_prefix: oscal_catalog
+default_range: string
+
+imports:
+  - linkml:types
+
+types:
+  UUIDType:
+    uri: xsd:string
+    base: str
+    description: >-
+      A type 4 or type 5 UUID per RFC 4122.
+    pattern: "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[45][0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$"
+
+  URIType:
+    uri: xsd:anyURI
+    base: str
+    description: >-
+      A universal resource identifier formatted according to RFC3986.
+
+  URIReferenceType:
+    uri: xsd:anyURI
+    base: str
+    description: >-
+      A URI Reference, either a URI or relative-reference, per RFC3986.
+
+  DateTimeWithTimezoneType:
+    uri: xsd:dateTime
+    base: str
+    description: >-
+      A string representing a point in time with a required timezone.
+
+  MarkupLineType:
+    uri: xsd:string
+    base: str
+    description: >-
+      A single line of Markdown content (no newlines).
+
+  MarkupMultilineType:
+    uri: xsd:string
+    base: str
+    description: >-
+      Multiple lines of Markdown content.
+
+  TokenType:
+    uri: xsd:string
+    base: str
+    description: >-
+      A non-colonized XML NCName token.
+
+  Base64Type:
+    uri: xsd:base64Binary
+    base: str
+    description: >-
+      Binary data encoded using Base64 as defined by RFC4648.
+
+  EmailAddressType:
+    uri: xsd:string
+    base: str
+    description: >-
+      An email address string formatted according to RFC 6531.
+    pattern: "^.+@.+$"
+
+enums:
+  PartyTypeEnum:
+    permissible_values:
+      person:
+      organization:
+
+  HashAlgorithmEnum:
+    permissible_values:
+      SHA-224:
+      SHA-256:
+      SHA-384:
+      SHA-512:
+      SHA3-224:
+      SHA3-256:
+      SHA3-384:
+      SHA3-512:
+
+  PhoneTypeEnum:
+    permissible_values:
+      home:
+      office:
+      mobile:
+
+  AddressTypeEnum:
+    permissible_values:
+      home:
+      work:
+
+  ParameterCardinalityEnum:
+    permissible_values:
+      one:
+      one-or-more:
+
+  WithChildControlsEnum:
+    permissible_values:
+      yes:
+      no:
+
+
+subsets:
+  catalog:
+    description: >-
+      Classes originating from the oscal-catalog namespace: the root catalog
+      document, groups, and controls.
+
+  metadata:
+    description: >-
+      Classes originating from the oscal-metadata namespace: document metadata,
+      parties, roles, locations, and utility types such as Property, Link, and Hash.
+
+  back_matter:
+    description: >-
+      Classes originating from the oscal-metadata back-matter definition:
+      back-matter container and its constituent resource types.
+
+  control_common:
+    description: >-
+      Classes originating from the oscal-control-common namespace: parts,
+      parameters, constraints, guidelines, selections, and control-matching
+      helpers.
+
+
+# Top-level slots
+
+slots:
+  uuid:
+    range: UUIDType
+    description: A machine-oriented, globally unique identifier with a cross-instance scope.
+
+  title:
+    range: MarkupLineType
+    description: A human-readable name or title.
+
+  description:
+    range: MarkupMultilineType
+    description: A human-readable description.
+
+  remarks:
+    range: MarkupMultilineType
+    description: Additional commentary about the containing object.
+
+  href:
+    range: URIReferenceType
+    description: A resolvable URL reference to a resource.
+
+  props:
+    range: Property
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A list of properties.
+
+  links:
+    range: Link
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A list of links.
+
+  responsible-roles:
+    range: ResponsibleRole
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Responsible role assignments.
+
+  responsible-parties:
+    range: ResponsibleParty
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Responsible party assignments.
+
+  id:
+    range: TokenType
+    description: A unique human-oriented identifier within a particular context.
+
+  _class:
+    range: TokenType
+    description: A textual label that provides a sub-type or characterization.
+
+  name:
+    range: TokenType
+    description: A textual label that uniquely identifies an attribute or semantic type.
+
+  ns:
+    range: URIType
+    description: >-
+      An optional namespace qualifying a name. Allows different organizations to
+      associate distinct semantics with the same name.
+
+  type:
+    range: string
+    description: Indicates the nature or kind of the containing object.
+
+  value:
+    range: string
+    description: The value associated with the containing object.
+
+  scheme:
+    range: URIType
+    description: Qualifies the kind of identifier using a URI.
+
+  role-id:
+    range: TokenType
+    description: A reference to a role by its identifier.
+
+  party-uuids:
+    range: UUIDType
+    multivalued: true
+    description: References to party UUIDs.
+
+  email-addresses:
+    range: EmailAddressType
+    multivalued: true
+    description: Email addresses associated with the containing object.
+
+  telephone-numbers:
+    range: TelephoneNumber
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Telephone numbers associated with the containing object.
+
+  short-name:
+    range: string
+    description: A short common name, abbreviation, or acronym.
+
+  published:
+    range: DateTimeWithTimezoneType
+    description: The date and time the document was last made available.
+
+  last-modified:
+    range: DateTimeWithTimezoneType
+    description: The date and time the document was last modified.
+
+  version:
+    range: string
+    description: >-
+      Used to distinguish a specific revision of an OSCAL document from other
+      previous and future versions.
+
+  oscal-version:
+    range: string
+    description: >-
+      The OSCAL model version the document was authored against and will conform
+      to as valid.
+
+  document-ids:
+    range: DocumentId
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: Document identifiers qualified by an identifier scheme.
+
+  prose:
+    range: MarkupMultilineType
+    description: Permits multiple paragraphs, lists, tables etc.
+
+  params:
+    range: Parameter
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: >-
+      Parameters providing a mechanism for the dynamic assignment of value(s)
+      in a control.
+
+  controls:
+    range: Control
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of controls.
+
+  groups:
+    range: Group
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of control groups.
+
+  parts:
+    range: Part
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: A collection of parts.
+
+  media-type:
+    range: string
+    description: >-
+      A label that indicates the nature of a resource, as a data serialization
+      or format.
+
+  text:
+    range: MarkupLineType
+    description: A textual label to associate with the containing object.
+
+  "how-many":
+    range: ParameterCardinalityEnum
+    aliases:
+      - how_many
+    description: >-
+      Describes the number of selections that must occur. Without this
+      setting, only one value should be assumed to be permitted.
+
+  choice:
+    range: MarkupLineType
+    multivalued: true
+    description: A value selection among several such options.
+
+  catalog:
+    range: Catalog
+    inlined: true
+    description: Root catalog document.
+
+  metadata:
+    range: Metadata
+    inlined: true
+    description: Provides information about the containing document, and defines concepts shared across the document.
+
+  back-matter:
+    range: BackMatter
+    inlined: true
+    description: A collection of resources that may be referenced from within the OSCAL document instance.
+
+  revisions:
+    range: Revision
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  roles:
+    range: Role
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  locations:
+    range: Location
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  parties:
+    range: Party
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  actions:
+    range: Action
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  identifier:
+    range: string
+    description: A document identifier value.
+
+  address:
+    range: Address
+    inlined: true
+
+  urls:
+    range: URIType
+    multivalued: true
+
+  external-ids:
+    range: PartyExternalId
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  addresses:
+    range: Address
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  location-uuids:
+    range: UUIDType
+    multivalued: true
+
+  member-of-organizations:
+    range: UUIDType
+    multivalued: true
+
+  date:
+    range: DateTimeWithTimezoneType
+    description: The date and time when the action occurred.
+
+  system:
+    range: URIType
+    description: Specifies the action type system used.
+
+  number:
+    range: string
+    description: A telephone number value.
+
+  addr-lines:
+    range: string
+    multivalued: true
+
+  city:
+    range: string
+
+  state:
+    range: string
+
+  postal-code:
+    range: string
+
+  country:
+    range: string
+
+  algorithm:
+    range: HashAlgorithmEnum
+    description: The digest method by which a hash is derived.
+
+  group:
+    range: TokenType
+    description: An identifier for relating distinct sets of properties.
+
+  rel:
+    range: TokenType
+    description: >-
+      Describes the type of relationship provided by the link's hypertext
+      reference. This can be an indicator of the link's purpose.
+
+  resource-fragment:
+    range: string
+    description: >-
+      In case where the href points to a back-matter/resource, this value
+      will indicate the URI fragment to append to any rlink associated with
+      the resource. This value MUST be URI encoded.
+
+  resources:
+    range: Resource
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  citation:
+    range: Citation
+    inlined: true
+
+  rlinks:
+    range: ResourceLink
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  base64:
+    range: Base64Resource
+    inlined: true
+
+  hashes:
+    range: Hash
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  filename:
+    range: TokenType
+    description: >-
+      Name of the file before it was encoded as Base64 to be embedded in a
+      resource.
+
+  depends-on:
+    range: TokenType
+    description: >-
+      (deprecated) Another parameter invoking this one. This construct has
+      been deprecated and should not be used.
+
+  label:
+    range: MarkupLineType
+    description: >-
+      A short, placeholder name for the parameter, which can be used as a
+      substitute for a value if no value is assigned.
+
+  usage:
+    range: MarkupMultilineType
+    description: Describes the purpose and use of a parameter.
+
+  constraints:
+    range: ParameterConstraint
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  guidelines:
+    range: ParameterGuideline
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  values:
+    range: string
+    multivalued: true
+    description: A parameter value or set of values.
+
+  select:
+    range: ParameterSelection
+    inlined: true
+
+  tests:
+    range: ConstraintTest
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  expression:
+    range: string
+    description: A formal (executable) expression of a constraint.
+
+  with-child-controls:
+    range: WithChildControlsEnum
+    description: >-
+      When a control is included, whether its child (dependent) controls
+      are also included.
+
+  with-ids:
+    range: TokenType
+    multivalued: true
+    description: Selecting a control by its ID given as a literal.
+
+  matching:
+    range: ControlMatching
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: >-
+      Selecting a set of controls by matching their IDs with a wildcard
+      pattern.
+
+  pattern:
+    range: string
+    description: >-
+      A glob expression matching the IDs of one or more controls to be
+      selected.
+
+# Classes
+
+classes:
+  # Mixins
+
+  HasPropsAndLinks:
+    mixin: true
+    description: >-
+      Mixin providing the props and links slots that are common to many OSCAL
+      objects.
+    slots:
+      - props
+      - links
+
+  OscalCommon:
+    mixin: true
+    description: >-
+      Mixin providing props, links, and remarks slots common to most OSCAL
+      objects. Extends HasPropsAndLinks.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - remarks
+
+  HasResponsibleRoles:
+    mixin: true
+    description: >-
+      Mixin providing the responsible-roles slot for objects that carry role
+      assignments.
+    slots:
+      - responsible-roles
+
+  HasResponsibleParties:
+    mixin: true
+    description: >-
+      Mixin providing the responsible-parties slot for objects that carry party
+      assignments.
+    slots:
+      - responsible-parties
+
+  # Root document
+  
+  CatalogDocument:
+    tree_root: true
+    description: Root wrapper for an OSCAL Catalog document.
+    slots:
+      - catalog
+    slot_usage:
+      catalog:
+        required: true
+    in_subset:
+      - catalog
+
+  # Top-level Catalog
+  Catalog:
+    description: >-
+      A structured, organized collection of control information.
+    slots:
+      - uuid
+      - metadata
+      - back-matter
+      - params
+      - controls
+      - groups
+    slot_usage:
+      uuid:
+        required: true
+        description: Provides a globally unique means to identify a given catalog instance.
+      metadata:
+        required: true
+    in_subset:
+      - catalog
+
+  # Catalog-specific classes
+
+  Group:
+    description: >-
+      A group of controls, or of groups of controls.
+    mixins:
+      - OscalCommon
+    slots:
+      - id
+      - _class
+      - title
+      - params
+      - parts
+      - groups
+      - controls
+    slot_usage:
+      id:
+        description: >-
+          Identifies the group for the purpose of cross-linking within the
+          defining instance or from other instances that reference the catalog.
+      _class:
+        description: >-
+          A textual label that provides a sub-type or characterization of the
+          group.
+      title:
+        required: true
+        description: >-
+          A name given to the group, which may be used by a tool for display
+          and navigation.
+    in_subset:
+      - catalog
+
+  Control:
+    description: >-
+      A structured object representing a requirement or guideline, which when
+      implemented will reduce an aspect of risk related to an information system
+      and its information.
+    mixins:
+      - OscalCommon
+    slots:
+      - id
+      - _class
+      - title
+      - params
+      - parts
+      - controls
+    slot_usage:
+      id:
+        required: true
+        description: >-
+          Identifies a control such that it can be referenced in the defining
+          catalog and other OSCAL instances (e.g., profiles).
+      _class:
+        description: >-
+          A textual label that provides a sub-type or characterization of the
+          control.
+      title:
+        required: true
+        description: >-
+          A name given to the control, which may be used by a tool for display
+          and navigation.
+    in_subset:
+      - catalog
+
+  # Metadata classes
+
+  Metadata:
+    description: >-
+      Provides information about the containing document, and defines concepts
+      shared across the document.
+    mixins:
+      - OscalCommon
+      - HasResponsibleParties
+    slots:
+      - title
+      - published
+      - last-modified
+      - version
+      - oscal-version
+      - document-ids
+      - revisions
+      - roles
+      - locations
+      - parties
+      - actions
+    slot_usage:
+      title:
+        required: true
+        description: A name given to the document.
+      last-modified:
+        required: true
+        description: The date and time the document was last stored for later retrieval.
+      version:
+        required: true
+        description: Used to distinguish a specific revision of an OSCAL document.
+      oscal-version:
+        required: true
+        description: The OSCAL model version the document was authored against.
+    in_subset:
+      - metadata
+
+  Revision:
+    description: An entry in a sequential list of revisions to the containing document.
+    mixins:
+      - OscalCommon
+    slots:
+      - title
+      - published
+      - last-modified
+      - version
+      - oscal-version
+    slot_usage:
+      version:
+        required: true
+    in_subset:
+      - metadata
+
+  DocumentId:
+    description: A document identifier qualified by an identifier scheme.
+    slots:
+      - scheme
+      - identifier
+    slot_usage:
+      identifier:
+        required: true
+    in_subset:
+      - metadata
+
+  Role:
+    description: >-
+      Defines a function, which might be assigned to a party in a specific
+      situation.
+    mixins:
+      - OscalCommon
+    slots:
+      - id
+      - title
+      - short-name
+      - description
+    slot_usage:
+      id:
+        required: true
+        description: A unique identifier for the role.
+      title:
+        required: true
+    in_subset:
+      - metadata
+
+  Location:
+    description: >-
+      A physical point of presence, which may be associated with people,
+      organizations, or other concepts within the current or linked OSCAL
+      document.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - title
+      - email-addresses
+      - telephone-numbers
+      - address
+      - urls
+    slot_usage:
+      uuid:
+        required: true
+    in_subset:
+      - metadata
+
+  Party:
+    description: >-
+      An organization or person, which may be associated with roles or other
+      concepts within the current or linked OSCAL document.
+    mixins:
+      - OscalCommon
+    slots:
+      - uuid
+      - type
+      - name
+      - short-name
+      - email-addresses
+      - telephone-numbers
+      - external-ids
+      - addresses
+      - location-uuids
+      - member-of-organizations
+    slot_usage:
+      uuid:
+        required: true
+      type:
+        range: PartyTypeEnum
+        required: true
+        description: A category describing the kind of party the object describes.
+      name:
+        range: string
+        description: The full name of the party.
+    in_subset:
+      - metadata
+
+  PartyExternalId:
+    description: >-
+      An identifier for a person or organization using a designated scheme,
+      e.g. an Open Researcher and Contributor ID (ORCID).
+    slots:
+      - scheme
+      - id
+    slot_usage:
+      scheme:
+        required: true
+        description: Indicates the type of external identifier.
+      id:
+        range: string
+        required: true
+    in_subset:
+      - metadata
+
+  ResponsibleParty:
+    description: >-
+      A reference to a set of persons and/or organizations that have
+      responsibility for performing the referenced role in the context of the
+      containing object.
+    mixins:
+      - OscalCommon
+    slots:
+      - role-id
+      - party-uuids
+    slot_usage:
+      role-id:
+        required: true
+        description: A reference to a role performed by a party.
+      party-uuids:
+        required: true
+    in_subset:
+      - metadata
+
+  ResponsibleRole:
+    description: >-
+      A reference to a role with responsibility for performing a function
+      relative to the containing object, optionally associated with a set of
+      persons and/or organizations that perform that role.
+    mixins:
+      - OscalCommon
+    slots:
+      - role-id
+      - party-uuids
+    slot_usage:
+      role-id:
+        required: true
+        description: A human-oriented identifier reference to a role performed.
+    in_subset:
+      - metadata
+
+  Action:
+    description: An action applied by a role within a given party to the content.
+    mixins:
+      - OscalCommon
+      - HasResponsibleParties
+    slots:
+      - uuid
+      - type
+      - date
+      - system
+    slot_usage:
+      uuid:
+        required: true
+        description: >-
+          A unique identifier that can be used to reference this defined action
+          elsewhere in an OSCAL document.
+      type:
+        range: TokenType
+        required: true
+        description: >-
+          The type of action documented by the assembly, such as an approval.
+      system:
+        required: true
+    in_subset:
+      - metadata
+
+  TelephoneNumber:
+    description: A telephone service number as defined by ITU-T E.164.
+    slots:
+      - type
+      - number
+    slot_usage:
+      type:
+        range: PhoneTypeEnum
+        description: Indicates the type of phone number.
+      number:
+        required: true
+    in_subset:
+      - metadata
+
+  Address:
+    description: A postal address for the location.
+    slots:
+      - type
+      - addr-lines
+      - city
+      - state
+      - postal-code
+      - country
+    slot_usage:
+      type:
+        range: AddressTypeEnum
+        description: Indicates the type of address.
+    in_subset:
+      - metadata
+
+  Hash:
+    description: >-
+      A representation of a cryptographic digest generated over a resource
+      using a specified hash algorithm.
+    slots:
+      - value
+      - algorithm
+    slot_usage:
+      value:
+        required: true
+      algorithm:
+        required: true
+    in_subset:
+      - metadata
+
+  Property:
+    description: >-
+      An attribute, characteristic, or quality of the containing object
+      expressed as a namespace qualified name/value pair.
+    slots:
+      - name
+      - uuid
+      - ns
+      - value
+      - _class
+      - remarks
+      - group
+    slot_usage:
+      name:
+        required: true
+        description: >-
+          A textual label, within a namespace, that identifies a specific
+          attribute, characteristic, or quality of the property's containing
+          object.
+      uuid:
+        description: A unique identifier for a property.
+      ns:
+        description: >-
+          A namespace qualifying the property's name. This allows different
+          organizations to associate distinct semantics with the same name.
+      value:
+        required: true
+        description: Indicates the value of the attribute, characteristic, or quality.
+      _class:
+        description: >-
+          A textual label that provides a sub-type or characterization of the
+          property's name.
+    in_subset:
+      - metadata
+
+  Link:
+    description: >-
+      A reference to a local or remote resource, that has a specific relation
+      to the containing object.
+    slots:
+      - href
+      - rel
+      - resource-fragment
+      - media-type
+      - text
+    slot_usage:
+      href:
+        required: true
+        description: A resolvable URL reference to a resource.
+    in_subset:
+      - metadata
+
+  # Back Matter
+
+  BackMatter:
+    description: >-
+      A collection of resources that may be referenced from within the OSCAL
+      document instance.
+    slots:
+      - resources
+    in_subset:
+      - back_matter
+
+  Resource:
+    description: >-
+      A resource associated with content in the containing document instance.
+      A resource may be directly included in the document using base64 encoding
+      or may point to one or more equivalent internet resources.
+    slots:
+      - uuid
+      - title
+      - description
+      - props
+      - document-ids
+      - remarks
+      - citation
+      - rlinks
+      - base64
+    slot_usage:
+      uuid:
+        required: true
+        description: A unique identifier for a resource.
+      title:
+        description: >-
+          An optional name given to the resource, which may be used by a tool
+          for display and navigation.
+      description:
+        description: >-
+          An optional short summary of the resource used to indicate the
+          purpose of the resource.
+    in_subset:
+      - back_matter
+
+  Citation:
+    description: >-
+      An optional citation consisting of end note text using structured markup.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - text
+    slot_usage:
+      text:
+        required: true
+        description: A line of citation text.
+    in_subset:
+      - back_matter
+
+  ResourceLink:
+    description: >-
+      A URL-based pointer to an external resource with an optional hash for
+      verification and change detection.
+    slots:
+      - href
+      - media-type
+      - hashes
+    slot_usage:
+      href:
+        required: true
+        description: A resolvable URL pointing to the referenced resource.
+    in_subset:
+      - back_matter
+
+  Base64Resource:
+    description: A resource encoded using the Base64 alphabet defined by RFC 2045.
+    slots:
+      - media-type
+      - value
+      - filename
+    slot_usage:
+      value:
+        range: Base64Type
+        required: true
+    in_subset:
+      - back_matter
+
+  # Control Common
+
+  Part:
+    description: >-
+      An annotated, markup-based textual element of a control's or catalog
+      group's definition, or a child of another part.
+    mixins:
+      - HasPropsAndLinks
+    slots:
+      - id
+      - name
+      - ns
+      - _class
+      - title
+      - prose
+      - parts
+    slot_usage:
+      id:
+        description: A unique identifier for the part.
+      name:
+        required: true
+        description: >-
+          A textual label that uniquely identifies the part's semantic type,
+          which exists in a value space qualified by the ns.
+      ns:
+        description: >-
+          An optional namespace qualifying the part's name. This allows
+          different organizations to associate distinct semantics with the same
+          name.
+      _class:
+        description: >-
+          An optional textual providing a sub-type or characterization of the
+          part's name, or a category to which the part belongs.
+      title:
+        description: >-
+          An optional name given to the part, which may be used by a tool for
+          display and navigation.
+      prose:
+        description: Permits multiple paragraphs, lists, tables etc.
+    in_subset:
+      - control_common
+
+  Parameter:
+    description: >-
+      Parameters provide a mechanism for the dynamic assignment of value(s) in
+      a control.
+    mixins:
+      - OscalCommon
+    slots:
+      - id
+      - _class
+      - depends-on
+      - label
+      - usage
+      - constraints
+      - guidelines
+      - values
+      - select
+    slot_usage:
+      id:
+        required: true
+        description: A unique identifier for the parameter.
+      _class:
+        description: >-
+          A textual label that provides a characterization of the type,
+          purpose, use or scope of the parameter.
+    in_subset:
+      - control_common
+
+  ParameterConstraint:
+    description: A formal or informal expression of a constraint or test.
+    slots:
+      - description
+      - tests
+    slot_usage:
+      description:
+        description: A textual summary of the constraint to be applied.
+    in_subset:
+      - control_common
+
+  ConstraintTest:
+    description: A test expression which is expected to be evaluated by a tool.
+    slots:
+      - remarks
+      - expression
+    slot_usage:
+      expression:
+        required: true
+    in_subset:
+      - control_common
+
+  ParameterGuideline:
+    description: >-
+      A prose statement that provides a recommendation for the use of a
+      parameter.
+    slots:
+      - prose
+    slot_usage:
+      prose:
+        required: true
+        description: Prose permits multiple paragraphs, lists, tables etc.
+    in_subset:
+      - control_common
+
+  ParameterSelection:
+    description: Presenting a choice among alternatives.
+    class_uri: linkml:Any
+    slots:
+      - "how-many"
+      - choice
+    in_subset:
+      - control_common
+
+  IncludeAll:
+    description: >-
+      Include all controls from the imported catalog or profile resources.
+    in_subset:
+      - control_common
+
+  ControlMatching:
+    description: >-
+      Selecting a set of controls by matching their IDs with a wildcard pattern.
+    slots:
+      - remarks
+      - pattern
+    in_subset:
+      - control_common
+
+  SelectControlById:
+    description: >-
+      Select a control or controls from an imported control set.
+    slots:
+      - with-child-controls
+      - with-ids
+      - matching
+    in_subset:
+      - control_common
+

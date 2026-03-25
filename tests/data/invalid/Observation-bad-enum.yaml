@@ -1,0 +1,6 @@
+# Observation with an unknown value for the 'methods' enum (ObservationMethodEnum)
+uuid: "7d7a8ae0-d49c-4e0a-8000-000000000099"
+description: "Observation using an invalid method type."
+methods:
+  - INVALID_METHOD
+collected: "2026-01-15T12:00:00.000Z"
