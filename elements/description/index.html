@@ -502,33 +502,18 @@ Alias: description</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../Resource/">Resource</a></td>
-<td>A resource associated with content in the containing document instance</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../AssessmentSubjectPlaceholder/">AssessmentSubjectPlaceholder</a></td>
-<td>Used when the assessment subjects will be determined as part of one or more o...</td>
+<td><a href="../RiskLogEntry/">RiskLogEntry</a></td>
+<td>Identifies an individual risk response that occurred as part of managing an i...</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../RequiredAsset/">RequiredAsset</a></td>
-<td>Identifies an asset required to achieve remediation</td>
-<td>yes</td>
+<td><a href="../SystemUser/">SystemUser</a></td>
+<td>A type of user that interacts with the system based on an associated role</td>
+<td>no</td>
 </tr>
 <tr>
-<td><a href="../Observation/">Observation</a></td>
-<td>Describes an individual observation</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../InventoryItem/">InventoryItem</a></td>
-<td>A single managed inventory item within the system</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../ReviewedControls/">ReviewedControls</a></td>
-<td>Identifies the controls being assessed and their control objectives</td>
+<td><a href="../Role/">Role</a></td>
+<td>Defines a function, which might be assigned to a party in a specific situatio...</td>
 <td>no</td>
 </tr>
 <tr>
@@ -537,18 +522,13 @@ Alias: description</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../Task/">Task</a></td>
-<td>Represents a scheduled event or milestone, which may be associated with a ser...</td>
+<td><a href="../FindingTarget/">FindingTarget</a></td>
+<td>Captures an assessor's conclusions regarding the degree to which an objective...</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ControlObjectiveSelection/">ControlObjectiveSelection</a></td>
-<td>Identifies the control objectives of the assessment</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Step/">Step</a></td>
-<td>Identifies an individual step in a series of steps related to an activity, su...</td>
+<td><a href="../Observation/">Observation</a></td>
+<td>Describes an individual observation</td>
 <td>yes</td>
 </tr>
 <tr>
@@ -557,44 +537,19 @@ Alias: description</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../FindingTarget/">FindingTarget</a></td>
-<td>Captures an assessor's conclusions regarding the degree to which an objective...</td>
+<td><a href="../Resource/">Resource</a></td>
+<td>A resource associated with content in the containing document instance</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../SystemComponent/">SystemComponent</a></td>
+<td>A defined component that can be part of an implemented system</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../Task/">Task</a></td>
+<td>Represents a scheduled event or milestone, which may be associated with a ser...</td>
 <td>no</td>
-</tr>
-<tr>
-<td><a href="../Finding/">Finding</a></td>
-<td>Describes an individual finding</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../RelevantEvidence/">RelevantEvidence</a></td>
-<td>Links this observation to relevant evidence</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../ParameterConstraint/">ParameterConstraint</a></td>
-<td>A formal or informal expression of a constraint or test</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../Risk/">Risk</a></td>
-<td>An identified risk</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../SystemUser/">SystemUser</a></td>
-<td>A type of user that interacts with the system based on an associated role</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AssessmentMethod/">AssessmentMethod</a></td>
-<td>A local definition of a control objective</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../MitigatingFactor/">MitigatingFactor</a></td>
-<td>Describes an existing mitigating factor that may affect the overall determina...</td>
-<td>yes</td>
 </tr>
 <tr>
 <td><a href="../Response/">Response</a></td>
@@ -607,9 +562,39 @@ Alias: description</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../AssessmentSubject/">AssessmentSubject</a></td>
-<td>Identifies system elements being assessed, such as components, inventory item...</td>
+<td><a href="../RelevantEvidence/">RelevantEvidence</a></td>
+<td>Links this observation to relevant evidence</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../MitigatingFactor/">MitigatingFactor</a></td>
+<td>Describes an existing mitigating factor that may affect the overall determina...</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../AssessmentSubjectPlaceholder/">AssessmentSubjectPlaceholder</a></td>
+<td>Used when the assessment subjects will be determined as part of one or more o...</td>
 <td>no</td>
+</tr>
+<tr>
+<td><a href="../ReviewedControls/">ReviewedControls</a></td>
+<td>Identifies the controls being assessed and their control objectives</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ParameterConstraint/">ParameterConstraint</a></td>
+<td>A formal or informal expression of a constraint or test</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../InventoryItem/">InventoryItem</a></td>
+<td>A single managed inventory item within the system</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../RequiredAsset/">RequiredAsset</a></td>
+<td>Identifies an asset required to achieve remediation</td>
+<td>yes</td>
 </tr>
 <tr>
 <td><a href="../Activity/">Activity</a></td>
@@ -617,18 +602,33 @@ Alias: description</p>
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../Role/">Role</a></td>
-<td>Defines a function, which might be assigned to a party in a specific situatio...</td>
+<td><a href="../ControlObjectiveSelection/">ControlObjectiveSelection</a></td>
+<td>Identifies the control objectives of the assessment</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../RiskLogEntry/">RiskLogEntry</a></td>
-<td>Identifies an individual risk response that occurred as part of managing an i...</td>
+<td><a href="../AssessmentMethod/">AssessmentMethod</a></td>
+<td>A local definition of a control objective</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../SystemComponent/">SystemComponent</a></td>
-<td>A defined component that can be part of an implemented system</td>
+<td><a href="../Risk/">Risk</a></td>
+<td>An identified risk</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../AssessmentSubject/">AssessmentSubject</a></td>
+<td>Identifies system elements being assessed, such as components, inventory item...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Finding/">Finding</a></td>
+<td>Describes an individual finding</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../Step/">Step</a></td>
+<td>Identifies an individual step in a series of steps related to an activity, su...</td>
 <td>yes</td>
 </tr>
 </tbody>
