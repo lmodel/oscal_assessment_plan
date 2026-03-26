@@ -502,8 +502,13 @@ Alias: remarks</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../ControlObjectiveSelection/">ControlObjectiveSelection</a></td>
-<td>Identifies the control objectives of the assessment</td>
+<td><a href="../AssociatedActivity/">AssociatedActivity</a></td>
+<td>Identifies an individual activity to be performed as part of a task</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ComponentStatus/">ComponentStatus</a></td>
+<td>Describes the operational status of the system component</td>
 <td>no</td>
 </tr>
 <tr>
@@ -512,63 +517,13 @@ Alias: remarks</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ControlMatching/">ControlMatching</a></td>
-<td>Selecting a set of controls by matching their IDs with a wildcard pattern</td>
+<td><a href="../AssessmentSubjectSource/">AssessmentSubjectSource</a></td>
+<td>Assessment subjects will be identified while conducting the referenced activi...</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../LocalObjective/">LocalObjective</a></td>
-<td>A local definition of a control objective for this assessment</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Revision/">Revision</a></td>
-<td>An entry in a sequential list of revisions to the containing document</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Response/">Response</a></td>
-<td>Describes either recommended or an actual plan for addressing the risk</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AssociatedRisk/">AssociatedRisk</a></td>
-<td>Relates the finding to a set of referenced risks</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Facet/">Facet</a></td>
-<td>An individual characteristic that is part of a larger set produced by the sam...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Task/">Task</a></td>
-<td>Represents a scheduled event or milestone, which may be associated with a ser...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../PortRange/">PortRange</a></td>
-<td>Where applicable, the transport layer protocol port range</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ReviewedControls/">ReviewedControls</a></td>
-<td>Identifies the controls being assessed and their control objectives</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ObjectiveStatus/">ObjectiveStatus</a></td>
-<td>A determination of if the objective is satisfied or not within a given system</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Action/">Action</a></td>
-<td>An action applied by a role within a given party to the content</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Property/">Property</a></td>
-<td>An attribute, characteristic, or quality of the containing object expressed a...</td>
+<td><a href="../ConstraintTest/">ConstraintTest</a></td>
+<td>A test expression which is expected to be evaluated by a tool</td>
 <td>no</td>
 </tr>
 <tr>
@@ -577,23 +532,13 @@ Alias: remarks</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../AssessmentMethod/">AssessmentMethod</a></td>
-<td>A local definition of a control objective</td>
+<td><a href="../Task/">Task</a></td>
+<td>Represents a scheduled event or milestone, which may be associated with a ser...</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../RelatedObservation/">RelatedObservation</a></td>
-<td>Relates the identified element to a set of referenced observations</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Control/">Control</a></td>
-<td>A structured object representing a requirement or guideline, which when imple...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Parameter/">Parameter</a></td>
-<td>Parameters provide a mechanism for the dynamic assignment of value(s) in a co...</td>
+<td><a href="../SubjectReference/">SubjectReference</a></td>
+<td>A human-oriented identifier reference to a resource</td>
 <td>no</td>
 </tr>
 <tr>
@@ -602,8 +547,48 @@ Alias: remarks</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../LoggedBy/">LoggedBy</a></td>
-<td>Used to indicate who created a log entry in what role</td>
+<td><a href="../Control/">Control</a></td>
+<td>A structured object representing a requirement or guideline, which when imple...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../RelatedObservation/">RelatedObservation</a></td>
+<td>Relates the identified element to a set of referenced observations</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Party/">Party</a></td>
+<td>An organization or person, which may be associated with roles or other concep...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ResponsibleParty/">ResponsibleParty</a></td>
+<td>A reference to a set of persons and/or organizations that have responsibility...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../AtFrequency/">AtFrequency</a></td>
+<td>The task is intended to occur at the specified frequency</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../FindingTarget/">FindingTarget</a></td>
+<td>Captures an assessor's conclusions regarding the degree to which an objective...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Action/">Action</a></td>
+<td>An action applied by a role within a given party to the content</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Facet/">Facet</a></td>
+<td>An individual characteristic that is part of a larger set produced by the sam...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Role/">Role</a></td>
+<td>Defines a function, which might be assigned to a party in a specific situatio...</td>
 <td>no</td>
 </tr>
 <tr>
@@ -612,23 +597,83 @@ Alias: remarks</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ControlSelection/">ControlSelection</a></td>
-<td>Identifies the controls being assessed</td>
+<td><a href="../TaskDependency/">TaskDependency</a></td>
+<td>Used to indicate that a task is dependent on another task</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ResponsibleRole/">ResponsibleRole</a></td>
-<td>A reference to a role with responsibility for performing a function relative ...</td>
+<td><a href="../LocalObjective/">LocalObjective</a></td>
+<td>A local definition of a control objective for this assessment</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../AssessmentSubject/">AssessmentSubject</a></td>
-<td>Identifies system elements being assessed, such as components, inventory item...</td>
+<td><a href="../PortRange/">PortRange</a></td>
+<td>Where applicable, the transport layer protocol port range</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../InventoryItem/">InventoryItem</a></td>
-<td>A single managed inventory item within the system</td>
+<td><a href="../LoggedBy/">LoggedBy</a></td>
+<td>Used to indicate who created a log entry in what role</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../RelevantEvidence/">RelevantEvidence</a></td>
+<td>Links this observation to relevant evidence</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Response/">Response</a></td>
+<td>Describes either recommended or an actual plan for addressing the risk</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Group/">Group</a></td>
+<td>A group of controls, or of groups of controls</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../RelatedTask/">RelatedTask</a></td>
+<td>Identifies an individual task for which the containing object is a consequenc...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ImportSSP/">ImportSSP</a></td>
+<td>Used by the assessment plan and POA&amp;M to import information about the system</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../RiskResponseReference/">RiskResponseReference</a></td>
+<td>Identifies an individual risk response that this log entry is for</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../AssessmentSubjectPlaceholder/">AssessmentSubjectPlaceholder</a></td>
+<td>Used when the assessment subjects will be determined as part of one or more o...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../RiskLogEntry/">RiskLogEntry</a></td>
+<td>Identifies an individual risk response that occurred as part of managing an i...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Activity/">Activity</a></td>
+<td>Identifies an assessment or related process that can be performed</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ControlMatching/">ControlMatching</a></td>
+<td>Selecting a set of controls by matching their IDs with a wildcard pattern</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Property/">Property</a></td>
+<td>An attribute, characteristic, or quality of the containing object expressed a...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Location/">Location</a></td>
+<td>A physical point of presence, which may be associated with people, organizati...</td>
 <td>no</td>
 </tr>
 <tr>
@@ -637,8 +682,93 @@ Alias: remarks</p>
 <td>no</td>
 </tr>
 <tr>
+<td><a href="../SetParameter/">SetParameter</a></td>
+<td>Identifies the parameter that will be set by the enclosed value</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../AssociatedRisk/">AssociatedRisk</a></td>
+<td>Relates the finding to a set of referenced risks</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ControlSelection/">ControlSelection</a></td>
+<td>Identifies the controls being assessed</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../AssessmentMethod/">AssessmentMethod</a></td>
+<td>A local definition of a control objective</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Step/">Step</a></td>
+<td>Identifies an individual step in a series of steps related to an activity, su...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ObjectiveStatus/">ObjectiveStatus</a></td>
+<td>A determination of if the objective is satisfied or not within a given system</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Resource/">Resource</a></td>
+<td>A resource associated with content in the containing document instance</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../UsesComponent/">UsesComponent</a></td>
+<td>The set of components that are used by the assessment platform</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../RequiredAsset/">RequiredAsset</a></td>
+<td>Identifies an asset required to achieve remediation</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../SystemUser/">SystemUser</a></td>
+<td>A type of user that interacts with the system based on an associated role</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Parameter/">Parameter</a></td>
+<td>Parameters provide a mechanism for the dynamic assignment of value(s) in a co...</td>
+<td>no</td>
+</tr>
+<tr>
 <td><a href="../LocalDefinitions/">LocalDefinitions</a></td>
 <td>Used to define data objects that are used in the assessment plan, that do not...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../OnDateCondition/">OnDateCondition</a></td>
+<td>The task is intended to occur on the specified date</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ControlObjectiveSelection/">ControlObjectiveSelection</a></td>
+<td>Identifies the control objectives of the assessment</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../AssessmentPlatform/">AssessmentPlatform</a></td>
+<td>Used to represent the toolset used to perform aspects of the assessment</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ReviewedControls/">ReviewedControls</a></td>
+<td>Identifies the controls being assessed and their control objectives</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ResponsibleRole/">ResponsibleRole</a></td>
+<td>A reference to a role with responsibility for performing a function relative ...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../WithinDateRange/">WithinDateRange</a></td>
+<td>The task is intended to occur within the specified date range</td>
 <td>no</td>
 </tr>
 <tr>
@@ -652,43 +782,8 @@ Alias: remarks</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../RequiredAsset/">RequiredAsset</a></td>
-<td>Identifies an asset required to achieve remediation</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ComponentStatus/">ComponentStatus</a></td>
-<td>Describes the operational status of the system component</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ConstraintTest/">ConstraintTest</a></td>
-<td>A test expression which is expected to be evaluated by a tool</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Activity/">Activity</a></td>
-<td>Identifies an assessment or related process that can be performed</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ImportSSP/">ImportSSP</a></td>
-<td>Used by the assessment plan and POA&amp;M to import information about the system</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AtFrequency/">AtFrequency</a></td>
-<td>The task is intended to occur at the specified frequency</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../UsesComponent/">UsesComponent</a></td>
-<td>The set of components that are used by the assessment platform</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../RiskResponseReference/">RiskResponseReference</a></td>
-<td>Identifies an individual risk response that this log entry is for</td>
+<td><a href="../Revision/">Revision</a></td>
+<td>An entry in a sequential list of revisions to the containing document</td>
 <td>no</td>
 </tr>
 <tr>
@@ -697,113 +792,18 @@ Alias: remarks</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ResponsibleParty/">ResponsibleParty</a></td>
-<td>A reference to a set of persons and/or organizations that have responsibility...</td>
+<td><a href="../InventoryItem/">InventoryItem</a></td>
+<td>A single managed inventory item within the system</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../FindingTarget/">FindingTarget</a></td>
-<td>Captures an assessor's conclusions regarding the degree to which an objective...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AssessmentSubjectSource/">AssessmentSubjectSource</a></td>
-<td>Assessment subjects will be identified while conducting the referenced activi...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AssessmentSubjectPlaceholder/">AssessmentSubjectPlaceholder</a></td>
-<td>Used when the assessment subjects will be determined as part of one or more o...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Role/">Role</a></td>
-<td>Defines a function, which might be assigned to a party in a specific situatio...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Resource/">Resource</a></td>
-<td>A resource associated with content in the containing document instance</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../RiskLogEntry/">RiskLogEntry</a></td>
-<td>Identifies an individual risk response that occurred as part of managing an i...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Location/">Location</a></td>
-<td>A physical point of presence, which may be associated with people, organizati...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../SubjectReference/">SubjectReference</a></td>
-<td>A human-oriented identifier reference to a resource</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Party/">Party</a></td>
-<td>An organization or person, which may be associated with roles or other concep...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../OnDateCondition/">OnDateCondition</a></td>
-<td>The task is intended to occur on the specified date</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AssessmentPlatform/">AssessmentPlatform</a></td>
-<td>Used to represent the toolset used to perform aspects of the assessment</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../WithinDateRange/">WithinDateRange</a></td>
-<td>The task is intended to occur within the specified date range</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AssociatedActivity/">AssociatedActivity</a></td>
-<td>Identifies an individual activity to be performed as part of a task</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../RelatedTask/">RelatedTask</a></td>
-<td>Identifies an individual task for which the containing object is a consequenc...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Step/">Step</a></td>
-<td>Identifies an individual step in a series of steps related to an activity, su...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../RelevantEvidence/">RelevantEvidence</a></td>
-<td>Links this observation to relevant evidence</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../SystemUser/">SystemUser</a></td>
-<td>A type of user that interacts with the system based on an associated role</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Group/">Group</a></td>
-<td>A group of controls, or of groups of controls</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../SetParameter/">SetParameter</a></td>
-<td>Identifies the parameter that will be set by the enclosed value</td>
+<td><a href="../AssessmentSubject/">AssessmentSubject</a></td>
+<td>Identifies system elements being assessed, such as components, inventory item...</td>
 <td>no</td>
 </tr>
 <tr>
 <td><a href="../ImplementedComponent/">ImplementedComponent</a></td>
 <td>The set of components that are implemented in a given system inventory item</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../TaskDependency/">TaskDependency</a></td>
-<td>Used to indicate that a task is dependent on another task</td>
 <td>no</td>
 </tr>
 </tbody>
