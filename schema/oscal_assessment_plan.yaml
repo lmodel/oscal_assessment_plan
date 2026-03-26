@@ -1,12 +1,13 @@
 name: oscal_assessment_plan
 description: 'OSCAL Assessment Plan Model: LinkML Schema'
 title: oscal_assessment_plan
-source: https://pages.nist.gov/OSCAL-Reference/release-assets/latest/oscal_assessment-plan_schema.json
+source: http://csrc.nist.gov/ns/oscal/1.2.1/oscal-ap-schema.json
 see_also:
 - https://lmodel.github.io/oscal_assessment_plan
 - https://pages.nist.gov/OSCAL/learn/concepts/layer/assessment/assessment-plan/
 - https://medium.com/@gregelin/an-orientation-to-oscal-in-the-devsecops-pipeline-b51e45f8503b
 id: https://w3id.org/lmodel/oscal_assessment_plan
+version: 1.2.1
 imports:
 - linkml:types
 - ./oscal_catalog
@@ -8100,7 +8101,7 @@ classes:
     class_uri: oscal_catalog:SelectControlById
 metamodel_version: 1.7.0
 source_file: oscal_assessment_plan.yaml
-source_file_date: '2026-03-26T16:05:37'
-source_file_size: 42181
-generation_date: '2026-03-26T16:05:46'
+source_file_date: '2026-03-26T16:10:21'
+source_file_size: 42158
+generation_date: '2026-03-26T16:10:33'
 
