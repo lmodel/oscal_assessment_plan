@@ -470,7 +470,7 @@ export interface Action extends OscalCommon, HasResponsibleParties {
  * A telephone service number as defined by ITU-T E.164.
  */
 export interface TelephoneNumber {
-    /** Indicates the type of phone number. */
+    /** Indicates the type of phone number. Typical values: home, office, mobile. Other values are permitted. */
     type?: string,
     /** A telephone number value. */
     number: string,
@@ -481,7 +481,7 @@ export interface TelephoneNumber {
  * A postal address for the location.
  */
 export interface Address {
-    /** Indicates the type of address. */
+    /** Indicates the type of address. Typical values: home, work. Other values are permitted. */
     type?: string,
     /** A single line of an address. */
     addr_lines?: string[],
@@ -502,7 +502,7 @@ export interface Address {
 export interface Hash {
     /** The value associated with the containing object. */
     value: string,
-    /** The digest method by which a hash is derived. */
+    /** The digest method by which a hash is derived. SHOULD be one of the HashAlgorithmEnum values but other values are permitted (allow-other="yes"). */
     algorithm: string,
 }
 

@@ -1,5 +1,5 @@
 # Auto generated from oscal_assessment_plan.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-03-25T02:06:37
+# Generation date: 2026-03-27T16:32:12
 # Schema: oscal_assessment_plan
 #
 # id: https://w3id.org/lmodel/oscal_assessment_plan
@@ -56,10 +56,10 @@ from rdflib import (
     URIRef
 )
 
-from linkml_runtime.linkml_model.types import Integer, String
+from linkml_runtime.linkml_model.types import String
 
 metamodel_version = "1.7.0"
-version = None
+version = "1.2.1"
 
 # Namespaces
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
@@ -70,6 +70,22 @@ DEFAULT_ = OSCAL_ASSESSMENT_PLAN
 
 
 # Types
+class NonNegativeIntegerType(int):
+    """ A non-negative integer value (>= 0), as used for port range boundaries. """
+    type_class_uri = XSD["nonNegativeInteger"]
+    type_class_curie = "xsd:nonNegativeInteger"
+    type_name = "NonNegativeIntegerType"
+    type_model_uri = OSCAL_ASSESSMENT_PLAN.NonNegativeIntegerType
+
+
+class PositiveIntegerType(int):
+    """ A positive integer value (>= 1), as used for task recurrence periods. """
+    type_class_uri = XSD["positiveInteger"]
+    type_class_curie = "xsd:positiveInteger"
+    type_name = "PositiveIntegerType"
+    type_model_uri = OSCAL_ASSESSMENT_PLAN.PositiveIntegerType
+
+
 class UUIDType(str):
     """ A type 4 or type 5 UUID per RFC 4122. """
     type_class_uri = XSD["string"]
@@ -3266,7 +3282,7 @@ class TelephoneNumber(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = OSCAL_ASSESSMENT_PLAN.TelephoneNumber
 
     number: str = None
-    type: Optional[Union[str, "PhoneTypeEnum"]] = None
+    type: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.number):
@@ -3274,8 +3290,8 @@ class TelephoneNumber(YAMLRoot):
         if not isinstance(self.number, str):
             self.number = str(self.number)
 
-        if self.type is not None and not isinstance(self.type, PhoneTypeEnum):
-            self.type = PhoneTypeEnum(self.type)
+        if self.type is not None and not isinstance(self.type, str):
+            self.type = str(self.type)
 
         super().__post_init__(**kwargs)
 
@@ -3292,7 +3308,7 @@ class Address(YAMLRoot):
     class_name: ClassVar[str] = "Address"
     class_model_uri: ClassVar[URIRef] = OSCAL_ASSESSMENT_PLAN.Address
 
-    type: Optional[Union[str, "AddressTypeEnum"]] = None
+    type: Optional[str] = None
     addr_lines: Optional[Union[str, list[str]]] = empty_list()
     city: Optional[str] = None
     state: Optional[str] = None
@@ -3300,8 +3316,8 @@ class Address(YAMLRoot):
     country: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self.type is not None and not isinstance(self.type, AddressTypeEnum):
-            self.type = AddressTypeEnum(self.type)
+        if self.type is not None and not isinstance(self.type, str):
+            self.type = str(self.type)
 
         if not isinstance(self.addr_lines, list):
             self.addr_lines = [self.addr_lines] if self.addr_lines is not None else []
@@ -3335,7 +3351,7 @@ class Hash(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = OSCAL_ASSESSMENT_PLAN.Hash
 
     value: str = None
-    algorithm: Union[str, "HashAlgorithmEnum"] = None
+    algorithm: str = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.value):
@@ -3345,8 +3361,8 @@ class Hash(YAMLRoot):
 
         if self._is_empty(self.algorithm):
             self.MissingRequiredField("algorithm")
-        if not isinstance(self.algorithm, HashAlgorithmEnum):
-            self.algorithm = HashAlgorithmEnum(self.algorithm)
+        if not isinstance(self.algorithm, str):
+            self.algorithm = str(self.algorithm)
 
         super().__post_init__(**kwargs)
 
@@ -3709,6 +3725,9 @@ class Parameter(YAMLRoot):
             self.values = [self.values] if self.values is not None else []
         self.values = [v if isinstance(v, str) else str(v) for v in self.values]
 
+        if self.select is not None and not isinstance(self.select, ParameterSelection):
+            self.select = ParameterSelection(**as_dict(self.select))
+
         if self.remarks is not None and not isinstance(self.remarks, str):
             self.remarks = str(self.remarks)
 
@@ -3789,7 +3808,31 @@ class ParameterGuideline(YAMLRoot):
         super().__post_init__(**kwargs)
 
 
-ParameterSelection = Any
+@dataclass(repr=False)
+class ParameterSelection(YAMLRoot):
+    """
+    Presenting a choice among alternatives.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = OSCAL_CATALOG["ParameterSelection"]
+    class_class_curie: ClassVar[str] = "oscal_catalog:ParameterSelection"
+    class_name: ClassVar[str] = "ParameterSelection"
+    class_model_uri: ClassVar[URIRef] = OSCAL_ASSESSMENT_PLAN.ParameterSelection
+
+    how_many: Optional[Union[str, "ParameterCardinalityEnum"]] = None
+    choice: Optional[Union[str, list[str]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.how_many is not None and not isinstance(self.how_many, ParameterCardinalityEnum):
+            self.how_many = ParameterCardinalityEnum(self.how_many)
+
+        if not isinstance(self.choice, list):
+            self.choice = [self.choice] if self.choice is not None else []
+        self.choice = [v if isinstance(v, str) else str(v) for v in self.choice]
+
+        super().__post_init__(**kwargs)
+
 
 class IncludeAll(YAMLRoot):
     """
@@ -4645,7 +4688,7 @@ slots.country = Slot(uri=OSCAL_CATALOG.country, name="country", curie=OSCAL_CATA
                    model_uri=OSCAL_ASSESSMENT_PLAN.country, domain=None, range=Optional[str])
 
 slots.algorithm = Slot(uri=OSCAL_CATALOG.algorithm, name="algorithm", curie=OSCAL_CATALOG.curie('algorithm'),
-                   model_uri=OSCAL_ASSESSMENT_PLAN.algorithm, domain=None, range=Optional[Union[str, "HashAlgorithmEnum"]])
+                   model_uri=OSCAL_ASSESSMENT_PLAN.algorithm, domain=None, range=Optional[str])
 
 slots.group = Slot(uri=OSCAL_CATALOG.group, name="group", curie=OSCAL_CATALOG.curie('group'),
                    model_uri=OSCAL_ASSESSMENT_PLAN.group, domain=None, range=Optional[str])
@@ -5143,19 +5186,19 @@ slots.Action_system = Slot(uri=OSCAL_CATALOG.system, name="Action_system", curie
                    model_uri=OSCAL_ASSESSMENT_PLAN.Action_system, domain=Action, range=str)
 
 slots.TelephoneNumber_type = Slot(uri=OSCAL_CATALOG.type, name="TelephoneNumber_type", curie=OSCAL_CATALOG.curie('type'),
-                   model_uri=OSCAL_ASSESSMENT_PLAN.TelephoneNumber_type, domain=TelephoneNumber, range=Optional[Union[str, "PhoneTypeEnum"]])
+                   model_uri=OSCAL_ASSESSMENT_PLAN.TelephoneNumber_type, domain=TelephoneNumber, range=Optional[str])
 
 slots.TelephoneNumber_number = Slot(uri=OSCAL_CATALOG.number, name="TelephoneNumber_number", curie=OSCAL_CATALOG.curie('number'),
                    model_uri=OSCAL_ASSESSMENT_PLAN.TelephoneNumber_number, domain=TelephoneNumber, range=str)
 
 slots.Address_type = Slot(uri=OSCAL_CATALOG.type, name="Address_type", curie=OSCAL_CATALOG.curie('type'),
-                   model_uri=OSCAL_ASSESSMENT_PLAN.Address_type, domain=Address, range=Optional[Union[str, "AddressTypeEnum"]])
+                   model_uri=OSCAL_ASSESSMENT_PLAN.Address_type, domain=Address, range=Optional[str])
 
 slots.Hash_value = Slot(uri=OSCAL_CATALOG.value, name="Hash_value", curie=OSCAL_CATALOG.curie('value'),
                    model_uri=OSCAL_ASSESSMENT_PLAN.Hash_value, domain=Hash, range=str)
 
 slots.Hash_algorithm = Slot(uri=OSCAL_CATALOG.algorithm, name="Hash_algorithm", curie=OSCAL_CATALOG.curie('algorithm'),
-                   model_uri=OSCAL_ASSESSMENT_PLAN.Hash_algorithm, domain=Hash, range=Union[str, "HashAlgorithmEnum"])
+                   model_uri=OSCAL_ASSESSMENT_PLAN.Hash_algorithm, domain=Hash, range=str)
 
 slots.Property_name = Slot(uri=OSCAL_CATALOG.name, name="Property_name", curie=OSCAL_CATALOG.curie('name'),
                    model_uri=OSCAL_ASSESSMENT_PLAN.Property_name, domain=Property, range=str)

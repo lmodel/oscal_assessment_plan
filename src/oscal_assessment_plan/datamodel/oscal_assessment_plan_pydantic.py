@@ -30,7 +30,7 @@ from pydantic import (
 
 
 metamodel_version = "1.7.0"
-version = "None"
+version = "1.2.1"
 
 
 class ConfiguredBaseModel(BaseModel):
@@ -82,7 +82,7 @@ linkml_meta = LinkMLMeta({'default_prefix': 'oscal_assessment_plan',
      'see_also': ['https://lmodel.github.io/oscal_assessment_plan',
                   'https://pages.nist.gov/OSCAL/learn/concepts/layer/assessment/assessment-plan/',
                   'https://medium.com/@gregelin/an-orientation-to-oscal-in-the-devsecops-pipeline-b51e45f8503b'],
-     'source': 'https://pages.nist.gov/OSCAL-Reference/release-assets/latest/oscal_assessment-plan_schema.json',
+     'source': 'http://csrc.nist.gov/ns/oscal/1.2.1/oscal-ap-schema.json',
      'source_file': 'src/oscal_assessment_plan/schema/oscal_assessment_plan.yaml',
      'subsets': {'assessment_common': {'description': 'Classes originating from '
                                                       'the oscal-assessment-common '
@@ -110,7 +110,22 @@ linkml_meta = LinkMLMeta({'default_prefix': 'oscal_assessment_plan',
                                                           'and set-parameter.',
                                            'from_schema': 'https://w3id.org/lmodel/oscal_assessment_plan',
                                            'name': 'implementation_common'}},
-     'title': 'oscal_assessment_plan'} )
+     'title': 'oscal_assessment_plan',
+     'types': {'NonNegativeIntegerType': {'base': 'int',
+                                          'description': 'A non-negative integer '
+                                                         'value (>= 0), as used '
+                                                         'for port range '
+                                                         'boundaries.',
+                                          'from_schema': 'https://w3id.org/lmodel/oscal_assessment_plan',
+                                          'name': 'NonNegativeIntegerType',
+                                          'uri': 'xsd:nonNegativeInteger'},
+               'PositiveIntegerType': {'base': 'int',
+                                       'description': 'A positive integer value '
+                                                      '(>= 1), as used for task '
+                                                      'recurrence periods.',
+                                       'from_schema': 'https://w3id.org/lmodel/oscal_assessment_plan',
+                                       'name': 'PositiveIntegerType',
+                                       'uri': 'xsd:positiveInteger'}}} )
 
 class PartyTypeEnum(str, Enum):
     person = "person"
@@ -958,6 +973,19 @@ class Party(OscalCommon):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/oscal_catalog',
          'in_subset': ['oscal_metadata'],
          'mixins': ['OscalCommon'],
+         'rules': [{'description': 'A party may have inline addresses or location UUID '
+                                   'references, but not both (metaschema <choice> '
+                                   'constraint).',
+                    'postconditions': {'slot_conditions': {'location-uuids': {'name': 'location-uuids',
+                                                                              'value_presence': 'ABSENT'}}},
+                    'preconditions': {'slot_conditions': {'addresses': {'name': 'addresses',
+                                                                        'value_presence': 'PRESENT'}}},
+                    'title': 'addresses-xor-location-uuids'},
+                   {'postconditions': {'slot_conditions': {'addresses': {'name': 'addresses',
+                                                                         'value_presence': 'ABSENT'}}},
+                    'preconditions': {'slot_conditions': {'location-uuids': {'name': 'location-uuids',
+                                                                             'value_presence': 'PRESENT'}}},
+                    'title': 'location-uuids-xor-addresses'}],
          'slot_usage': {'name': {'description': 'The full name of the party.',
                                  'name': 'name',
                                  'range': 'string'},
@@ -1242,11 +1270,12 @@ class TelephoneNumber(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/oscal_catalog',
          'in_subset': ['oscal_metadata'],
          'slot_usage': {'number': {'name': 'number', 'required': True},
-                        'type': {'description': 'Indicates the type of phone number.',
-                                 'name': 'type',
-                                 'range': 'PhoneTypeEnum'}}})
+                        'type': {'description': 'Indicates the type of phone number. '
+                                                'Typical values: home, office, mobile. '
+                                                'Other values are permitted.',
+                                 'name': 'type'}}})
 
-    type: Optional[PhoneTypeEnum] = Field(default=None, description="""Indicates the type of phone number.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Party',
+    type: Optional[str] = Field(default=None, description="""Indicates the type of phone number. Typical values: home, office, mobile. Other values are permitted.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Party',
                        'Action',
                        'TelephoneNumber',
                        'Address',
@@ -1266,11 +1295,12 @@ class Address(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/oscal_catalog',
          'in_subset': ['oscal_metadata'],
-         'slot_usage': {'type': {'description': 'Indicates the type of address.',
-                                 'name': 'type',
-                                 'range': 'AddressTypeEnum'}}})
+         'slot_usage': {'type': {'description': 'Indicates the type of address. '
+                                                'Typical values: home, work. Other '
+                                                'values are permitted.',
+                                 'name': 'type'}}})
 
-    type: Optional[AddressTypeEnum] = Field(default=None, description="""Indicates the type of address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Party',
+    type: Optional[str] = Field(default=None, description="""Indicates the type of address. Typical values: home, work. Other values are permitted.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Party',
                        'Action',
                        'TelephoneNumber',
                        'Address',
@@ -1301,7 +1331,7 @@ class Hash(ConfiguredBaseModel):
                         'value': {'name': 'value', 'required': True}}})
 
     value: str = Field(default=..., description="""The value associated with the containing object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Hash', 'Property', 'Base64Resource', 'Facet']} })
-    algorithm: HashAlgorithmEnum = Field(default=..., description="""The digest method by which a hash is derived.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Hash']} })
+    algorithm: str = Field(default=..., description="""The digest method by which a hash is derived. SHOULD be one of the HashAlgorithmEnum values but other values are permitted (allow-other=\"yes\").""", json_schema_extra = { "linkml_meta": {'domain_of': ['Hash']} })
 
 
 class Property(ConfiguredBaseModel):
@@ -1706,6 +1736,19 @@ class Parameter(OscalCommon):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/oscal_catalog',
          'in_subset': ['oscal_control_common'],
          'mixins': ['OscalCommon'],
+         'rules': [{'description': 'A parameter may have prescribed values or a '
+                                   'selection construct, but not both (metaschema '
+                                   '<choice> constraint).',
+                    'postconditions': {'slot_conditions': {'select': {'name': 'select',
+                                                                      'value_presence': 'ABSENT'}}},
+                    'preconditions': {'slot_conditions': {'values': {'name': 'values',
+                                                                     'value_presence': 'PRESENT'}}},
+                    'title': 'values-xor-select'},
+                   {'postconditions': {'slot_conditions': {'values': {'name': 'values',
+                                                                      'value_presence': 'ABSENT'}}},
+                    'preconditions': {'slot_conditions': {'select': {'name': 'select',
+                                                                     'value_presence': 'PRESENT'}}},
+                    'title': 'select-xor-values'}],
          'slot_usage': {'_class': {'description': 'A textual label that provides a '
                                                   'characterization of the type, '
                                                   'purpose, use or scope of the '
@@ -1737,7 +1780,7 @@ class Parameter(OscalCommon):
     constraints: Optional[list[ParameterConstraint]] = Field(default=None, description="""A formal or informal expression of a constraint or test.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Parameter']} })
     guidelines: Optional[list[ParameterGuideline]] = Field(default=None, description="""A prose statement that provides a recommendation for the use of a parameter.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Parameter']} })
     values: Optional[list[str]] = Field(default=None, description="""A parameter value or set of values.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Parameter', 'SetParameter']} })
-    select: Optional[Any] = Field(default=None, description="""Presenting a choice among alternatives.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Parameter']} })
+    select: Optional[ParameterSelection] = Field(default=None, description="""Presenting a choice among alternatives.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Parameter']} })
     remarks: Optional[str] = Field(default=None, description="""Additional commentary about the containing object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['OscalCommon',
                        'Property',
                        'Resource',
@@ -1846,6 +1889,17 @@ class ParameterGuideline(ConfiguredBaseModel):
                                   'required': True}}})
 
     prose: str = Field(default=..., description="""Prose permits multiple paragraphs, lists, tables etc.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Part', 'ParameterGuideline', 'AssessmentPart', 'ControlPart']} })
+
+
+class ParameterSelection(ConfiguredBaseModel):
+    """
+    Presenting a choice among alternatives.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/oscal_catalog',
+         'in_subset': ['oscal_control_common']})
+
+    how_many: Optional[ParameterCardinalityEnum] = Field(default=None, description="""Describes the number of selections that must occur. Without this setting, only one value should be assumed to be permitted.""", json_schema_extra = { "linkml_meta": {'aliases': ['how_many'], 'domain_of': ['ParameterSelection']} })
+    choice: Optional[list[str]] = Field(default=None, description="""A value selection among several such options.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ParameterSelection']} })
 
 
 class IncludeAll(ConfiguredBaseModel):
@@ -3903,8 +3957,8 @@ class PortRange(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/oscal_assessment_plan',
          'in_subset': ['implementation_common'],
-         'slot_usage': {'end': {'name': 'end', 'range': 'integer'},
-                        'start': {'name': 'start', 'range': 'integer'}}})
+         'slot_usage': {'end': {'name': 'end', 'range': 'NonNegativeIntegerType'},
+                        'start': {'name': 'start', 'range': 'NonNegativeIntegerType'}}})
 
     start: Optional[int] = Field(default=None, description="""The start date/time.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WithinDateRange', 'PortRange', 'RiskLogEntry']} })
     end: Optional[int] = Field(default=None, description="""The end date/time.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WithinDateRange', 'PortRange', 'RiskLogEntry']} })
@@ -5676,6 +5730,7 @@ Parameter.model_rebuild()
 ParameterConstraint.model_rebuild()
 ConstraintTest.model_rebuild()
 ParameterGuideline.model_rebuild()
+ParameterSelection.model_rebuild()
 IncludeAll.model_rebuild()
 ControlMatching.model_rebuild()
 SelectControlById.model_rebuild()

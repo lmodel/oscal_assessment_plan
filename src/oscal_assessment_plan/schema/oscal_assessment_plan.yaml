@@ -9,7 +9,8 @@ see_also:
   - https://lmodel.github.io/oscal_assessment_plan
   - https://pages.nist.gov/OSCAL/learn/concepts/layer/assessment/assessment-plan/
   - https://medium.com/@gregelin/an-orientation-to-oscal-in-the-devsecops-pipeline-b51e45f8503b
-source: https://pages.nist.gov/OSCAL-Reference/release-assets/latest/oscal_assessment-plan_schema.json
+source: http://csrc.nist.gov/ns/oscal/1.2.1/oscal-ap-schema.json
+version: 1.2.1
 
 prefixes:
   oscal_assessment_plan: https://w3id.org/lmodel/oscal_assessment_plan/
@@ -21,6 +22,17 @@ default_range: string
 imports:
   - linkml:types
   - ./oscal_catalog
+
+types:
+  NonNegativeIntegerType:
+    uri: xsd:nonNegativeInteger
+    base: int
+    description: A non-negative integer value (>= 0), as used for port range boundaries.
+
+  PositiveIntegerType:
+    uri: xsd:positiveInteger
+    base: int
+    description: A positive integer value (>= 1), as used for task recurrence periods.
 
 enums:
   TaskTypeEnum:
@@ -73,6 +85,7 @@ enums:
       control-objective:
       mitigation:
       finding:
+        deprecated: "Deprecated since OSCAL 1.1.4. Use 'discovery' instead."
       discovery:
       historic:
 
@@ -472,7 +485,7 @@ slots:
 
   # AtFrequency
   period:
-    range: integer
+    range: PositiveIntegerType
     description: The task must occur every period (in the given units).
 
   unit:
@@ -1325,9 +1338,9 @@ classes:
       - remarks
     slot_usage:
       start:
-        range: integer
+        range: NonNegativeIntegerType
       end:
-        range: integer
+        range: NonNegativeIntegerType
     in_subset:
       - implementation_common
 

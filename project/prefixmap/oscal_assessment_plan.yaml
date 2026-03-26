@@ -78,7 +78,7 @@
       "@id": "oscal_catalog:ParameterGuideline"
    },
    "ParameterSelection": {
-      "@id": "linkml:Any"
+      "@id": "oscal_catalog:ParameterSelection"
    },
    "Part": {
       "@id": "oscal_catalog:Part"

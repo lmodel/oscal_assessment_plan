@@ -1,6 +1,7 @@
 package None;
 
 /* metamodel_version: 1.7.0 */
+/* version: 1.2.1 */
 import java.util.List;
 import lombok.*;
 
@@ -11,8 +12,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class PortRange  {
 
-  private Integer start;
-  private Integer end;
+  private String start;
+  private String end;
   private String transport;
   private String remarks;
 

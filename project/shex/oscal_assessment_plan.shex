@@ -1,10 +1,15 @@
 # metamodel_version: 1.7.0
+# version: 1.2.1
 BASE <https://w3id.org/lmodel/oscal_assessment_plan/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX oscal_catalog: <https://w3id.org/lmodel/oscal_catalog/>
 PREFIX linkml: <https://w3id.org/linkml/>
 
+
+<NonNegativeIntegerType> xsd:nonNegativeInteger
+
+<PositiveIntegerType> xsd:positiveInteger
 
 linkml:String xsd:string
 
@@ -100,8 +105,7 @@ oscal_catalog:Action CLOSED {
 }
 
 oscal_catalog:Address CLOSED {
-    (  $oscal_catalog:Address_tes (  oscal_catalog:type [ <https://w3id.org/lmodel/oscal_catalog/AddressTypeEnum#home>
-             <https://w3id.org/lmodel/oscal_catalog/AddressTypeEnum#work> ] ? ;
+    (  $oscal_catalog:Address_tes (  oscal_catalog:type @linkml:String ? ;
           oscal_catalog:addr_lines @linkml:String * ;
           oscal_catalog:city @linkml:String ? ;
           oscal_catalog:state @linkml:String ? ;
@@ -267,7 +271,7 @@ oscal_catalog:Address CLOSED {
 }
 
 <AtFrequency> CLOSED {
-    (  $<AtFrequency_tes> (  <period> @linkml:Integer ;
+    (  $<AtFrequency_tes> (  <period> @<PositiveIntegerType> ;
           <unit> [ <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#seconds>
              <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#minutes>
              <https://w3id.org/lmodel/oscal_assessment_plan/TimingUnitEnum#hours>
@@ -528,14 +532,7 @@ oscal_catalog:Group CLOSED {
 
 oscal_catalog:Hash CLOSED {
     (  $oscal_catalog:Hash_tes (  oscal_catalog:value @linkml:String ;
-          oscal_catalog:algorithm [ <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA-224>
-             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA-256>
-             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA-384>
-             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA-512>
-             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA3-224>
-             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA3-256>
-             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA3-384>
-             <https://w3id.org/lmodel/oscal_catalog/HashAlgorithmEnum#SHA3-512> ]
+          oscal_catalog:algorithm @linkml:String
        ) ;
        rdf:type [ oscal_catalog:Hash ] ?
     )
@@ -862,7 +859,7 @@ oscal_catalog:ParameterSelection CLOSED {
              <https://w3id.org/lmodel/oscal_catalog/ParameterCardinalityEnum#one-or-more> ] ? ;
           oscal_catalog:choice @oscal_catalog:MarkupLineType *
        ) ;
-       rdf:type [ linkml:Any ] ?
+       rdf:type [ oscal_catalog:ParameterSelection ] ?
     )
 }
 
@@ -914,8 +911,8 @@ oscal_catalog:PartyExternalId CLOSED {
 }
 
 <PortRange> CLOSED {
-    (  $<PortRange_tes> (  <start> @linkml:Integer ? ;
-          <end> @linkml:Integer ? ;
+    (  $<PortRange_tes> (  <start> @<NonNegativeIntegerType> ? ;
+          <end> @<NonNegativeIntegerType> ? ;
           <transport> [ <https://w3id.org/lmodel/oscal_assessment_plan/TransportEnum#TCP>
              <https://w3id.org/lmodel/oscal_assessment_plan/TransportEnum#UDP> ] ? ;
           oscal_catalog:remarks @oscal_catalog:MarkupMultilineType ?
@@ -1361,9 +1358,7 @@ oscal_catalog:SelectControlById CLOSED {
 }
 
 oscal_catalog:TelephoneNumber CLOSED {
-    (  $oscal_catalog:TelephoneNumber_tes (  oscal_catalog:type [ <https://w3id.org/lmodel/oscal_catalog/PhoneTypeEnum#home>
-             <https://w3id.org/lmodel/oscal_catalog/PhoneTypeEnum#office>
-             <https://w3id.org/lmodel/oscal_catalog/PhoneTypeEnum#mobile> ] ? ;
+    (  $oscal_catalog:TelephoneNumber_tes (  oscal_catalog:type @linkml:String ? ;
           oscal_catalog:number @linkml:String
        ) ;
        rdf:type [ oscal_catalog:TelephoneNumber ] ?

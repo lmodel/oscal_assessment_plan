@@ -39,11 +39,6 @@
          "@id": "oscal_catalog:addresses"
       },
       "algorithm": {
-         "@context": {
-            "text": "skos:notation",
-            "description": "skos:prefLabel",
-            "meaning": "@id"
-         },
          "@id": "oscal_catalog:algorithm"
       },
       "assessment_assets": {
@@ -402,7 +397,7 @@
          "@id": "oscal_catalog:pattern"
       },
       "period": {
-         "@type": "xsd:integer",
+         "@type": "xsd:positiveInteger",
          "@id": "period"
       },
       "port_ranges": {
@@ -878,7 +873,7 @@
          "@id": "oscal_catalog:ParameterGuideline"
       },
       "ParameterSelection": {
-         "@id": "linkml:Any"
+         "@id": "oscal_catalog:ParameterSelection"
       },
       "Part": {
          "@id": "oscal_catalog:Part"

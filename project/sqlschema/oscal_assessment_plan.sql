@@ -503,13 +503,13 @@
 --     * Slot: Metadata_id Description: Autocreated FK slot
 -- # Class: TelephoneNumber Description: A telephone service number as defined by ITU-T E.164.
 --     * Slot: id
---     * Slot: type Description: Indicates the type of phone number.
+--     * Slot: type Description: Indicates the type of phone number. Typical values: home, office, mobile. Other values are permitted.
 --     * Slot: number Description: A telephone number value.
 --     * Slot: Location_id Description: Autocreated FK slot
 --     * Slot: Party_id Description: Autocreated FK slot
 -- # Class: Address Description: A postal address for the location.
 --     * Slot: id
---     * Slot: type Description: Indicates the type of address.
+--     * Slot: type Description: Indicates the type of address. Typical values: home, work. Other values are permitted.
 --     * Slot: city Description: City, town or geographical region for the mailing address.
 --     * Slot: state Description: State, province or analogous geographical region for a mailing address.
 --     * Slot: postal_code Description: Postal or ZIP code for mailing address.
@@ -518,7 +518,7 @@
 -- # Class: Hash Description: A representation of a cryptographic digest generated over a resource using a specified hash algorithm.
 --     * Slot: id
 --     * Slot: value Description: The value associated with the containing object.
---     * Slot: algorithm Description: The digest method by which a hash is derived.
+--     * Slot: algorithm Description: The digest method by which a hash is derived. SHOULD be one of the HashAlgorithmEnum values but other values are permitted (allow-other="yes").
 --     * Slot: ResourceLink_id Description: Autocreated FK slot
 -- # Class: Property Description: An attribute, characteristic, or quality of the containing object expressed as a namespace qualified name/value pair.
 --     * Slot: id
@@ -1304,8 +1304,8 @@ CREATE TABLE "Observation_methods" (
 	PRIMARY KEY ("Observation_id", methods),
 	FOREIGN KEY("Observation_id") REFERENCES "Observation" (id)
 );
-CREATE INDEX "ix_Observation_methods_methods" ON "Observation_methods" (methods);
 CREATE INDEX "ix_Observation_methods_Observation_id" ON "Observation_methods" ("Observation_id");
+CREATE INDEX "ix_Observation_methods_methods" ON "Observation_methods" (methods);
 
 CREATE TABLE "Observation_types" (
 	"Observation_id" INTEGER,
@@ -1313,8 +1313,8 @@ CREATE TABLE "Observation_types" (
 	PRIMARY KEY ("Observation_id", types),
 	FOREIGN KEY("Observation_id") REFERENCES "Observation" (id)
 );
-CREATE INDEX "ix_Observation_types_types" ON "Observation_types" (types);
 CREATE INDEX "ix_Observation_types_Observation_id" ON "Observation_types" ("Observation_id");
+CREATE INDEX "ix_Observation_types_types" ON "Observation_types" (types);
 
 CREATE TABLE "ParameterSelection_choice" (
 	"ParameterSelection_id" INTEGER,
@@ -1558,7 +1558,7 @@ CREATE INDEX "ix_PartyExternalId_uid" ON "PartyExternalId" (uid);
 
 CREATE TABLE "Address" (
 	id INTEGER NOT NULL,
-	type VARCHAR(4),
+	type TEXT,
 	city TEXT,
 	state TEXT,
 	postal_code TEXT,
@@ -1594,8 +1594,8 @@ CREATE TABLE "Party_email_addresses" (
 	PRIMARY KEY ("Party_id", email_addresses),
 	FOREIGN KEY("Party_id") REFERENCES "Party" (id)
 );
-CREATE INDEX "ix_Party_email_addresses_Party_id" ON "Party_email_addresses" ("Party_id");
 CREATE INDEX "ix_Party_email_addresses_email_addresses" ON "Party_email_addresses" (email_addresses);
+CREATE INDEX "ix_Party_email_addresses_Party_id" ON "Party_email_addresses" ("Party_id");
 
 CREATE TABLE "Party_location_uuids" (
 	"Party_id" INTEGER,
@@ -1612,8 +1612,8 @@ CREATE TABLE "Party_member_of_organizations" (
 	PRIMARY KEY ("Party_id", member_of_organizations),
 	FOREIGN KEY("Party_id") REFERENCES "Party" (id)
 );
-CREATE INDEX "ix_Party_member_of_organizations_member_of_organizations" ON "Party_member_of_organizations" (member_of_organizations);
 CREATE INDEX "ix_Party_member_of_organizations_Party_id" ON "Party_member_of_organizations" ("Party_id");
+CREATE INDEX "ix_Party_member_of_organizations_member_of_organizations" ON "Party_member_of_organizations" (member_of_organizations);
 
 CREATE TABLE "Task" (
 	id INTEGER NOT NULL,
@@ -1726,7 +1726,7 @@ CREATE INDEX "ix_Location_id" ON "Location" (id);
 CREATE TABLE "Hash" (
 	id INTEGER NOT NULL,
 	value TEXT NOT NULL,
-	algorithm VARCHAR(8) NOT NULL,
+	algorithm TEXT NOT NULL,
 	"ResourceLink_id" INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY("ResourceLink_id") REFERENCES "ResourceLink" (id)
@@ -1833,7 +1833,7 @@ CREATE INDEX "ix_Characterization_id" ON "Characterization" (id);
 
 CREATE TABLE "TelephoneNumber" (
 	id INTEGER NOT NULL,
-	type VARCHAR(6),
+	type TEXT,
 	number TEXT NOT NULL,
 	"Location_id" INTEGER,
 	"Party_id" INTEGER,
@@ -1887,8 +1887,8 @@ CREATE TABLE "Location_email_addresses" (
 	PRIMARY KEY ("Location_id", email_addresses),
 	FOREIGN KEY("Location_id") REFERENCES "Location" (id)
 );
-CREATE INDEX "ix_Location_email_addresses_email_addresses" ON "Location_email_addresses" (email_addresses);
 CREATE INDEX "ix_Location_email_addresses_Location_id" ON "Location_email_addresses" ("Location_id");
+CREATE INDEX "ix_Location_email_addresses_email_addresses" ON "Location_email_addresses" (email_addresses);
 
 CREATE TABLE "Location_urls" (
 	"Location_id" INTEGER,
@@ -2037,8 +2037,8 @@ CREATE TABLE "ResponsibleRole_party_uuids" (
 	PRIMARY KEY ("ResponsibleRole_id", party_uuids),
 	FOREIGN KEY("ResponsibleRole_id") REFERENCES "ResponsibleRole" (id)
 );
-CREATE INDEX "ix_ResponsibleRole_party_uuids_ResponsibleRole_id" ON "ResponsibleRole_party_uuids" ("ResponsibleRole_id");
 CREATE INDEX "ix_ResponsibleRole_party_uuids_party_uuids" ON "ResponsibleRole_party_uuids" (party_uuids);
+CREATE INDEX "ix_ResponsibleRole_party_uuids_ResponsibleRole_id" ON "ResponsibleRole_party_uuids" ("ResponsibleRole_id");
 
 CREATE TABLE "Property" (
 	id INTEGER NOT NULL,

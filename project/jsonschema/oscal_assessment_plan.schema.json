@@ -199,8 +199,11 @@
                     ]
                 },
                 "type": {
-                    "$ref": "#/$defs/AddressTypeEnum",
-                    "description": "Indicates the type of address."
+                    "description": "Indicates the type of address. Typical values: home, work. Other values are permitted.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 }
             },
             "title": "Address",
@@ -1906,8 +1909,8 @@
             "description": "A representation of a cryptographic digest generated over a resource using a specified hash algorithm.",
             "properties": {
                 "algorithm": {
-                    "$ref": "#/$defs/HashAlgorithmEnum",
-                    "description": "The digest method by which a hash is derived."
+                    "description": "The digest method by which a hash is derived. SHOULD be one of the HashAlgorithmEnum values but other values are permitted (allow-other=\"yes\").",
+                    "type": "string"
                 },
                 "value": {
                     "description": "The value associated with the containing object.",
@@ -2923,6 +2926,48 @@
         },
         "Parameter": {
             "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "values": {}
+                        },
+                        "required": [
+                            "values"
+                        ]
+                    },
+                    "then": {
+                        "not": {
+                            "required": [
+                                "select"
+                            ]
+                        },
+                        "properties": {
+                            "select": {}
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "select": {}
+                        },
+                        "required": [
+                            "select"
+                        ]
+                    },
+                    "then": {
+                        "not": {
+                            "required": [
+                                "values"
+                            ]
+                        },
+                        "properties": {
+                            "values": {}
+                        }
+                    }
+                }
+            ],
             "description": "Parameters provide a mechanism for the dynamic assignment of value(s) in a control.",
             "properties": {
                 "_class": {
@@ -3082,7 +3127,7 @@
             "type": "object"
         },
         "ParameterSelection": {
-            "additionalProperties": true,
+            "additionalProperties": false,
             "description": "Presenting a choice among alternatives.",
             "properties": {
                 "choice": {
@@ -3101,13 +3146,7 @@
                 }
             },
             "title": "ParameterSelection",
-            "type": [
-                "null",
-                "boolean",
-                "object",
-                "number",
-                "string"
-            ]
+            "type": "object"
         },
         "Part": {
             "additionalProperties": false,
@@ -3191,6 +3230,48 @@
         },
         "Party": {
             "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "addresses": {}
+                        },
+                        "required": [
+                            "addresses"
+                        ]
+                    },
+                    "then": {
+                        "not": {
+                            "required": [
+                                "location_uuids"
+                            ]
+                        },
+                        "properties": {
+                            "location_uuids": {}
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "location_uuids": {}
+                        },
+                        "required": [
+                            "location_uuids"
+                        ]
+                    },
+                    "then": {
+                        "not": {
+                            "required": [
+                                "addresses"
+                            ]
+                        },
+                        "properties": {
+                            "addresses": {}
+                        }
+                    }
+                }
+            ],
             "description": "An organization or person, which may be associated with roles or other concepts within the current or linked OSCAL document.",
             "properties": {
                 "addresses": {
@@ -5154,8 +5235,11 @@
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/$defs/PhoneTypeEnum",
-                    "description": "Indicates the type of phone number."
+                    "description": "Indicates the type of phone number. Typical values: home, office, mobile. Other values are permitted.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 }
             },
             "required": [
@@ -5328,5 +5412,5 @@
     "metamodel_version": "1.7.0",
     "title": "oscal_assessment_plan",
     "type": "object",
-    "version": null
+    "version": "1.2.1"
 }

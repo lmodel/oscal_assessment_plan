@@ -1,6 +1,7 @@
  syntax="proto3";
  package
 // metamodel_version: 1.7.0
+// version: 1.2.1
 // An action applied by a role within a given party to the content.
 message Action
  {
@@ -29,7 +30,7 @@ message Activity
 // A postal address for the location.
 message Address
  {
-  addressTypeEnum type = 0
+  string type = 0
  repeated  string addr-lines = 0
   string city = 0
   string state = 0
@@ -147,7 +148,7 @@ message AssociatedRisk
 // The task is intended to occur at the specified frequency.
 message AtFrequency
  {
-  integer period = 0
+  positiveIntegerType period = 0
   timingUnitEnum unit = 0
   markupMultilineType remarks = 0
  }
@@ -335,7 +336,7 @@ message Group
 message Hash
  {
   string value = 0
-  hashAlgorithmEnum algorithm = 0
+  string algorithm = 0
  }
 // Used to detail assessment subjects that were identified by this task.
 message IdentifiedSubject
@@ -570,8 +571,8 @@ message PartyExternalId
 // Where applicable, the transport layer protocol port range.
 message PortRange
  {
-  integer start = 0
-  integer end = 0
+  nonNegativeIntegerType start = 0
+  nonNegativeIntegerType end = 0
   transportEnum transport = 0
   markupMultilineType remarks = 0
  }
@@ -875,7 +876,7 @@ message TaskDependency
 // A telephone service number as defined by ITU-T E.164.
 message TelephoneNumber
  {
-  phoneTypeEnum type = 0
+  string type = 0
   string number = 0
  }
 // Used to define various terms and conditions under which an assessment can be performed.

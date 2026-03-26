@@ -8,7 +8,8 @@ license: Apache-2.0
 see_also:
   - https://lmodel.github.io/oscal_catalog
   - https://pages.nist.gov/OSCAL/learn/concepts/layer/control/catalog/
-source: https://pages.nist.gov/OSCAL-Reference/release-assets/latest/oscal_catalog_schema.json
+source: http://csrc.nist.gov/ns/oscal/1.2.1/oscal-catalog-schema.json
+version: 1.2.1
 
 prefixes:
   oscal_catalog: https://w3id.org/lmodel/oscal_catalog/
@@ -463,8 +464,10 @@ slots:
     description: The ISO 3166-1 alpha-2 country code for the mailing address.
 
   algorithm:
-    range: HashAlgorithmEnum
-    description: The digest method by which a hash is derived.
+    range: string
+    description: >-
+      The digest method by which a hash is derived. SHOULD be one of the
+      HashAlgorithmEnum values but other values are permitted (allow-other="yes").
 
   group:
     range: TokenType
@@ -878,6 +881,28 @@ classes:
       name:
         range: string
         description: The full name of the party.
+    rules:
+      - title: addresses-xor-location-uuids
+        description: >-
+          A party may have inline addresses or location UUID references,
+          but not both (metaschema <choice> constraint).
+        preconditions:
+          slot_conditions:
+            addresses:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            location-uuids:
+              value_presence: ABSENT
+      - title: location-uuids-xor-addresses
+        preconditions:
+          slot_conditions:
+            location-uuids:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            addresses:
+              value_presence: ABSENT
     in_subset:
       - oscal_metadata
 
@@ -967,8 +992,9 @@ classes:
       - number
     slot_usage:
       type:
-        range: PhoneTypeEnum
-        description: Indicates the type of phone number.
+        description: >-
+          Indicates the type of phone number. Typical values: home, office,
+          mobile. Other values are permitted.
       number:
         required: true
     in_subset:
@@ -985,8 +1011,9 @@ classes:
       - country
     slot_usage:
       type:
-        range: AddressTypeEnum
-        description: Indicates the type of address.
+        description: >-
+          Indicates the type of address. Typical values: home, work.
+          Other values are permitted.
     in_subset:
       - oscal_metadata
 
@@ -1206,6 +1233,28 @@ classes:
         description: >-
           A textual label that provides a characterization of the type,
           purpose, use or scope of the parameter.
+    rules:
+      - title: values-xor-select
+        description: >-
+          A parameter may have prescribed values or a selection construct,
+          but not both (metaschema <choice> constraint).
+        preconditions:
+          slot_conditions:
+            values:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            select:
+              value_presence: ABSENT
+      - title: select-xor-values
+        preconditions:
+          slot_conditions:
+            select:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            values:
+              value_presence: ABSENT
     in_subset:
       - oscal_control_common
 
@@ -1246,7 +1295,6 @@ classes:
 
   ParameterSelection:
     description: Presenting a choice among alternatives.
-    class_uri: linkml:Any
     slots:
       - "how-many"
       - choice

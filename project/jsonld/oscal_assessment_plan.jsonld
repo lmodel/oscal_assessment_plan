@@ -2,13 +2,14 @@
   "name": "oscal_assessment_plan",
   "description": "OSCAL Assessment Plan Model: LinkML Schema",
   "title": "oscal_assessment_plan",
-  "source": "https://pages.nist.gov/OSCAL-Reference/release-assets/latest/oscal_assessment-plan_schema.json",
+  "source": "http://csrc.nist.gov/ns/oscal/1.2.1/oscal-ap-schema.json",
   "see_also": [
     "https://lmodel.github.io/oscal_assessment_plan",
     "https://pages.nist.gov/OSCAL/learn/concepts/layer/assessment/assessment-plan/",
     "https://medium.com/@gregelin/an-orientation-to-oscal-in-the-devsecops-pipeline-b51e45f8503b"
   ],
   "id": "https://w3id.org/lmodel/oscal_assessment_plan",
+  "version": "1.2.1",
   "imports": [
     "linkml:types",
     "./oscal_catalog"
@@ -82,6 +83,24 @@
     }
   ],
   "types": [
+    {
+      "name": "NonNegativeIntegerType",
+      "definition_uri": "https://w3id.org/lmodel/oscal_assessment_plan/NonNegativeIntegerType",
+      "description": "A non-negative integer value (>= 0), as used for port range boundaries.",
+      "from_schema": "https://w3id.org/lmodel/oscal_assessment_plan",
+      "base": "int",
+      "uri": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "PositiveIntegerType",
+      "definition_uri": "https://w3id.org/lmodel/oscal_assessment_plan/PositiveIntegerType",
+      "description": "A positive integer value (>= 1), as used for task recurrence periods.",
+      "from_schema": "https://w3id.org/lmodel/oscal_assessment_plan",
+      "base": "int",
+      "uri": "http://www.w3.org/2001/XMLSchema#positiveInteger",
+      "@type": "TypeDefinition"
+    },
     {
       "name": "string",
       "definition_uri": "https://w3id.org/linkml/String",
@@ -610,7 +629,8 @@
           "text": "mitigation"
         },
         {
-          "text": "finding"
+          "text": "finding",
+          "deprecated": "Deprecated since OSCAL 1.1.4. Use 'discovery' instead."
         },
         {
           "text": "discovery"
@@ -1687,7 +1707,7 @@
       "domain_of": [
         "AtFrequency"
       ],
-      "range": "integer",
+      "range": "PositiveIntegerType",
       "@type": "SlotDefinition"
     },
     {
@@ -3350,14 +3370,14 @@
     {
       "name": "algorithm",
       "definition_uri": "https://w3id.org/lmodel/oscal_catalog/algorithm",
-      "description": "The digest method by which a hash is derived.",
+      "description": "The digest method by which a hash is derived. SHOULD be one of the HashAlgorithmEnum values but other values are permitted (allow-other=\"yes\").",
       "from_schema": "https://w3id.org/lmodel/oscal_catalog",
       "slot_uri": "https://w3id.org/lmodel/oscal_catalog/algorithm",
       "owner": "Hash",
       "domain_of": [
         "Hash"
       ],
-      "range": "HashAlgorithmEnum",
+      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -4401,7 +4421,7 @@
       ],
       "is_usage_slot": true,
       "usage_slot_name": "period",
-      "range": "integer",
+      "range": "PositiveIntegerType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -4753,7 +4773,7 @@
       ],
       "is_usage_slot": true,
       "usage_slot_name": "start",
-      "range": "integer",
+      "range": "NonNegativeIntegerType",
       "@type": "SlotDefinition"
     },
     {
@@ -4771,7 +4791,7 @@
       ],
       "is_usage_slot": true,
       "usage_slot_name": "end",
-      "range": "integer",
+      "range": "NonNegativeIntegerType",
       "@type": "SlotDefinition"
     },
     {
@@ -6459,7 +6479,7 @@
     {
       "name": "TelephoneNumber_type",
       "definition_uri": "https://w3id.org/lmodel/oscal_catalog/type",
-      "description": "Indicates the type of phone number.",
+      "description": "Indicates the type of phone number. Typical values: home, office, mobile. Other values are permitted.",
       "from_schema": "https://w3id.org/lmodel/oscal_catalog",
       "is_a": "type",
       "domain": "TelephoneNumber",
@@ -6471,7 +6491,7 @@
       ],
       "is_usage_slot": true,
       "usage_slot_name": "type",
-      "range": "PhoneTypeEnum",
+      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -6496,7 +6516,7 @@
     {
       "name": "Address_type",
       "definition_uri": "https://w3id.org/lmodel/oscal_catalog/type",
-      "description": "Indicates the type of address.",
+      "description": "Indicates the type of address. Typical values: home, work. Other values are permitted.",
       "from_schema": "https://w3id.org/lmodel/oscal_catalog",
       "is_a": "type",
       "domain": "Address",
@@ -6508,7 +6528,7 @@
       ],
       "is_usage_slot": true,
       "usage_slot_name": "type",
-      "range": "AddressTypeEnum",
+      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -6533,7 +6553,7 @@
     {
       "name": "Hash_algorithm",
       "definition_uri": "https://w3id.org/lmodel/oscal_catalog/algorithm",
-      "description": "The digest method by which a hash is derived.",
+      "description": "The digest method by which a hash is derived. SHOULD be one of the HashAlgorithmEnum values but other values are permitted (allow-other=\"yes\").",
       "from_schema": "https://w3id.org/lmodel/oscal_catalog",
       "is_a": "algorithm",
       "domain": "Hash",
@@ -6545,7 +6565,7 @@
       ],
       "is_usage_slot": true,
       "usage_slot_name": "algorithm",
-      "range": "HashAlgorithmEnum",
+      "range": "string",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -8643,6 +8663,69 @@
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/lmodel/oscal_catalog/Party",
+      "rules": [
+        {
+          "preconditions": {
+            "slot_conditions": [
+              {
+                "name": "addresses",
+                "value_presence": {
+                  "text": "PRESENT",
+                  "@type": "PermissibleValue"
+                },
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "postconditions": {
+            "slot_conditions": [
+              {
+                "name": "location_uuids",
+                "value_presence": {
+                  "text": "ABSENT",
+                  "@type": "PermissibleValue"
+                },
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "description": "A party may have inline addresses or location UUID references, but not both (metaschema <choice> constraint).",
+          "title": "addresses-xor-location-uuids",
+          "@type": "ClassRule"
+        },
+        {
+          "preconditions": {
+            "slot_conditions": [
+              {
+                "name": "location_uuids",
+                "value_presence": {
+                  "text": "PRESENT",
+                  "@type": "PermissibleValue"
+                },
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "postconditions": {
+            "slot_conditions": [
+              {
+                "name": "addresses",
+                "value_presence": {
+                  "text": "ABSENT",
+                  "@type": "PermissibleValue"
+                },
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "title": "location-uuids-xor-addresses",
+          "@type": "ClassRule"
+        }
+      ],
       "@type": "ClassDefinition"
     },
     {
@@ -8968,6 +9051,69 @@
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/lmodel/oscal_catalog/Parameter",
+      "rules": [
+        {
+          "preconditions": {
+            "slot_conditions": [
+              {
+                "name": "values",
+                "value_presence": {
+                  "text": "PRESENT",
+                  "@type": "PermissibleValue"
+                },
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "postconditions": {
+            "slot_conditions": [
+              {
+                "name": "select",
+                "value_presence": {
+                  "text": "ABSENT",
+                  "@type": "PermissibleValue"
+                },
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "description": "A parameter may have prescribed values or a selection construct, but not both (metaschema <choice> constraint).",
+          "title": "values-xor-select",
+          "@type": "ClassRule"
+        },
+        {
+          "preconditions": {
+            "slot_conditions": [
+              {
+                "name": "select",
+                "value_presence": {
+                  "text": "PRESENT",
+                  "@type": "PermissibleValue"
+                },
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "postconditions": {
+            "slot_conditions": [
+              {
+                "name": "values",
+                "value_presence": {
+                  "text": "ABSENT",
+                  "@type": "PermissibleValue"
+                },
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "title": "select-xor-values",
+          "@type": "ClassRule"
+        }
+      ],
       "@type": "ClassDefinition"
     },
     {
@@ -9025,15 +9171,12 @@
         "oscal_control_common"
       ],
       "from_schema": "https://w3id.org/lmodel/oscal_catalog",
-      "mappings": [
-        "linkml:Any"
-      ],
       "slots": [
         "how_many",
         "choice"
       ],
       "slot_usage": {},
-      "class_uri": "https://w3id.org/linkml/Any",
+      "class_uri": "https://w3id.org/lmodel/oscal_catalog/ParameterSelection",
       "@type": "ClassDefinition"
     },
     {
@@ -9084,9 +9227,9 @@
   ],
   "metamodel_version": "1.7.0",
   "source_file": "oscal_assessment_plan.yaml",
-  "source_file_date": "2026-03-25T01:27:49",
-  "source_file_size": 42181,
-  "generation_date": "2026-03-25T02:04:31",
+  "source_file_date": "2026-03-26T17:44:51",
+  "source_file_size": 42600,
+  "generation_date": "2026-03-27T16:30:14",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/oscal_assessment_plan.context.jsonld",
