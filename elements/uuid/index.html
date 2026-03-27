@@ -502,18 +502,8 @@ Alias: uuid</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../SystemComponent/">SystemComponent</a></td>
-<td>A defined component that can be part of an implemented system</td>
-<td>yes</td>
-</tr>
-<tr>
 <td><a href="../Resource/">Resource</a></td>
 <td>A resource associated with content in the containing document instance</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../AssessmentPlan/">AssessmentPlan</a></td>
-<td>An assessment plan, such as those provided by a FedRAMP assessor</td>
 <td>yes</td>
 </tr>
 <tr>
@@ -522,8 +512,48 @@ Alias: uuid</p>
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../Step/">Step</a></td>
-<td>Identifies an individual step in a series of steps related to an activity, su...</td>
+<td><a href="../MitigatingFactor/">MitigatingFactor</a></td>
+<td>Describes an existing mitigating factor that may affect the overall determina...</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../Response/">Response</a></td>
+<td>Describes either recommended or an actual plan for addressing the risk</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../AssessmentSubjectPlaceholder/">AssessmentSubjectPlaceholder</a></td>
+<td>Used when the assessment subjects will be determined as part of one or more o...</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../AssessmentPlan/">AssessmentPlan</a></td>
+<td>An assessment plan, such as those provided by a FedRAMP assessor</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../Finding/">Finding</a></td>
+<td>Describes an individual finding</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../AssessmentPlatform/">AssessmentPlatform</a></td>
+<td>Used to represent the toolset used to perform aspects of the assessment</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../Protocol/">Protocol</a></td>
+<td>Information about the protocol used to provide a service</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../AssessmentPart/">AssessmentPart</a></td>
+<td>A partition of an assessment plan or results or a child of another part</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Activity/">Activity</a></td>
+<td>Identifies an assessment or related process that can be performed</td>
 <td>yes</td>
 </tr>
 <tr>
@@ -537,68 +567,8 @@ Alias: uuid</p>
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../Protocol/">Protocol</a></td>
-<td>Information about the protocol used to provide a service</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AssessmentPlatform/">AssessmentPlatform</a></td>
-<td>Used to represent the toolset used to perform aspects of the assessment</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../Response/">Response</a></td>
-<td>Describes either recommended or an actual plan for addressing the risk</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../Activity/">Activity</a></td>
-<td>Identifies an assessment or related process that can be performed</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../MitigatingFactor/">MitigatingFactor</a></td>
-<td>Describes an existing mitigating factor that may affect the overall determina...</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../Task/">Task</a></td>
-<td>Represents a scheduled event or milestone, which may be associated with a ser...</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../AssessmentPart/">AssessmentPart</a></td>
-<td>A partition of an assessment plan or results or a child of another part</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../InventoryItem/">InventoryItem</a></td>
-<td>A single managed inventory item within the system</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../RiskLogEntry/">RiskLogEntry</a></td>
-<td>Identifies an individual risk response that occurred as part of managing an i...</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../Location/">Location</a></td>
-<td>A physical point of presence, which may be associated with people, organizati...</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../AssessmentSubjectPlaceholder/">AssessmentSubjectPlaceholder</a></td>
-<td>Used when the assessment subjects will be determined as part of one or more o...</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../Finding/">Finding</a></td>
-<td>Describes an individual finding</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../Risk/">Risk</a></td>
-<td>An identified risk</td>
+<td><a href="../Party/">Party</a></td>
+<td>An organization or person, which may be associated with roles or other concep...</td>
 <td>yes</td>
 </tr>
 <tr>
@@ -612,8 +582,8 @@ Alias: uuid</p>
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../RequiredAsset/">RequiredAsset</a></td>
-<td>Identifies an asset required to achieve remediation</td>
+<td><a href="../Location/">Location</a></td>
+<td>A physical point of presence, which may be associated with people, organizati...</td>
 <td>yes</td>
 </tr>
 <tr>
@@ -622,8 +592,38 @@ Alias: uuid</p>
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../Party/">Party</a></td>
-<td>An organization or person, which may be associated with roles or other concep...</td>
+<td><a href="../Step/">Step</a></td>
+<td>Identifies an individual step in a series of steps related to an activity, su...</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../SystemComponent/">SystemComponent</a></td>
+<td>A defined component that can be part of an implemented system</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../Task/">Task</a></td>
+<td>Represents a scheduled event or milestone, which may be associated with a ser...</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../RequiredAsset/">RequiredAsset</a></td>
+<td>Identifies an asset required to achieve remediation</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../Risk/">Risk</a></td>
+<td>An identified risk</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../InventoryItem/">InventoryItem</a></td>
+<td>A single managed inventory item within the system</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../RiskLogEntry/">RiskLogEntry</a></td>
+<td>Identifies an individual risk response that occurred as part of managing an i...</td>
 <td>yes</td>
 </tr>
 </tbody>

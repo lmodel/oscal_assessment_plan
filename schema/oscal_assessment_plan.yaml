@@ -70,6 +70,20 @@ subsets:
       parameters, constraints, guidelines, selections, and control-matching helpers.'
     from_schema: https://w3id.org/lmodel/oscal_catalog
 types:
+  NonNegativeIntegerType:
+    name: NonNegativeIntegerType
+    definition_uri: https://w3id.org/lmodel/oscal_assessment_plan/NonNegativeIntegerType
+    description: A non-negative integer value (>= 0), as used for port range boundaries.
+    from_schema: https://w3id.org/lmodel/oscal_assessment_plan
+    base: int
+    uri: xsd:nonNegativeInteger
+  PositiveIntegerType:
+    name: PositiveIntegerType
+    definition_uri: https://w3id.org/lmodel/oscal_assessment_plan/PositiveIntegerType
+    description: A positive integer value (>= 1), as used for task recurrence periods.
+    from_schema: https://w3id.org/lmodel/oscal_assessment_plan
+    base: int
+    uri: xsd:positiveInteger
   string:
     name: string
     definition_uri: https://w3id.org/linkml/String
@@ -499,6 +513,7 @@ enums:
         text: mitigation
       finding:
         text: finding
+        deprecated: Deprecated since OSCAL 1.1.4. Use 'discovery' instead.
       discovery:
         text: discovery
       historic:
@@ -1330,7 +1345,7 @@ slots:
     owner: AtFrequency
     domain_of:
     - AtFrequency
-    range: integer
+    range: PositiveIntegerType
   unit:
     name: unit
     definition_uri: https://w3id.org/lmodel/oscal_assessment_plan/unit
@@ -2707,13 +2722,14 @@ slots:
   algorithm:
     name: algorithm
     definition_uri: https://w3id.org/lmodel/oscal_catalog/algorithm
-    description: The digest method by which a hash is derived.
+    description: The digest method by which a hash is derived. SHOULD be one of the
+      HashAlgorithmEnum values but other values are permitted (allow-other="yes").
     from_schema: https://w3id.org/lmodel/oscal_catalog
     slot_uri: oscal_catalog:algorithm
     owner: Hash
     domain_of:
     - Hash
-    range: HashAlgorithmEnum
+    range: string
   group:
     name: group
     definition_uri: https://w3id.org/lmodel/oscal_catalog/group
@@ -3602,7 +3618,7 @@ slots:
     - AtFrequency
     is_usage_slot: true
     usage_slot_name: period
-    range: integer
+    range: PositiveIntegerType
     required: true
   AtFrequency_unit:
     name: AtFrequency_unit
@@ -3904,7 +3920,7 @@ slots:
     - PortRange
     is_usage_slot: true
     usage_slot_name: start
-    range: integer
+    range: NonNegativeIntegerType
   PortRange_end:
     name: PortRange_end
     definition_uri: https://w3id.org/lmodel/oscal_assessment_plan/end
@@ -3919,7 +3935,7 @@ slots:
     - PortRange
     is_usage_slot: true
     usage_slot_name: end
-    range: integer
+    range: NonNegativeIntegerType
   ImplementationStatus_state:
     name: ImplementationStatus_state
     definition_uri: https://w3id.org/lmodel/oscal_catalog/state
@@ -5372,7 +5388,8 @@ slots:
   TelephoneNumber_type:
     name: TelephoneNumber_type
     definition_uri: https://w3id.org/lmodel/oscal_catalog/type
-    description: Indicates the type of phone number.
+    description: 'Indicates the type of phone number. Typical values: home, office,
+      mobile. Other values are permitted.'
     from_schema: https://w3id.org/lmodel/oscal_catalog
     is_a: type
     domain: TelephoneNumber
@@ -5383,7 +5400,7 @@ slots:
     - TelephoneNumber
     is_usage_slot: true
     usage_slot_name: type
-    range: PhoneTypeEnum
+    range: string
   TelephoneNumber_number:
     name: TelephoneNumber_number
     definition_uri: https://w3id.org/lmodel/oscal_catalog/number
@@ -5403,7 +5420,8 @@ slots:
   Address_type:
     name: Address_type
     definition_uri: https://w3id.org/lmodel/oscal_catalog/type
-    description: Indicates the type of address.
+    description: 'Indicates the type of address. Typical values: home, work. Other
+      values are permitted.'
     from_schema: https://w3id.org/lmodel/oscal_catalog
     is_a: type
     domain: Address
@@ -5414,7 +5432,7 @@ slots:
     - Address
     is_usage_slot: true
     usage_slot_name: type
-    range: AddressTypeEnum
+    range: string
   Hash_value:
     name: Hash_value
     definition_uri: https://w3id.org/lmodel/oscal_catalog/value
@@ -5434,7 +5452,8 @@ slots:
   Hash_algorithm:
     name: Hash_algorithm
     definition_uri: https://w3id.org/lmodel/oscal_catalog/algorithm
-    description: The digest method by which a hash is derived.
+    description: The digest method by which a hash is derived. SHOULD be one of the
+      HashAlgorithmEnum values but other values are permitted (allow-other="yes").
     from_schema: https://w3id.org/lmodel/oscal_catalog
     is_a: algorithm
     domain: Hash
@@ -5445,7 +5464,7 @@ slots:
     - Hash
     is_usage_slot: true
     usage_slot_name: algorithm
-    range: HashAlgorithmEnum
+    range: string
     required: true
   Property_name:
     name: Property_name
@@ -6592,10 +6611,10 @@ classes:
     slot_usage:
       start:
         name: start
-        range: integer
+        range: NonNegativeIntegerType
       end:
         name: end
-        range: integer
+        range: NonNegativeIntegerType
     class_uri: oscal_assessment_plan:PortRange
   ImplementationStatus:
     name: ImplementationStatus
@@ -7612,6 +7631,35 @@ classes:
         description: The full name of the party.
         range: string
     class_uri: oscal_catalog:Party
+    rules:
+    - preconditions:
+        slot_conditions:
+          addresses:
+            name: addresses
+            value_presence:
+              text: PRESENT
+      postconditions:
+        slot_conditions:
+          location-uuids:
+            name: location-uuids
+            value_presence:
+              text: ABSENT
+      description: A party may have inline addresses or location UUID references,
+        but not both (metaschema <choice> constraint).
+      title: addresses-xor-location-uuids
+    - preconditions:
+        slot_conditions:
+          location-uuids:
+            name: location-uuids
+            value_presence:
+              text: PRESENT
+      postconditions:
+        slot_conditions:
+          addresses:
+            name: addresses
+            value_presence:
+              text: ABSENT
+      title: location-uuids-xor-addresses
   PartyExternalId:
     name: PartyExternalId
     definition_uri: https://w3id.org/lmodel/oscal_catalog/PartyExternalId
@@ -7728,8 +7776,8 @@ classes:
     slot_usage:
       type:
         name: type
-        description: Indicates the type of phone number.
-        range: PhoneTypeEnum
+        description: 'Indicates the type of phone number. Typical values: home, office,
+          mobile. Other values are permitted.'
       number:
         name: number
         required: true
@@ -7751,8 +7799,8 @@ classes:
     slot_usage:
       type:
         name: type
-        description: Indicates the type of address.
-        range: AddressTypeEnum
+        description: 'Indicates the type of address. Typical values: home, work. Other
+          values are permitted.'
     class_uri: oscal_catalog:Address
   Hash:
     name: Hash
@@ -8008,6 +8056,35 @@ classes:
         description: A textual label that provides a characterization of the type,
           purpose, use or scope of the parameter.
     class_uri: oscal_catalog:Parameter
+    rules:
+    - preconditions:
+        slot_conditions:
+          values:
+            name: values
+            value_presence:
+              text: PRESENT
+      postconditions:
+        slot_conditions:
+          select:
+            name: select
+            value_presence:
+              text: ABSENT
+      description: A parameter may have prescribed values or a selection construct,
+        but not both (metaschema <choice> constraint).
+      title: values-xor-select
+    - preconditions:
+        slot_conditions:
+          select:
+            name: select
+            value_presence:
+              text: PRESENT
+      postconditions:
+        slot_conditions:
+          values:
+            name: values
+            value_presence:
+              text: ABSENT
+      title: select-xor-values
   ParameterConstraint:
     name: ParameterConstraint
     definition_uri: https://w3id.org/lmodel/oscal_catalog/ParameterConstraint
@@ -8061,12 +8138,10 @@ classes:
     in_subset:
     - oscal_control_common
     from_schema: https://w3id.org/lmodel/oscal_catalog
-    mappings:
-    - linkml:Any
     slots:
     - how-many
     - choice
-    class_uri: linkml:Any
+    class_uri: oscal_catalog:ParameterSelection
   IncludeAll:
     name: IncludeAll
     definition_uri: https://w3id.org/lmodel/oscal_catalog/IncludeAll
@@ -8101,7 +8176,7 @@ classes:
     class_uri: oscal_catalog:SelectControlById
 metamodel_version: 1.7.0
 source_file: oscal_assessment_plan.yaml
-source_file_date: '2026-03-26T16:10:21'
-source_file_size: 42158
-generation_date: '2026-03-26T16:10:33'
+source_file_date: '2026-03-27T16:34:17'
+source_file_size: 42600
+generation_date: '2026-03-27T16:34:30'
 

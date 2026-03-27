@@ -293,15 +293,6 @@
     click Hash href "../Hash/"
       Hash : algorithm
 
-
-
-
-
-        Hash --&gt; "1" HashAlgorithmEnum : algorithm
-        click HashAlgorithmEnum href "../HashAlgorithmEnum/"
-
-
-
       Hash : value
 
 </code></pre>
@@ -325,7 +316,7 @@
 </tr>
 <tr>
 <td><a href="../algorithm/">algorithm</a></td>
-<td>1 <br/> <a href="../HashAlgorithmEnum/">HashAlgorithmEnum</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
 <td>The digest method by which a hash is derived</td>
 <td>direct</td>
 </tr>
@@ -432,14 +423,15 @@
 <span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">algorithm</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">algorithm</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The digest method by which a hash is derived.</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The digest method by which a hash is derived. SHOULD be one of the</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">HashAlgorithmEnum values but other values are permitted (allow-other="yes").</span>
 <span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/lmodel/oscal_assessment_plan</span>
 <span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
 <span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">algorithm</span>
 <span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hash</span>
 <span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hash</span>
-<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HashAlgorithmEnum</span>
+<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </details>

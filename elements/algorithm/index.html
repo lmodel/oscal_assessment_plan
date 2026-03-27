@@ -486,7 +486,7 @@
 
 
 <h1 id="slot-algorithm">Slot: algorithm</h1>
-<p><em>The digest method by which a hash is derived.</em></p>
+<p><em>The digest method by which a hash is derived. SHOULD be one of the HashAlgorithmEnum values but other values are permitted (allow-other="yes").</em></p>
 <p>URI: <a href="https://w3id.org/lmodel/oscal_assessment_plan/algorithm">oscal_assessment_plan:algorithm</a>
 Alias: algorithm</p>
 <!-- no inheritance hierarchy -->
@@ -520,7 +520,7 @@ Alias: algorithm</p>
 <tbody>
 <tr>
 <td>Range</td>
-<td><a href="../HashAlgorithmEnum/">HashAlgorithmEnum</a></td>
+<td><a href="../String/">String</a></td>
 </tr>
 <tr>
 <td>Domain Of</td>
@@ -570,13 +570,14 @@ Alias: algorithm</p>
 <h2 id="linkml-source">LinkML Source</h2>
 <details>
 <div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">algorithm</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The digest method by which a hash is derived.</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The digest method by which a hash is derived. SHOULD be one of the HashAlgorithmEnum</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">values but other values are permitted (allow-other=&quot;yes&quot;).</span>
 <span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/lmodel/oscal_assessment_plan</span>
 <span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
 <span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">algorithm</span>
 <span class="nt">domain_of</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hash</span>
-<span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HashAlgorithmEnum</span>
+<span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 </code></pre></div>
 </details>
 
